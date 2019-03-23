@@ -311,7 +311,7 @@ public class Road {
 	/**
 	 * A method to calculate the minimum possible length of a road
 	 * @return returns the euclidian distance between the endpoints of a road
-	 * 		| sqrt((x2-x1)�+(y2-y1)�)
+	 * 		| sqrt((x2-x1)^2+(y2-y1)^2)
 	 */
 	public int calculateMinLength() {
 		double ydif=getEndCoordinate()[1]-getStartCoordinate()[1];
