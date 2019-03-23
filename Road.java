@@ -12,7 +12,7 @@ public class Road {
 	private double[] endCoordinate;
 	private double MAX_COORDINATE = 70.0;
 	private int length;
-	private float speedlimit = (float)19.5
+	private float speedlimit = (float) 19.5;
 	private float roadSpeed;
 	private float delayDirectionOne = 0;
 	private float delayDirectionTwo = 0;
@@ -231,29 +231,137 @@ public class Road {
 	public int getMaxIDLength() {
 		return maxIDLength;
 	}
-
+	
+	
+	//make seperate class for coordinates? and assert min length for road (=euclidian distance between points)
+	
 	/**
-	 * Sets the length of the road to the given length in meters.
-	 *
-	 * @param length The new length for the given road in meters.
-	 * @post The length of the road is set to 1 if the given length is 0 | if
-	 *       (length == 0) then new.getLength() == 1)
-	 * @post The length of the road is set to the absolute value of the given length
-	 *       | new.getLength() == Math.abs(length)
-	 */
-	public void setLength(int length) {
-		if (length == 0)
-			this.length = 1;
-		this.length = Math.abs(length);
-	}
-
-	/**
-	 * Returns the length of the road expressed in meters.
+	 * Return the start coordinate of this road.
 	 */
 	@Basic
-	public int getLength() {
-		return length;
+	@Raw
+	public double[] getStartCoordinate() {
+		return this.startCoordinate;
 	}
+
+	/**
+	 * Return the end coordinate of this road.
+	 */
+	@Basic
+	@Raw
+	public double[] getEndCoordinate() {
+		return this.endCoordinate;
+	}
+
+	/**
+	 * Set the start coordinate of this road to the given coordinate.
+	 * 
+	 * @param coordinate The new start coordinate for this road.
+	 * @pre The given coordinate must be a valid coordinate for any road. |
+	 *      isValidCoordinate(propertyName_Java)
+	 * @post The start coordinate of this road is equal to the given coordinate. |
+	 *       new.getCoordinate() == propertyName_Java
+	 */
+	@Raw
+	public void setStartCoordinate(double[] coordinate) {
+		assert isValidCoordinate(coordinate);
+		this.startCoordinate = coordinate;
+	}
+	
+	/**
+	 * Set the end coordinate of this road to the given coordinate.
+	 * 
+	 * @param coordinate The new end coordinate for this road.
+	 * @pre The given coordinate must be a valid coordinate for any road. |
+	 *      isValidCoordinate(propertyName_Java)
+	 * @post The end coordinate of this road is equal to the given coordinate. |
+	 *       new.getCoordinate() == propertyName_Java
+	 */
+	@Raw
+	public void setEndCoordinate(double[] coordinate) {
+		assert isValidCoordinate(coordinate);
+		this.endCoordinate = coordinate;
+	}
+	
+	/**
+	 * Set the maximum value a coordinate can have to the given value.
+	 * 
+	 * @param value The new maximum value for coordinates.
+	 * @throws NullPointerException if the given value is null
+	 * 		| value == null
+	 * @throws IllegalArgumentException if the given value is not between 0 and 360 degrees
+	 * 		| ((value <= 0.0) || (value >= 360.0))
+	 */
+	public void setMaxCoordinate(double value) throws NullPointerException, IllegalArgumentException {
+		if((value <= 0.0) || (value >= 360.0))
+			throw new IllegalArgumentException();
+		this.MAX_COORDINATE = value;
+	}
+
+	/**
+	 * Check whether the given coordinate is a valid coordinate for any road.
+	 * 
+	 * @param coordinate the coordinate to check.
+	 * @return returns true if both the lattitude and longitude of the given
+	 *         coordinate are greater than or equal to zero and less than or equal
+	 *         to the maximum coordinate | result == ((coordinate[0] > 0) &&
+	 *         (coordinate[1] > 0) && (coordinate[0] <= MAX_COORDINATE) &&
+	 *         (coordinate[1] <= MAX_COORDINATE));
+	 * 
+	 */
+	public boolean isValidCoordinate(double[] coordinate) {
+		return ((coordinate[0] >= 0.0) && (coordinate[1] >= 0.0) && (coordinate[0] <= MAX_COORDINATE)
+				&& (coordinate[1] <= MAX_COORDINATE));
+	}
+	
+	/**
+	 * A method to calculate the minimum possible length of a road
+	 * @return returns the euclidian distance between the endpoints of a road
+	 * 		| sqrt((x2-x1)²+(y2-y1)²)
+	 */
+	public int calculateMinLength() {
+		double ydif=getEndCoordinate()[1]-getStartCoordinate()[1];
+		double xdif=getEndCoordinate()[0]-getStartCoordinate()[0];
+		return (int) Math.sqrt((xdif*xdif)+(ydif*ydif));
+	}
+
+	/**
+	 * Return the length of this road.
+	 */
+	@Basic
+	@Raw
+	public int getLength() {
+		return this.length;
+	}
+
+	/**
+	 * Check whether the given length is a valid length for
+	 * any road.
+	 * 
+	 * @param length The length to check.
+	 * @return true if the given length is greater or equal to the minimal possible length of a road
+	 * 		| result == (length >= calculateMinLength());
+	 */
+	public boolean isValidLength(int length) {
+		return (length >= calculateMinLength());
+	}
+
+	/**
+	 * Set the length of this road to the given length.
+	 * 
+	 * @param length The new length for this object_name.
+	 * @post If the given length is a valid length for any
+	 *       road, the length of this new road is equal to
+	 *       the given length. | if
+	 *       (isValidLength(length)) | then
+	 *       new.getLength() == length
+	 */
+	@Raw
+	public void setLength(int length) {
+		if (isValidLength(length))
+			this.length = length;
+	}
+
 
 	private final float maxSpeed = (float) 299792458.0;
 
@@ -336,26 +444,6 @@ public class Road {
 		return (roadSpeed > 0 && roadSpeed <= speedlimit);
 	}
 
-	public void setMaxCoordinate(double coordinate) {
-		this.MAX_COORDINATE = coordinate;
-	}
-
-	/**
-	 * Checks if the given coordinate is a valid coordinate
-	 * 
-	 * @param coordinate the coordinate to check
-	 * @return returns true if both the lattitude and longitude of the given
-	 *         coordinate are greater than or equal to zero and less than or equal
-	 *         to the maximum coordinate | result == ((coordinate[0] > 0) &&
-	 *         (coordinate[1] > 0) && (coordinate[0] <= MAX_COORDINATE) &&
-	 *         (coordinate[1] <= MAX_COORDINATE));
-	 * 
-	 */
-	public boolean isValidCoordinate(double[] coordinate) {
-		return ((coordinate[0] > 0) && (coordinate[1] > 0) && (coordinate[0] <= MAX_COORDINATE)
-				&& (coordinate[1] <= MAX_COORDINATE));
-	}
-
 	/**
 	 * Sets the delay of the road in Direction One to the given delay in seconds or to infinity
 	 *
@@ -366,6 +454,7 @@ public class Road {
 	 * @post The delay of the road going towards Direction One is equal to the given delay
 	 * 		| new.getDelayDirectionOne() == delay
 	 */
+	
 	public void setDelayDirectionOne(float delay){
 		assert isValidDelay(delay);
 		this.delayDirectionOne = delay;
@@ -381,6 +470,7 @@ public class Road {
 	 * @post The delay of the road going towards Direction Two is equal to the given delay
 	 * 		| new.getDelayDirectionTwo() == delay
 	 */
+	
 	public void setDelayDirectionTwo(float delay){
 		assert isValidDelay(delay);
 		this.delayDirectionTwo = delay;
@@ -394,7 +484,7 @@ public class Road {
 	 *		result == (delay >= 0 || delay == Float.POSITIVE_INFINITY)
 	 */
 	public boolean isValidDelay(float delay){
-		delay >= 0 || delay == Float.POSITIVE_INFINITY;
+		return delay >= 0 || delay == Float.POSITIVE_INFINITY;
 
 	}
 
@@ -447,3 +537,5 @@ public class Road {
 		return blockedDirectionTwo;
 	}
 }
+
+	
