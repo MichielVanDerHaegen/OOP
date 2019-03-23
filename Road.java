@@ -12,41 +12,76 @@ public class Road {
 	private double[] endCoordinate;
 	private double MAX_COORDINATE = 70.0;
 	private int length;
-	private float speedlimit;
+	private float speedlimit = (float)19.5
 	private float roadSpeed;
-	private float delayDirectionOne;
-	private float delayDirectionTwo;
+	private float delayDirectionOne = 0;
+	private float delayDirectionTwo = 0;
+	private boolean blockedDirectionOne = false;
+	private boolean blockedDirectionTwo = false;
 
 	/**
-	 * Initialize a new road with given ID, endpoint coordinates, length, and
+	 * Initialize a new road with given ID, Start and End coordinates and
 	 * roadspeed. The road will be given the standard speed limit of 19.5 m/s.
 	 *
 	 * @param id        The unique identifier for our new road.
-	 * @param endpoint1 The endpoint of one end of our new road.
-	 * @param endpoint2 The other endpoint of our new road.
-	 * @param length    The length of our new road
+	 * @param startCoordinate The coordinates of the start of the new road.
+	 * @param endCoordinate The coordinates of the end of the new road.
 	 * @param roadSpeed The average speed obtained on the new road under standard
 	 *                  conditions.
+	 * @pre The given startCoordinates must be valid coordinates for a road
+	 * 		| isValidCoordinate(startCoordinate)
+	 * @pre The given endCoordinates must be valid coordinates for a road
+	 * 		| isValidCoordinate(endCoordinate)
 	 * @post The ID of this new road will be equal to the given id | new.getID() ==
 	 *       id
-	 * @post
+	 * @post The start coordinates of the new road will be equal to the given startCoordinates
+	 * 		| new.get
+	 * @post The end coordinates of the new road will be equal to the given endCoordinates
+	 * 		| new.get
+	 * @post The average roadspeed for the new road will be equal to the given roadSpeed
+	 * 		| new.getRoadSpeed() == roadSpeed
 	 */
-	public Road(String id, double[] endpoint1, double[] endpoint2, int length, float roadSpeed) {
-		ID = id;
-		setLength(length);
-		endpoint1 = endpoint1;
-		endpoint2 = endpoint2;
-		setSpeedLimit((float) 19.5);
-		this.roadSpeed = roadSpeed;
+	public Road(String id, double[] startCoordinate, double[] endCoordinate, float roadSpeed) {
+		setID(id);
+		assert isValidCoordinate(startCoordinate);
+		assert isValidCoordinate(endCoordinate);
+		this.startCoordinate = startCoordinate; //switch to setter
+		this.endCoordinate = endCoordinate; //switch to setter
+		setAvgRoadSpeed(roadSpeed);
 	}
 
-	public Road(String id, double[] endpoint1, double[] endpoint2, int length, float speedlimit, float roadSpeed) {
-		ID = id;
-		setLength(length);
-		endpoint1 = endpoint1;
-		endpoint2 = endpoint2;
+	/**
+	 * Initialize a new road with given ID, Start and End coordinates, speed limit and
+	 * roadspeed.
+	 *
+	 * @param id        The unique identifier for our new road.
+	 * @param startCoordinate The coordinates of the start of the new road.
+	 * @param endCoordinate The coordinates of the end of the new road.
+	 * @param roadSpeed The average speed obtained on the new road under standard
+	 *                  conditions.
+	 * @pre The given startCoordinates must be valid coordinates for a road
+	 * 		| isValidCoordinate(startCoordinate)
+	 * @pre The given endCoordinates must be valid coordinates for a road
+	 * 		| isValidCoordinate(endCoordinate)
+	 * @post The ID of this new road will be equal to the given id | new.getID() ==
+	 *       id
+	 * @post The start coordinates of the new road will be equal to the given startCoordinates
+	 * 		| new.get
+	 * @post The end coordinates of the new road will be equal to the given endCoordinates
+	 * 		| new.get
+	 * @post The speed limit of the new road will be equal to the given speedlimit
+	 * 		| new.getSpeedLimit() == speedlimit
+	 * @post The average roadspeed for the new road will be equal to the given roadSpeed
+	 * 		| new.getRoadSpeed() == roadSpeed
+	 */
+	public Road(String id, double[] startCoordinate, double[] endCoordinate, float speedlimit, float roadSpeed) {
+		setID(id);
+		assert isValidCoordinate(startCoordinate);
+		assert isValidCoordinate(endCoordinate);
+		this.startCoordinate = startCoordinate; //switch to setter
+		this.endCoordinate = endCoordinate; //switch to setter
 		setSpeedLimit(speedlimit);
-		this.roadSpeed = roadSpeed;
+		setAvgRoadSpeed(roadSpeed);
 	}
 
 	/**
@@ -58,9 +93,12 @@ public class Road {
 	 * @post The ID of the road is set to the given ID | new.getID() == ID
 	 * @throws IllegalArgumentException The given ID of the road is not valid. |
 	 *                                  !isValidID(ID)
+	 * @throws NullPointerException
+	 * 			The given ID is null
+	 * 		|	ID == null
 	 */
 
-	public void setID(String ID) throws IllegalArgumentException {
+	public void setID(String ID) throws IllegalArgumentException, NullPointerException {
 		if (!isValidID(ID)) {
 			throw new IllegalArgumentException();
 		}
@@ -99,15 +137,16 @@ public class Road {
 		return false;
 	}
 
-	// fix the documentation using quantifiers
+	// fix the documentation using quantifiers - maybe good now?
 	/**
 	 * Checks to see if the given ID follows the correct naming conventions
 	 * 
 	 * @param ID The ID to be checked
 	 * @return True if the first character as a UpperCase letter and then has at
-	 *         least one number following | if (Character.isUpperCase(ID.charAt(0)))
-	 *         then for(int i =1;i<ID.length(); i++) if(!Character.isDigit(i))
-	 *         return false else return true
+	 *         least one number following
+	 *         | if (Character.isUpperCase(ID.charAt(0)))
+	 *         then for each additional character i in 1:ID.length():
+	 *         Character.isDigit(i))
 	 */
 	public boolean correctIDFormat(String ID) {
 		if (Character.isUpperCase(ID.charAt(0))) {
@@ -120,14 +159,14 @@ public class Road {
 		return true;
 	}
 
-	// fix the documentation using quantifiers
+	// fix the documentation using quantifiers - maybe good now?
 	/**
 	 * Checks the given ID to see if it is Unique
 	 * 
-	 * @param ID The ID to be checked
-	 * @return True if the ID given is not used for another road | (for each element
-	 *         in) //use this kind of language (String i:idArray) if(ID.equals(i))
-	 *         return false else return true
+	 * @param   ID The ID to be checked
+	 * @return	True if the ID given is not used for another road
+	 * 		 |  for each element in idArray:
+	 *		    !ID.equals(element)
 	 */
 	public boolean isUniqueID(String ID) {
 		for (String i : idArray) {
@@ -226,8 +265,11 @@ public class Road {
 	 *       new.getSpeedLimit() == speedlimit
 	 * @throws IllegalArgumentException The given speed limit for the road is not
 	 *                                  valid | !isValidSpeedLimit(speedlimit)
+	 * @throws NullPointerException
+	 * 			The given speed limit is null
+	 * 		|	speedlimit == null
 	 */
-	public void setSpeedLimit(float speedlimit) {
+	public void setSpeedLimit(float speedlimit) throws IllegalArgumentException, NullPointerException {
 		if (!isValidSpeedLimit(speedlimit))
 			throw new IllegalArgumentException(); // What exception should be throwing?
 		this.speedlimit = speedlimit;
@@ -263,8 +305,11 @@ public class Road {
 	 *       given roadspeed value | new.getRoadSpeed() == roadspeed
 	 * @throws IllegalArgumentException The given roadspeed for the road is not
 	 *                                  valid | !isValidRoadSpeed(roadspeed)
+	 * @throws NullPointerException
+	 * 			The given roadspeed is null
+	 * 		|	roadspeed == null
 	 */
-	public void setAvgRoadSpeed(float roadspeed) {
+	public void setAvgRoadSpeed(float roadspeed) throws IllegalArgumentException, NullPointerException{
 		if (!isValidRoadSpeed(roadspeed))
 			throw new IllegalArgumentException();
 		this.roadSpeed = roadspeed;
@@ -311,4 +356,94 @@ public class Road {
 				&& (coordinate[1] <= MAX_COORDINATE));
 	}
 
+	/**
+	 * Sets the delay of the road in Direction One to the given delay in seconds or to infinity
+	 *
+	 * @param delay
+	 *		The new delay time for the road going towards Direction One
+	 * @pre	The given delay of the road must be a valid delay for a road
+	 * 		| isValidDelay(delay)
+	 * @post The delay of the road going towards Direction One is equal to the given delay
+	 * 		| new.getDelayDirectionOne() == delay
+	 */
+	public void setDelayDirectionOne(float delay){
+		assert isValidDelay(delay);
+		this.delayDirectionOne = delay;
+	}
+
+	/**
+	 * Sets the delay of the road in Direction Two to the given delay in seconds or to infinity
+	 *
+	 * @param delay
+	 *		The new delay time for the road going towards Direction Two
+	 * @pre	The given delay of the road must be a valid delay for a road
+	 * 		| isValidDelay(delay)
+	 * @post The delay of the road going towards Direction Two is equal to the given delay
+	 * 		| new.getDelayDirectionTwo() == delay
+	 */
+	public void setDelayDirectionTwo(float delay){
+		assert isValidDelay(delay);
+		this.delayDirectionTwo = delay;
+	}
+
+	/**
+	 * Checks to see if the given delay value for the road is valid
+	 * @param delay
+	 * 		The delay in seconds to check
+	 * @return True if and only if the given delay is non negative or positive infinity
+	 *		result == (delay >= 0 || delay == Float.POSITIVE_INFINITY)
+	 */
+	public boolean isValidDelay(float delay){
+		delay >= 0 || delay == Float.POSITIVE_INFINITY;
+
+	}
+
+	/**
+	 * Returns the delay in seconds for the road in Direction Two
+	 */
+	public float getDelayDirectionOne(){return delayDirectionOne;}
+
+	/**
+	 * Returns the delay in seconds for the road in Direction Two
+	 */
+	public float getDelayDirectionTwo(){return delayDirectionTwo;}
+
+
+	/**
+	 * Sets the blcoked status of the road going towards direction one to the given boolean blocked value.
+	 * True = blocked
+	 * False = not blocked
+	 * @param blocked
+	 * 		The new blocked status of the road.
+	 * 	|	new.isBlockedDirectionOne() == blocked
+	 */
+	public void setBlockedDirectionOne(boolean blocked){
+		this.blockedDirectionOne = blocked;
+	}
+
+	/**
+	 * Sets the blcoked status of the road going toward direction two to the given boolean blocked value.
+	 * True = blocked
+	 * False = not blocked
+	 * @param blocked
+	 * 		The new blocked status of the road.
+	 * 	|	new.isBlockedDirectionTwo() == blocked
+	 */
+	public void setBlockedDirectionTwo(boolean blocked){
+		this.blockedDirectionTwo = blocked;
+	}
+
+	/**
+	 * Returns the blocked status of the road going towards DirectionOne
+	 */
+	public boolean isBlockedDirectionOne(){
+		return blockedDirectionOne;
+	}
+
+	/**
+	 * Returns the blocked status of the road going towards DirectionTwo
+	 */
+	public boolean isBlockedDirectionTwo(){
+		return blockedDirectionTwo;
+	}
 }
