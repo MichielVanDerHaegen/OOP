@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 import be.kuleuven.cs.som.annotate.*;
 
-public class Road {
+public class Road implements Facade {
 
 	private String ID;
 	private ArrayList<String> idArray = new ArrayList<>();
@@ -139,7 +139,7 @@ public class Road {
 	public boolean isValidID(String ID) {
 		if (ID.length() >= getMinIDLength() || ID.length() <= getMaxIDLength()) {
 			if (correctIDFormat(ID)) {
-				isUniqueID(ID);
+				return isUniqueID(ID);
 			}
 		}
 		return false;
@@ -158,7 +158,7 @@ public class Road {
 	public boolean correctIDFormat(String ID) {
 		if (Character.isUpperCase(ID.charAt(0))) {
 			for (int i = 1; i < ID.length(); i++) {
-				if (!Character.isDigit(i)) {
+				if (!Character.isDigit(ID.charAt(i))) {
 					return false;
 				}
 			}
