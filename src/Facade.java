@@ -64,7 +64,11 @@ public interface Facade {
 	 */
 	default double[][] getEndPoints(Road road) throws ModelException {
 		// To be implemented
-		return road.getEndPoints();
+		try {
+			return road.getEndPoints();
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
@@ -72,7 +76,11 @@ public interface Facade {
 	 */
 	default int getRoadLength(Road road) throws ModelException {
 		// To be implemented
-		return road.getLength();
+		try {
+			return road.getLength();
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
@@ -80,6 +88,11 @@ public interface Facade {
 	 */
 	default void changeRoadLength(Road road, int newLength) throws ModelException {
 		// To be implemented
+		try {
+			road.setLength(newLength);
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
@@ -87,7 +100,11 @@ public interface Facade {
 	 */
 	default float getRoadSpeedLimit(Road road) throws ModelException {
 		// To be implemented
-		return Float.NaN;
+		try {
+			return road.getSpeedlimit();
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 	
 	/**
@@ -95,6 +112,11 @@ public interface Facade {
 	 */
 	default void changeRoadSpeedLimit(Road road, float newSpeedLimit) throws ModelException {
 		// To be implemented
+		try {
+			road.setSpeedLimit(newSpeedLimit);
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
@@ -102,7 +124,11 @@ public interface Facade {
 	 */
 	default float getRoadAverageSpeed(Road road) throws ModelException {
 		// To be implemented
-		return Float.NaN;
+		try {
+			return road.getRoadSpeed();
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 	
 	/**
@@ -110,6 +136,11 @@ public interface Facade {
 	 */
 	default void changeRoadAverageSpeed(Road road, float newAverageSpeed) throws ModelException {
 		// To be implemented
+		try {
+			road.setAvgRoadSpeed(newAverageSpeed);
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 	
 	/**
@@ -119,7 +150,13 @@ public interface Facade {
 	 */
 	default float getRoadDelayinDirection(Road road, boolean directionForth) throws ModelException {
 		// To be implemented
-		return Float.NaN;
+		try {
+			if (directionForth)
+				road.getDelayDirectionOne();
+			return road.getDelayDirectionTwo();
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
@@ -129,6 +166,13 @@ public interface Facade {
 	 */
 	default void changeRoadDelayinDirection(Road road, float delay, boolean directionForth) throws ModelException {
 		// To be implemented
+		try {
+			if (directionForth)
+				road.setDelayDirectionOne(delay);
+			road.setDelayDirectionTwo(delay);
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
@@ -138,7 +182,13 @@ public interface Facade {
 	 */
 	default boolean getRoadIsBlocked(Road road, boolean directionForth) throws ModelException {
 		// To be implemented
-		return true;
+		try {
+			if (directionForth)
+				return road.isBlockedDirectionOne();
+			return road.isBlockedDirectionTwo();
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
@@ -148,6 +198,12 @@ public interface Facade {
 	 */
 	default void changeRoadBlockedState(Road road, boolean flag, boolean directionForth) throws ModelException {
 		// To be implemented
+		try {
+			if (directionForth)
+				road.setBlockedDirectionOne(flag);
+			road.setBlockedDirectionTwo(flag);
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
-
 }

@@ -153,7 +153,7 @@ public class Road implements Facade {
 	 *         least one number following
 	 *         | if (Character.isUpperCase(ID.charAt(0)))
 	 *         then for each additional character i in 1:ID.length():
-	 *         Character.isDigit(i))
+	 *         Character.isDigit(ID.charAt(i)))
 	 */
 	public boolean correctIDFormat(String ID) {
 		if (Character.isUpperCase(ID.charAt(0))) {
@@ -420,8 +420,12 @@ public class Road implements Facade {
 	 * @return True if the given road speed is greater than 0 and less than or equal
 	 *         to the roads speed limit | result == (roadSpeed > 0 && roadSpeed <=
 	 *         speedlimit)
+	 * @return False if the given road speed is not a number
+	 * 		| roadSpeed == Float.NaN
 	 */
 	public boolean isValidRoadSpeed(float roadSpeed) {
+		if(roadSpeed == Float.NaN)
+			return false;
 		return (roadSpeed > 0 && roadSpeed <= speedlimit);
 	}
 
