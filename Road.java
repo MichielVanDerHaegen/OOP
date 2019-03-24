@@ -45,8 +45,8 @@ public class Road {
 		setID(id);
 		assert isValidCoordinate(startCoordinate);
 		assert isValidCoordinate(endCoordinate);
-		setStartCoordinate(startCoordinate);
-		setEndCoordinate(endCoordinate);
+		this.startCoordinate = startCoordinate;
+		this.endCoordinate = endCoordinate;
 		setAvgRoadSpeed(roadSpeed);
 	}
 
@@ -229,14 +229,13 @@ public class Road {
 	public int getMaxIDLength() {
 		return maxIDLength;
 	}
-	
-	
-	//make seperate class for coordinates? and assert min length for road (=euclidian distance between points)
+
 	
 	/**
 	 * Return the start coordinate of this road.
 	 */
 	@Basic
+    @Immutable
 	public double[] getStartCoordinate() {
 		return this.startCoordinate;
 	}
@@ -245,38 +244,11 @@ public class Road {
 	 * Return the end coordinate of this road.
 	 */
 	@Basic
+    @Immutable
 	public double[] getEndCoordinate() {
 		return this.endCoordinate;
 	}
 
-	/**
-	 * Set the start coordinate of this road to the given coordinate.
-	 * 
-	 * @param coordinate The new start coordinate for this road.
-	 * @pre The given coordinate must be a valid coordinate for any road. |
-	 *      isValidCoordinate(coordinate)
-	 * @post The start coordinate of this road is equal to the given coordinate. |
-	 *       new.getCoordinate() == coordinate
-	 */
-	public void setStartCoordinate(double[] coordinate) {
-		assert isValidCoordinate(coordinate);
-		this.startCoordinate = coordinate;
-	}
-	
-	/**
-	 * Set the end coordinate of this road to the given coordinate.
-	 * 
-	 * @param coordinate The new end coordinate for this road.
-	 * @pre The given coordinate must be a valid coordinate for any road. |
-	 *      isValidCoordinate(coordinate)
-	 * @post The end coordinate of this road is equal to the given coordinate. |
-	 *       new.getCoordinate() == coordinate
-	 */
-	public void setEndCoordinate(double[] coordinate) {
-		assert isValidCoordinate(coordinate);
-		this.endCoordinate = coordinate;
-	}
-	
 	/**
 	 * Set the maximum value a coordinate can have to the given value.
 	 * 
