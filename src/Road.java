@@ -26,6 +26,7 @@ public class Road {
 	 * @param id        The unique identifier for our new road.
 	 * @param startCoordinate The coordinates of the start of the new road.
 	 * @param endCoordinate The coordinates of the end of the new road.
+	 * @param length The length of the road.
 	 * @param roadSpeed The average speed obtained on the new road under standard
 	 *                  conditions.
 	 * @pre The given startCoordinates must be valid coordinates for a road
@@ -35,18 +36,21 @@ public class Road {
 	 * @post The ID of this new road will be equal to the given id | new.getID() ==
 	 *       id
 	 * @post The start coordinates of the new road will be equal to the given startCoordinates
-	 * 		| new.get
+	 * 		| new.getStartCoordinate() == startCoordinate
 	 * @post The end coordinates of the new road will be equal to the given endCoordinates
-	 * 		| new.get
+	 * 		| new.getEndCoordinate() == endCoordinate
+	 * @post The length of the new road will be equal to the given length in meters
+	 * 		| new.getLength() == length
 	 * @post The average roadspeed for the new road will be equal to the given roadSpeed
 	 * 		| new.getRoadSpeed() == roadSpeed
 	 */
-	public Road(String id, double[] startCoordinate, double[] endCoordinate, float roadSpeed) {
+	public Road(String id, double[] startCoordinate, double[] endCoordinate, int length, float roadSpeed) {
 		setID(id);
 		assert isValidCoordinate(startCoordinate);
 		assert isValidCoordinate(endCoordinate);
 		this.startCoordinate = startCoordinate;
 		this.endCoordinate = endCoordinate;
+		setLength(length);
 		setAvgRoadSpeed(roadSpeed);
 	}
 
@@ -57,6 +61,7 @@ public class Road {
 	 * @param id        The unique identifier for our new road.
 	 * @param startCoordinate The coordinates of the start of the new road.
 	 * @param endCoordinate The coordinates of the end of the new road.
+	 * @param length The length of the new road.
 	 * @param roadSpeed The average speed obtained on the new road under standard
 	 *                  conditions.
 	 * @pre The given startCoordinates must be valid coordinates for a road
@@ -66,20 +71,23 @@ public class Road {
 	 * @post The ID of this new road will be equal to the given id | new.getID() ==
 	 *       id
 	 * @post The start coordinates of the new road will be equal to the given startCoordinates
-	 * 		| new.get
+	 * 		| new.getStartCoordinate() == startCoordinate
 	 * @post The end coordinates of the new road will be equal to the given endCoordinates
-	 * 		| new.get
+	 * 		| new.getEndCoordinate() == endCoordinate
+	 * @post The length of the new road will be equal to the given length in meters
+	 * 		| new.getLength() == length
 	 * @post The speed limit of the new road will be equal to the given speedlimit
 	 * 		| new.getSpeedLimit() == speedlimit
 	 * @post The average roadspeed for the new road will be equal to the given roadSpeed
 	 * 		| new.getRoadSpeed() == roadSpeed
 	 */
-	public Road(String id, double[] startCoordinate, double[] endCoordinate, float speedlimit, float roadSpeed) {
+	public Road(String id, double[] startCoordinate, double[] endCoordinate, int length, float speedlimit, float roadSpeed) {
 		setID(id);
 		assert isValidCoordinate(startCoordinate);
 		assert isValidCoordinate(endCoordinate);
-		setStartCoordinate(startCoordinate);
-		setEndCoordinate(endCoordinate);
+		this.startCoordinate = startCoordinate;
+		this.endCoordinate = endCoordinate;
+		setLength(length);
 		setSpeedLimit(speedlimit);
 		setAvgRoadSpeed(roadSpeed);
 	}
@@ -247,6 +255,15 @@ public class Road {
     @Immutable
 	public double[] getEndCoordinate() {
 		return this.endCoordinate;
+	}
+	
+	/**
+	 * Return both end points of this road.
+	 */
+	@Immutable
+	public double[][] getEndPoints(){
+		double[][] endpoints = new double[][] {this.startCoordinate,this.endCoordinate};
+		return endpoints;
 	}
 
 	/**

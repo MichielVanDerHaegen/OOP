@@ -18,7 +18,7 @@
  * any kind of exception that invocation may throw, and throw a new ModelException
  * as a signal that the execution was not successful.
  */
-public interface Facade extends Road {
+public interface Facade {
 
 	/**
 	 * Return a new road with the given identification, given end points, given length,
@@ -28,8 +28,8 @@ public interface Facade extends Road {
 	default Road createRoad(String identification, double[] endPoint1, double[] endPoint2,
 			int length, float speedLimit, float averageSpeed)
 			throws ModelException {
-		Road road = new Road(identification, endPoint1, endPoint2, length, speedLimit, averageSpeed)
-		return null;
+		Road road = new Road(identification, endPoint1, endPoint2, length, speedLimit, averageSpeed);
+		return road;
 	}
 
 
@@ -64,7 +64,7 @@ public interface Facade extends Road {
 	 */
 	default double[][] getEndPoints(Road road) throws ModelException {
 		// To be implemented
-		return null;
+		return road.getEndPoints();
 	}
 
 	/**
@@ -72,7 +72,7 @@ public interface Facade extends Road {
 	 */
 	default int getRoadLength(Road road) throws ModelException {
 		// To be implemented
-		return -1;
+		return road.getLength();
 	}
 
 	/**
