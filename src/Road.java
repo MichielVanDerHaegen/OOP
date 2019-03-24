@@ -1,3 +1,5 @@
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.ArrayList;
 
 import be.kuleuven.cs.som.annotate.*;
@@ -8,11 +10,11 @@ public class Road implements Facade {
 	private ArrayList<String> idArray = new ArrayList<>();
 	private int minIDLength = 2;
 	private int maxIDLength = 3;
-	private double[] startCoordinate;
-	private double[] endCoordinate;
+	private double[] endPoint1;
+	private double[] endPoint2;
 	private double MAX_COORDINATE = 70.0;
 	private int length;
-	private float speedlimit = (float) 19.5;
+	private float speedlimit = 19.5F;
 	private float roadSpeed;
 	private float delayDirectionOne = 0;
 	private float delayDirectionTwo = 0;
@@ -20,60 +22,60 @@ public class Road implements Facade {
 	private boolean blockedDirectionTwo = false;
 
 	/**
-	 * Initialize a new road with given ID, Start and End coordinates and
+	 * Initialize a new road with given ID, first and second endpoints and
 	 * roadspeed. The road will be given the standard speed limit of 19.5 m/s.
 	 *
 	 * @param id        The unique identifier for our new road.
-	 * @param startCoordinate The coordinates of the start of the new road.
-	 * @param endCoordinate The coordinates of the end of the new road.
+	 * @param endPoint1 The first endpoint of the new road.
+	 * @param endPoint2 The second endpoint of the new road.
 	 * @param length The length of the road.
 	 * @param roadSpeed The average speed obtained on the new road under standard
 	 *                  conditions.
-	 * @pre The given startCoordinates must be valid coordinates for a road
-	 * 		| isValidCoordinate(startCoordinate)
-	 * @pre The given endCoordinates must be valid coordinates for a road
-	 * 		| isValidCoordinate(endCoordinate)
+	 * @pre The given end point must be valid end point for a road
+	 * 		| isValidEndPoint(endPoint1)
+	 * @pre The given end point must be valid end point for a road
+	 * 		| isValidEndPoint(endPoint2)
 	 * @post The ID of this new road will be equal to the given id | new.getID() ==
 	 *       id
-	 * @post The start coordinates of the new road will be equal to the given startCoordinates
-	 * 		| new.getStartCoordinate() == startCoordinate
-	 * @post The end coordinates of the new road will be equal to the given endCoordinates
-	 * 		| new.getEndCoordinate() == endCoordinate
+	 * @post The first endpoint of the new road will be equal to the given endPoint1
+	 * 		| new.getEndPoint1() == endPoint1
+	 * @post The second endpoint of the new road will be equal to the given endPoint2
+	 * 		| new.getEndPoint2() == endPoint2
 	 * @post The length of the new road will be equal to the given length in meters
 	 * 		| new.getLength() == length
 	 * @post The average roadspeed for the new road will be equal to the given roadSpeed
 	 * 		| new.getRoadSpeed() == roadSpeed
 	 */
-	public Road(String id, double[] startCoordinate, double[] endCoordinate, int length, float roadSpeed) {
-		setID(id);
-		assert isValidCoordinate(startCoordinate);
-		assert isValidCoordinate(endCoordinate);
-		this.startCoordinate = startCoordinate;
-		this.endCoordinate = endCoordinate;
-		setLength(length);
-		setAvgRoadSpeed(roadSpeed);
+	public Road(String id, double[] endPoint1, double[] endPoint2, int length, float roadSpeed) {
+		this.setID(id);
+		assert isValidEndPoint(endPoint1);
+		assert isValidEndPoint(endPoint2);
+		this.endPoint1 = endPoint1;
+		this.endPoint2 = endPoint2;
+		this.setLength(length);
+		this.setAvgRoadSpeed(roadSpeed);
 	}
 
 	/**
-	 * Initialize a new road with given ID, Start and End coordinates, speed limit and
+	 * Initialize a new road with given ID, first end second endpoint, speed limit and
 	 * roadspeed.
 	 *
 	 * @param id        The unique identifier for our new road.
-	 * @param startCoordinate The coordinates of the start of the new road.
-	 * @param endCoordinate The coordinates of the end of the new road.
+	 * @param endPoint1 The first endpoint of the new road.
+	 * @param endPoint2 The second endpoint of the new road.
 	 * @param length The length of the new road.
 	 * @param roadSpeed The average speed obtained on the new road under standard
 	 *                  conditions.
-	 * @pre The given startCoordinates must be valid coordinates for a road
-	 * 		| isValidCoordinate(startCoordinate)
-	 * @pre The given endCoordinates must be valid coordinates for a road
-	 * 		| isValidCoordinate(endCoordinate)
+	 * @pre The given first endpoint must be valid endpoint for a road
+	 * 		| isValidEndPoint(endPoint1)
+	 * @pre The given second endpoint must be valid endpoint for a road
+	 * 		| isValidEndPoint(endPoint2)
 	 * @post The ID of this new road will be equal to the given id | new.getID() ==
 	 *       id
-	 * @post The start coordinates of the new road will be equal to the given startCoordinates
-	 * 		| new.getStartCoordinate() == startCoordinate
-	 * @post The end coordinates of the new road will be equal to the given endCoordinates
-	 * 		| new.getEndCoordinate() == endCoordinate
+	 * @post The first endpoint of the new road will be equal to the given endPoint1s
+	 * 		| new.getEndPoint1() == endPoint1
+	 * @post The second endpoint of the new road will be equal to the given endPoint2s
+	 * 		| new.getEndPoint2() == endPoint2
 	 * @post The length of the new road will be equal to the given length in meters
 	 * 		| new.getLength() == length
 	 * @post The speed limit of the new road will be equal to the given speedlimit
@@ -81,15 +83,15 @@ public class Road implements Facade {
 	 * @post The average roadspeed for the new road will be equal to the given roadSpeed
 	 * 		| new.getRoadSpeed() == roadSpeed
 	 */
-	public Road(String id, double[] startCoordinate, double[] endCoordinate, int length, float speedlimit, float roadSpeed) {
-		setID(id);
-		assert isValidCoordinate(startCoordinate);
-		assert isValidCoordinate(endCoordinate);
-		this.startCoordinate = startCoordinate;
-		this.endCoordinate = endCoordinate;
-		setLength(length);
-		setSpeedLimit(speedlimit);
-		setAvgRoadSpeed(roadSpeed);
+	public Road(String id, double[] endPoint1, double[] endPoint2, int length, float speedlimit, float roadSpeed) {
+		this.setID(id);
+		assert isValidEndPoint(endPoint1);
+		assert isValidEndPoint(endPoint2);
+		this.endPoint1 = endPoint1;
+		this.endPoint2 = endPoint2;
+		this.setLength(length);
+		this.setSpeedLimit(speedlimit);
+		this.setAvgRoadSpeed(roadSpeed);
 	}
 
 	/**
@@ -123,7 +125,7 @@ public class Road implements Facade {
 	 */
 	@Basic
 	public String getID() {
-		return ID;
+		return this.ID;
 	}
 
 	/**
@@ -137,7 +139,7 @@ public class Road implements Facade {
 	 *         isUniqueID(ID)
 	 */
 	public boolean isValidID(String ID) {
-		if (ID.length() >= getMinIDLength() || ID.length() <= getMaxIDLength()) {
+		if (ID.length() >= getMinIDLength() && ID.length() <= getMaxIDLength()) {
 			if (correctIDFormat(ID)) {
 				return isUniqueID(ID);
 			}
@@ -162,8 +164,9 @@ public class Road implements Facade {
 					return false;
 				}
 			}
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	/**
@@ -240,29 +243,29 @@ public class Road implements Facade {
 
 	
 	/**
-	 * Return the start coordinate of this road.
+	 * Return the first endpoint of this road.
 	 */
 	@Basic
     @Immutable
-	public double[] getStartCoordinate() {
-		return this.startCoordinate;
+	public double[] getEndPoint1() {
+		return this.endPoint1;
 	}
 
 	/**
-	 * Return the end coordinate of this road.
+	 * Return the second endpoint of this road.
 	 */
 	@Basic
     @Immutable
-	public double[] getEndCoordinate() {
-		return this.endCoordinate;
+	public double[] getEndPoint2() {
+		return this.endPoint2;
 	}
 	
 	/**
-	 * Return both end points of this road.
+	 * Return both endpoints of this road.
 	 */
 	@Immutable
-	public double[][] getEndPoints(){
-		double[][] endpoints = new double[][] {this.startCoordinate,this.endCoordinate};
+	public double[][] getEndPoints(){		
+		double[][] endpoints = new double[][] {new double[] {endPoint1[0],endPoint1[1]},new double[] {endPoint2[0],endPoint2[1]}};
 		return endpoints;
 	}
 
@@ -280,21 +283,37 @@ public class Road implements Facade {
 			throw new IllegalArgumentException();
 		this.MAX_COORDINATE = value;
 	}
+	
+	
+	
+	
+	public boolean isValidCoordinate(double coordinate) {
+		return coordinate >= 0.0 && coordinate <= MAX_COORDINATE;
+	}
 
 	/**
-	 * Check whether the given coordinate is a valid coordinate for any road.
+	 * Check whether the given endpoint is a valid endpoint for any road.
 	 * 
-	 * @param coordinate the coordinate to check.
+	 * @param endpoint The endpoint to check.
 	 * @return returns true if both the lattitude and longitude of the given
-	 *         coordinate are greater than or equal to zero and less than or equal
+	 *         endpoint are greater than or equal to zero and less than or equal
 	 *         to the maximum coordinate | result == ((coordinate[0] > 0) &&
 	 *         (coordinate[1] > 0) && (coordinate[0] <= MAX_COORDINATE) &&
 	 *         (coordinate[1] <= MAX_COORDINATE));
 	 * 
 	 */
-	public boolean isValidCoordinate(double[] coordinate) {
-		return ((coordinate[0] >= 0.0) && (coordinate[1] >= 0.0) && (coordinate[0] <= MAX_COORDINATE)
-				&& (coordinate[1] <= MAX_COORDINATE));
+	public boolean isValidEndPoint(double[] endpoint) {
+//		return ((coordinate[0] >= 0.0) && (coordinate[1] >= 0.0) && (coordinate[0] <= MAX_COORDINATE)
+//				&& (coordinate[1] <= MAX_COORDINATE));
+		if(endpoint==null) {
+			return false;
+		}
+		if(endpoint.length==2) {
+			assert isValidCoordinate(endpoint[0]);
+			assert isValidCoordinate(endpoint[1]);
+			return true;
+		}
+		return false;	
 	}
 	
 	/**
@@ -303,8 +322,8 @@ public class Road implements Facade {
 	 * 		| sqrt((x2-x1)^2+(y2-y1)^2)
 	 */
 	public int calculateMinLength() {
-		double ydif=getEndCoordinate()[1]-getStartCoordinate()[1];
-		double xdif=getEndCoordinate()[0]-getStartCoordinate()[0];
+		double ydif=getEndPoint2()[1]-getEndPoint1()[1];
+		double xdif=getEndPoint2()[0]-getEndPoint1()[0];
 		return (int) Math.sqrt((xdif*xdif)+(ydif*ydif));
 	}
 
@@ -325,7 +344,7 @@ public class Road implements Facade {
 	 * 		| result == (length >= calculateMinLength());
 	 */
 	public boolean isValidLength(int length) {
-		return (length >= calculateMinLength());
+		return (length >= this.calculateMinLength());
 	}
 
 	/**
@@ -341,6 +360,8 @@ public class Road implements Facade {
 	public void setLength(int length) {
 		if (isValidLength(length))
 			this.length = length;
+		else
+			this.length=this.calculateMinLength();
 	}
 
 
@@ -377,11 +398,11 @@ public class Road implements Facade {
 	 * 
 	 * @param speedlimit The speed limit to check
 	 * @return True if the given speed limit is greater than 0 and less than or
-	 *         equal to the max speed limit | result == (speedlimit > 0 &&
-	 *         speedlimit <= maxSpeed)
+	 *         equal to the max speed limit and greater or equal to the road speed | result == (speedlimit > 0) &&
+	 *         (speedlimit <= maxSpeed) && (speedlimit >= roadSpeed)
 	 */
 	public boolean isValidSpeedLimit(float speedlimit) {
-		return (speedlimit > 0 && speedlimit <= maxSpeed);
+		return ((speedlimit > 0.0F) && (speedlimit <= maxSpeed) && (speedlimit >= roadSpeed));
 	}
 
 	/**
@@ -426,7 +447,7 @@ public class Road implements Facade {
 	public boolean isValidRoadSpeed(float roadSpeed) {
 		if(roadSpeed == Float.NaN)
 			return false;
-		return (roadSpeed > 0 && roadSpeed <= speedlimit);
+		return ((roadSpeed > 0.0F) && (roadSpeed <= speedlimit));
 	}
 
 	/**
@@ -469,7 +490,7 @@ public class Road implements Facade {
 	 *		result == (delay >= 0 || delay == Float.POSITIVE_INFINITY)
 	 */
 	public boolean isValidDelay(float delay){
-		return delay >= 0 || delay == Float.POSITIVE_INFINITY;
+		return delay >= 0 || delay == Float.POSITIVE_INFINITY ;
 
 	}
 
@@ -521,6 +542,7 @@ public class Road implements Facade {
 	public boolean isBlockedDirectionTwo(){
 		return blockedDirectionTwo;
 	}
+	
 }
 
 	
