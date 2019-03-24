@@ -39,7 +39,7 @@ public interface Facade {
 	default String getRoadIdentification(Road road) throws ModelException {
 		// Example implementation
 		try {
-			return road.getIdentification();
+			return road.getID();
 		} catch (Throwable exc) {
 			throw new ModelException();
 		}
@@ -51,7 +51,7 @@ public interface Facade {
 	default void changeRoadIdentification(Road road, String newIdentification) throws ModelException {
 		// Example implementation
 		try {
-			road.setIdentification(newIdentification);
+			road.setID(newIdentification);
 		} catch (Throwable exc) {
 			throw new ModelException();
 		}
