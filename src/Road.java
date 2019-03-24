@@ -78,6 +78,8 @@ public class Road {
 		setID(id);
 		assert isValidCoordinate(startCoordinate);
 		assert isValidCoordinate(endCoordinate);
+		setStartCoordinate(startCoordinate);
+		setEndCoordinate(endCoordinate);
 		setSpeedLimit(speedlimit);
 		setAvgRoadSpeed(roadSpeed);
 	}
