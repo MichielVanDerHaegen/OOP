@@ -90,6 +90,8 @@ public class Road implements Facade {
 		this.endPoint1 = endPoint1;
 		this.endPoint2 = endPoint2;
 		this.setLength(length);
+		this.speedlimit = speedlimit;
+		this.roadSpeed = roadSpeed;
 		this.setSpeedLimit(speedlimit);
 		this.setAvgRoadSpeed(roadSpeed);
 	}
@@ -288,7 +290,7 @@ public class Road implements Facade {
 	
 	
 	public boolean isValidCoordinate(double coordinate) {
-		return coordinate >= 0.0 && coordinate <= MAX_COORDINATE;
+		return ((coordinate >= 0.0) && (coordinate <= MAX_COORDINATE));
 	}
 
 	/**
@@ -305,9 +307,9 @@ public class Road implements Facade {
 	public boolean isValidEndPoint(double[] endpoint) {
 //		return ((coordinate[0] >= 0.0) && (coordinate[1] >= 0.0) && (coordinate[0] <= MAX_COORDINATE)
 //				&& (coordinate[1] <= MAX_COORDINATE));
-		if(endpoint==null) {
-			return false;
-		}
+//		if(endpoint==null) {
+//			return false;
+//		}
 		if(endpoint.length==2) {
 			assert isValidCoordinate(endpoint[0]);
 			assert isValidCoordinate(endpoint[1]);
@@ -381,7 +383,7 @@ public class Road implements Facade {
 	 */
 	public void setSpeedLimit(float speedlimit) throws IllegalArgumentException, NullPointerException {
 		if (!isValidSpeedLimit(speedlimit))
-			throw new IllegalArgumentException(); // What exception should be throwing?
+			throw new IllegalArgumentException();
 		this.speedlimit = speedlimit;
 	}
 
@@ -439,15 +441,11 @@ public class Road implements Facade {
 	 * 
 	 * @param roadSpeed The average road speed under standard conditions to check
 	 * @return True if the given road speed is greater than 0 and less than or equal
-	 *         to the roads speed limit | result == (roadSpeed > 0 && roadSpeed <=
-	 *         speedlimit)
-	 * @return False if the given road speed is not a number
-	 * 		| roadSpeed == Float.NaN
+	 *         to the roads speed limit and less or equal than te maximum speed| result == (roadSpeed > 0 && roadSpeed <=
+	 *         speedlimit && roadSpeed <= maxSpeed)
 	 */
 	public boolean isValidRoadSpeed(float roadSpeed) {
-		if(roadSpeed == Float.NaN)
-			return false;
-		return ((roadSpeed > 0.0F) && (roadSpeed <= speedlimit));
+		return ((roadSpeed > 0.0F) && (roadSpeed <= speedlimit) && (roadSpeed <= maxSpeed));
 	}
 
 	/**
@@ -543,6 +541,11 @@ public class Road implements Facade {
 		return blockedDirectionTwo;
 	}
 	
+	public static void main(String[] args) {
+		double[] coord_10_20 = new double[] {10.0,20.0};
+		double[] coord_15_60 = new double[] {15.3,60.6};
+		Road road = new Road("X2",coord_10_20,coord_15_60,100,1.56F,3.0F);
+	}
 }
 
 	
