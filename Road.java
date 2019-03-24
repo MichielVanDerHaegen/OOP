@@ -45,8 +45,8 @@ public class Road {
 		setID(id);
 		assert isValidCoordinate(startCoordinate);
 		assert isValidCoordinate(endCoordinate);
-		this.startCoordinate = startCoordinate; //switch to setter
-		this.endCoordinate = endCoordinate; //switch to setter
+		setStartCoordinate(startCoordinate);
+		setEndCoordinate(endCoordinate);
 		setAvgRoadSpeed(roadSpeed);
 	}
 
@@ -78,8 +78,8 @@ public class Road {
 		setID(id);
 		assert isValidCoordinate(startCoordinate);
 		assert isValidCoordinate(endCoordinate);
-		this.startCoordinate = startCoordinate; //switch to setter
-		this.endCoordinate = endCoordinate; //switch to setter
+		setStartCoordinate(startCoordinate);
+		setEndCoordinate(endCoordinate);
 		setSpeedLimit(speedlimit);
 		setAvgRoadSpeed(roadSpeed);
 	}
@@ -137,7 +137,6 @@ public class Road {
 		return false;
 	}
 
-	// fix the documentation using quantifiers - maybe good now?
 	/**
 	 * Checks to see if the given ID follows the correct naming conventions
 	 * 
@@ -159,7 +158,6 @@ public class Road {
 		return true;
 	}
 
-	// fix the documentation using quantifiers - maybe good now?
 	/**
 	 * Checks the given ID to see if it is Unique
 	 * 
@@ -239,7 +237,6 @@ public class Road {
 	 * Return the start coordinate of this road.
 	 */
 	@Basic
-	@Raw
 	public double[] getStartCoordinate() {
 		return this.startCoordinate;
 	}
@@ -248,7 +245,6 @@ public class Road {
 	 * Return the end coordinate of this road.
 	 */
 	@Basic
-	@Raw
 	public double[] getEndCoordinate() {
 		return this.endCoordinate;
 	}
@@ -258,11 +254,10 @@ public class Road {
 	 * 
 	 * @param coordinate The new start coordinate for this road.
 	 * @pre The given coordinate must be a valid coordinate for any road. |
-	 *      isValidCoordinate(propertyName_Java)
+	 *      isValidCoordinate(coordinate)
 	 * @post The start coordinate of this road is equal to the given coordinate. |
-	 *       new.getCoordinate() == propertyName_Java
+	 *       new.getCoordinate() == coordinate
 	 */
-	@Raw
 	public void setStartCoordinate(double[] coordinate) {
 		assert isValidCoordinate(coordinate);
 		this.startCoordinate = coordinate;
@@ -273,11 +268,10 @@ public class Road {
 	 * 
 	 * @param coordinate The new end coordinate for this road.
 	 * @pre The given coordinate must be a valid coordinate for any road. |
-	 *      isValidCoordinate(propertyName_Java)
+	 *      isValidCoordinate(coordinate)
 	 * @post The end coordinate of this road is equal to the given coordinate. |
-	 *       new.getCoordinate() == propertyName_Java
+	 *       new.getCoordinate() == coordinate
 	 */
-	@Raw
 	public void setEndCoordinate(double[] coordinate) {
 		assert isValidCoordinate(coordinate);
 		this.endCoordinate = coordinate;
@@ -317,7 +311,7 @@ public class Road {
 	/**
 	 * A method to calculate the minimum possible length of a road
 	 * @return returns the euclidian distance between the endpoints of a road
-	 * 		| sqrt((x2-x1)²+(y2-y1)²)
+	 * 		| sqrt((x2-x1)^2+(y2-y1)^2)
 	 */
 	public int calculateMinLength() {
 		double ydif=getEndCoordinate()[1]-getStartCoordinate()[1];
@@ -329,7 +323,6 @@ public class Road {
 	 * Return the length of this road.
 	 */
 	@Basic
-	@Raw
 	public int getLength() {
 		return this.length;
 	}
@@ -356,7 +349,6 @@ public class Road {
 	 *       (isValidLength(length)) | then
 	 *       new.getLength() == length
 	 */
-	@Raw
 	public void setLength(int length) {
 		if (isValidLength(length))
 			this.length = length;
