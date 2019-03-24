@@ -6,3 +6,9 @@
 .idea/workspace.xml
 OOP.iml
 .idea/libraries/junit_4_13_beta_2.xml
+out/production/OOP/Road.class
+out/production/OOP/ModelException.class
+out/production/OOP/FullPart1Test.class
+out/production/OOP/FullPart1Test$1.class
+out/production/OOP/Facade.class
+.idea/libraries/apiguardian_api_1_0_0.xml
