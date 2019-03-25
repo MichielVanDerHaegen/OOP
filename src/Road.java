@@ -1,9 +1,6 @@
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.util.ArrayList;
 
 import be.kuleuven.cs.som.annotate.*;
-import sun.awt.util.IdentityArrayList;
 
 public class Road implements Facade {
 
@@ -47,7 +44,7 @@ public class Road implements Facade {
 	 * @post The average roadspeed for the new road will be equal to the given roadSpeed
 	 * 		| new.getRoadSpeed() == roadSpeed
 	 */
-	public Road(String id, double[] endPoint1, double[] endPoint2, int length, float roadSpeed) throws IllegalArgumentException, NullPointerException{
+	public Road(String id, double[] endPoint1, double[] endPoint2, int length, float roadSpeed) {
 		this.setID(id);
 		assert isValidEndPoint(endPoint1);
 		assert isValidEndPoint(endPoint2);
@@ -84,7 +81,7 @@ public class Road implements Facade {
 	 * @post The average roadspeed for the new road will be equal to the given roadSpeed
 	 * 		| new.getRoadSpeed() == roadSpeed
 	 */
-	public Road(String id, double[] endPoint1, double[] endPoint2, int length, float speedlimit, float roadSpeed) throws IllegalArgumentException, NullPointerException{
+	public Road(String id, double[] endPoint1, double[] endPoint2, int length, float speedlimit, float roadSpeed) {
 		this.setID(id);
 		assert isValidEndPoint(endPoint1);
 		assert isValidEndPoint(endPoint2);
@@ -537,15 +534,47 @@ public class Road implements Facade {
 		return blockedDirectionTwo;
 	}
 	
-//	public static void main(String[] args) {
-//		double[] coord_10_20 = new double[] {10.0,20.0};
-//		double[] coord_15_60 = new double[] {15.3,60.6};
-//		Road road = new Road("A6",coord_10_20,coord_15_60,100,10.56F,3.0F);
-//		Road road2 = new Road("A61",coord_10_20,coord_15_60,100,10.56F,3.0F);
-//		Road road3 = new Road("A62",coord_10_20,coord_15_60,100,10.56F,3.0F);
-//		//Road road4 = new Road("A6",coord_10_20,coord_15_60,100,10.56F,3.0F);
-//		System.out.println(idArray);
-//	}
+	@Override
+	public String toString(){
+		return ("This road has the following properties:"+'\n'+"ID: "+this.getID()+'\n'+
+				"End point 1: "+this.getEndPoint1()+'\n'+"End point 2: "+this.getEndPoint2()+'\n'+"Length: "+this.getLength()
+				+'\n'+"Speed limit: "+this.getSpeedlimit()+'\n'+"Average speed: "+this.getRoadSpeed()+'\n');
+	}
+	
+	public float calculateTravelTimeOne() {
+		float time = (this.getLength()/this.getRoadSpeed())+this.getDelayDirectionOne();
+		return time; 
+	}
+	
+	public float calculateTravelTimeTwo() {
+		float time = (this.getLength()/this.getRoadSpeed())+this.getDelayDirectionTwo();
+		return time; 
+	}
+	
+	
+	
+	public static void main(String[] args) {
+		double[] point1 = new double[] {10.0,20.0};
+		double[] point2 = new double[] {15.3,60.6};
+		double[] point3 = new double[] {40.5,5.5};
+		double[] point4 = new double[] {3.14,42.0};
+
+		Road road = new Road("E40",point1,point2,1000,120.0F,100.0F);
+		Road road2 = new Road("E17",point2,point3,200,120.0F,50.0F);
+		Road road3 = new Road("R0",point3,point4,500,120.0F,25.0F);
+		System.out.println(road);
+		System.out.println(road2);
+		System.out.println(road3);
+		
+		road.setDelayDirectionTwo(100);
+		road.setBlockedDirectionOne(true);
+		float totalTime = road.calculateTravelTimeTwo()+road2.calculateTravelTimeTwo()+road3.calculateTravelTimeTwo();
+		System.out.println("The total travel time is: "+totalTime+" seconds."+'\n');
+
+		road2.setDelayDirectionTwo(Float.POSITIVE_INFINITY);
+		float totalTime2 = road.calculateTravelTimeTwo()+road2.calculateTravelTimeTwo()+road3.calculateTravelTimeTwo();
+		System.out.println("The total travel time is: "+totalTime2+" seconds."+'\n');
+	}
 
 }
 
