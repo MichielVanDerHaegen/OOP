@@ -537,16 +537,20 @@ public class Road implements Facade {
 	@Override
 	public String toString(){
 		return ("This road has the following properties:"+'\n'+"ID: "+this.getID()+'\n'+
-				"End point 1: "+this.getEndPoint1()+'\n'+"End point 2: "+this.getEndPoint2()+'\n'+"Length: "+this.getLength()
+				"End point 1: "+this.getEndPoint1()[0]+","+this.getEndPoint1()[1]+'\n'+"End point 2: "+this.getEndPoint2()[0]+","+this.getEndPoint2()[1]+'\n'+"Length: "+this.getLength()
 				+'\n'+"Speed limit: "+this.getSpeedlimit()+'\n'+"Average speed: "+this.getRoadSpeed()+'\n');
 	}
 	
+	
+	//Still need to work these out, so that if the road is blocked, it throws an error
 	public float calculateTravelTimeOne() {
+		assert (!this.isBlockedDirectionOne());
 		float time = (this.getLength()/this.getRoadSpeed())+this.getDelayDirectionOne();
 		return time; 
 	}
 	
 	public float calculateTravelTimeTwo() {
+		assert (!this.isBlockedDirectionTwo());
 		float time = (this.getLength()/this.getRoadSpeed())+this.getDelayDirectionTwo();
 		return time; 
 	}
