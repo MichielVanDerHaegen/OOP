@@ -544,13 +544,13 @@ public class Road implements Facade {
 	
 	//Still need to work these out, so that if the road is blocked, it throws an error
 	public float calculateTravelTimeOne() {
-		assert (!this.isBlockedDirectionOne());
+		assert (this.isBlockedDirectionOne());
 		float time = (this.getLength()/this.getRoadSpeed())+this.getDelayDirectionOne();
 		return time; 
 	}
 	
 	public float calculateTravelTimeTwo() {
-		assert (!this.isBlockedDirectionTwo());
+		assert (this.isBlockedDirectionTwo());
 		float time = (this.getLength()/this.getRoadSpeed())+this.getDelayDirectionTwo();
 		return time; 
 	}
@@ -578,6 +578,10 @@ public class Road implements Facade {
 		road2.setDelayDirectionTwo(Float.POSITIVE_INFINITY);
 		float totalTime2 = road.calculateTravelTimeTwo()+road2.calculateTravelTimeTwo()+road3.calculateTravelTimeTwo();
 		System.out.println("The total travel time is: "+totalTime2+" seconds."+'\n');
+		
+		float totalTime3 = road.calculateTravelTimeOne()+road2.calculateTravelTimeOne()+road3.calculateTravelTimeOne();
+		System.out.println("The total travel time is: "+totalTime3+" seconds."+'\n');
+
 	}
 
 }
