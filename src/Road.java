@@ -112,10 +112,10 @@ public class Road implements Facade {
 		if (!isValidID(ID)) {
 			throw new IllegalArgumentException();
 		}
-//		String oldID = this.getID();
-//		if (oldID != null) {
-//			idArray.remove(oldID);
-//		}
+		String oldID = this.getID();
+		if (oldID != null) {
+			idArray.remove(oldID);
+		}
 		idArray.add(ID);
 		this.ID = ID;
 	}
@@ -541,16 +541,21 @@ public class Road implements Facade {
 				+'\n'+"Speed limit: "+this.getSpeedlimit()+'\n'+"Average speed: "+this.getRoadSpeed()+'\n');
 	}
 	
-	
 	//Still need to work these out, so that if the road is blocked, it throws an error
 	public float calculateTravelTimeOne() {
-		assert (this.isBlockedDirectionOne());
+		if(this.isBlockedDirectionOne()) {
+			System.out.println("The road "+this.getID()+" is blocked in this direction!");
+			return 0.0F;
+		}
 		float time = (this.getLength()/this.getRoadSpeed())+this.getDelayDirectionOne();
 		return time; 
 	}
 	
 	public float calculateTravelTimeTwo() {
-		assert (this.isBlockedDirectionTwo());
+		if(this.isBlockedDirectionTwo()) {
+			System.out.println("The road "+this.getID()+"  is blocked in this direction!");
+			return 0.0F;
+		}
 		float time = (this.getLength()/this.getRoadSpeed())+this.getDelayDirectionTwo();
 		return time; 
 	}
