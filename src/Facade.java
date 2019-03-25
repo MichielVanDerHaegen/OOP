@@ -28,8 +28,13 @@ public interface Facade {
 	default Road createRoad(String identification, double[] endPoint1, double[] endPoint2,
 			int length, float speedLimit, float averageSpeed)
 			throws ModelException {
+		try {
 		Road road = new Road(identification, endPoint1, endPoint2, length, speedLimit, averageSpeed);
 		return road;
+		}catch (Throwable exc) {
+			throw new ModelException();
+		}
+		
 	}
 
 

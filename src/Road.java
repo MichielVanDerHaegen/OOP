@@ -3,11 +3,12 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.util.ArrayList;
 
 import be.kuleuven.cs.som.annotate.*;
+import sun.awt.util.IdentityArrayList;
 
 public class Road implements Facade {
 
 	private String ID;
-	private ArrayList<String> idArray = new ArrayList<>();
+	private static ArrayList<String> idArray = new ArrayList<>();
 	private int minIDLength = 2;
 	private int maxIDLength = 3;
 	private double[] endPoint1;
@@ -46,7 +47,7 @@ public class Road implements Facade {
 	 * @post The average roadspeed for the new road will be equal to the given roadSpeed
 	 * 		| new.getRoadSpeed() == roadSpeed
 	 */
-	public Road(String id, double[] endPoint1, double[] endPoint2, int length, float roadSpeed) {
+	public Road(String id, double[] endPoint1, double[] endPoint2, int length, float roadSpeed) throws IllegalArgumentException, NullPointerException{
 		this.setID(id);
 		assert isValidEndPoint(endPoint1);
 		assert isValidEndPoint(endPoint2);
@@ -83,7 +84,7 @@ public class Road implements Facade {
 	 * @post The average roadspeed for the new road will be equal to the given roadSpeed
 	 * 		| new.getRoadSpeed() == roadSpeed
 	 */
-	public Road(String id, double[] endPoint1, double[] endPoint2, int length, float speedlimit, float roadSpeed) {
+	public Road(String id, double[] endPoint1, double[] endPoint2, int length, float speedlimit, float roadSpeed) throws IllegalArgumentException, NullPointerException{
 		this.setID(id);
 		assert isValidEndPoint(endPoint1);
 		assert isValidEndPoint(endPoint2);
@@ -114,10 +115,10 @@ public class Road implements Facade {
 		if (!isValidID(ID)) {
 			throw new IllegalArgumentException();
 		}
-		String oldID = this.getID();
-		if (oldID != null) {
-			idArray.remove(oldID);
-		}
+//		String oldID = this.getID();
+//		if (oldID != null) {
+//			idArray.remove(oldID);
+//		}
 		idArray.add(ID);
 		this.ID = ID;
 	}
@@ -305,11 +306,6 @@ public class Road implements Facade {
 	 * 
 	 */
 	public boolean isValidEndPoint(double[] endpoint) {
-//		return ((coordinate[0] >= 0.0) && (coordinate[1] >= 0.0) && (coordinate[0] <= MAX_COORDINATE)
-//				&& (coordinate[1] <= MAX_COORDINATE));
-//		if(endpoint==null) {
-//			return false;
-//		}
 		if(endpoint.length==2) {
 			assert isValidCoordinate(endpoint[0]);
 			assert isValidCoordinate(endpoint[1]);
@@ -541,11 +537,16 @@ public class Road implements Facade {
 		return blockedDirectionTwo;
 	}
 	
-	public static void main(String[] args) {
-		double[] coord_10_20 = new double[] {10.0,20.0};
-		double[] coord_15_60 = new double[] {15.3,60.6};
-		Road road = new Road("X2",coord_10_20,coord_15_60,100,1.56F,3.0F);
-	}
+//	public static void main(String[] args) {
+//		double[] coord_10_20 = new double[] {10.0,20.0};
+//		double[] coord_15_60 = new double[] {15.3,60.6};
+//		Road road = new Road("A6",coord_10_20,coord_15_60,100,10.56F,3.0F);
+//		Road road2 = new Road("A61",coord_10_20,coord_15_60,100,10.56F,3.0F);
+//		Road road3 = new Road("A62",coord_10_20,coord_15_60,100,10.56F,3.0F);
+//		//Road road4 = new Road("A6",coord_10_20,coord_15_60,100,10.56F,3.0F);
+//		System.out.println(idArray);
+//	}
+
 }
 
 	
