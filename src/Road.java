@@ -8,8 +8,8 @@ public class Road implements Facade {
 	private static ArrayList<String> idArray = new ArrayList<>();
 	private int minIDLength = 2;
 	private int maxIDLength = 3;
-	private final double[] endPoint1;
-	private final double[] endPoint2;
+	private double[] endPoint1;
+	private double[] endPoint2;
 	private double MAX_COORDINATE = 70.0;
 	private int length;
 	private float speedlimit = 19.5F;
@@ -264,10 +264,8 @@ public class Road implements Facade {
 	 * Return both endpoints of this road.
 	 */
 	@Immutable
-	public double[][] getEndPoints(){	
-		double[] clone1 = new double[] {endPoint1[0],endPoint1[1]};
-		double[] clone2 = new double[] {endPoint2[0],endPoint2[1]};
-		double[][] endpoints = new double[][] {clone1, clone2};
+	public double[][] getEndPoints(){		
+		double[][] endpoints = new double[][] {new double[] {endPoint1[0],endPoint1[1]},new double[] {endPoint2[0],endPoint2[1]}};
 		return endpoints;
 	}
 
