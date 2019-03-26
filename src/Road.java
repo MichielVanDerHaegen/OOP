@@ -35,10 +35,10 @@ public class Road implements Facade {
 	 * 		| isValidEndPoint(endPoint2)
 	 * @post The ID of this new road will be equal to the given id | new.getID() ==
 	 *       id
-	 * @post The first endpoint of the new road will be equal to the given endPoint1
-	 * 		| new.getEndPoint1() == endPoint1
-	 * @post The second endpoint of the new road will be equal to the given endPoint2
-	 * 		| new.getEndPoint2() == endPoint2
+	 * @post The first endpoint of the new road will be equal to the values of the given endPoint1
+	 * 		| new.getEndPoint1() == endPoint1.clone()
+	 * @post The second endpoint of the new road will be equal to the values of the given endPoint2
+	 * 		| new.getEndPoint2() == endPoint2.clone()
 	 * @post The length of the new road will be equal to the given length in meters
 	 * 		| new.getLength() == length
 	 * @post The average roadspeed for the new road will be equal to the given roadSpeed
@@ -48,8 +48,8 @@ public class Road implements Facade {
 		this.setID(id);
 		assert isValidEndPoint(endPoint1);
 		assert isValidEndPoint(endPoint2);
-		this.endPoint1 = endPoint1;
-		this.endPoint2 = endPoint2;
+		this.endPoint1 = endPoint1.clone();
+		this.endPoint2 = endPoint2.clone();
 		this.setLength(length);
 		this.setAvgRoadSpeed(roadSpeed);
 	}
@@ -70,10 +70,10 @@ public class Road implements Facade {
 	 * 		| isValidEndPoint(endPoint2)
 	 * @post The ID of this new road will be equal to the given id | new.getID() ==
 	 *       id
-	 * @post The first endpoint of the new road will be equal to the given endPoint1s
-	 * 		| new.getEndPoint1() == endPoint1
-	 * @post The second endpoint of the new road will be equal to the given endPoint2s
-	 * 		| new.getEndPoint2() == endPoint2
+	 * @post The first endpoint of the new road will be equal to the values of the given endPoint1
+	 * 		| new.getEndPoint1() == endPoint1.clone()
+	 * @post The second endpoint of the new road will be equal to the values of the given endPoint2
+	 * 		| new.getEndPoint2() == endPoint2.clone()
 	 * @post The length of the new road will be equal to the given length in meters
 	 * 		| new.getLength() == length
 	 * @post The speed limit of the new road will be equal to the given speedlimit
@@ -85,8 +85,8 @@ public class Road implements Facade {
 		this.setID(id);
 		assert isValidEndPoint(endPoint1);
 		assert isValidEndPoint(endPoint2);
-		this.endPoint1 = endPoint1;
-		this.endPoint2 = endPoint2;
+		this.endPoint1 = endPoint1.clone();
+		this.endPoint2 = endPoint2.clone();
 		this.setLength(length);
 		this.speedlimit = speedlimit;
 		this.roadSpeed = roadSpeed;
@@ -220,13 +220,11 @@ public class Road implements Facade {
 	 *       == maxIDLength
 	 * @throws NullPointerException     If given value is null | maxIDLength == null
 	 * @throws IllegalArgumentException If the given value is less than the minimum
-	 *                                  ID length or greater than the maximum
-	 *                                  Integer Value allowed | maxIDLength <
-	 *                                  minIDLength || maxIDLength >
-	 *                                  Integer.MAX_VALUE)
+	 *                                  ID length | maxIDLength <
+	 *                                  minIDLength
 	 */
 	public void setMaxIDLength(int maxIDLength) throws NullPointerException, IllegalArgumentException {
-		if (maxIDLength < minIDLength || maxIDLength > Integer.MAX_VALUE) {
+		if (maxIDLength < minIDLength) {
 			throw new IllegalArgumentException();
 		}
 		this.maxIDLength = maxIDLength;
@@ -285,10 +283,15 @@ public class Road implements Facade {
 			throw new IllegalArgumentException();
 		this.MAX_COORDINATE = value;
 	}
-	
-	
-	
-	
+
+
+	/**
+	 * Checks to see if the given coordinate is valid.
+	 * @param coordinate
+	 * 		The coordinate value to check
+	 * @return True if the coordinate is both greater than or equal to 0 and less than or equal to the Max coordinate
+	 * 		|  result == ((coordinate >= 0.0) && (coordinate <= MAX_COORDINATE))
+	 */
 	public boolean isValidCoordinate(double coordinate) {
 		return ((coordinate >= 0.0) && (coordinate <= MAX_COORDINATE));
 	}
@@ -543,7 +546,7 @@ public class Road implements Facade {
 				+'\n'+"Speed limit: "+this.getSpeedlimit()+'\n'+"Average speed: "+this.getRoadSpeed()+'\n');
 	}
 	
-	//Still need to work these out, so that if the road is blocked, it throws an error
+
 	public float calculateTravelTimeOne() {
 		if(this.isBlockedDirectionOne()) {
 			System.out.println("The road "+this.getID()+" is blocked in this direction!");
@@ -588,7 +591,6 @@ public class Road implements Facade {
 		
 		float totalTime3 = road.calculateTravelTimeOne()+road2.calculateTravelTimeOne()+road3.calculateTravelTimeOne();
 		System.out.println("The total travel time is: "+totalTime3+" seconds."+'\n');
-
 	}
 
 }
