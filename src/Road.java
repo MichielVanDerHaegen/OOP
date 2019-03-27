@@ -15,8 +15,8 @@ public class Road implements Facade {
 	private float speedlimit = 19.5F;
 	private float roadSpeed;
 	private final float maxSpeed = (float) 299792458.0;
-	private float delayDirectionOne = 0;
-	private float delayDirectionTwo = 0;
+	private float delayDirectionOne = 0.0F;
+	private float delayDirectionTwo = 0.0F;
 	private boolean blockedDirectionOne = false;
 	private boolean blockedDirectionTwo = false;
 
@@ -376,10 +376,8 @@ public class Road implements Facade {
 	 * 		| new.getSpeedLimit() == speedlimit
 	 * @throws IllegalArgumentException The given speed limit for the road is not valid 
 	 * 		| !isValidSpeedLimit(speedlimit)
-	 * @throws NullPointerException The given speed limit is null
-	 * 		| speedlimit == null
 	 */
-	public void setSpeedLimit(float speedlimit) throws IllegalArgumentException, NullPointerException {
+	public void setSpeedLimit(float speedlimit) throws IllegalArgumentException {
 		if (!isValidSpeedLimit(speedlimit))
 			throw new IllegalArgumentException();
 		this.speedlimit = speedlimit;
@@ -412,10 +410,8 @@ public class Road implements Facade {
 	 * 		| new.getRoadSpeed() == roadspeed
 	 * @throws IllegalArgumentException The given roadspeed for the road is not valid 
 	 * 		| !isValidRoadSpeed(roadspeed)
-	 * @throws NullPointerException The given roadspeed is null
-	 * 		| roadspeed == null
 	 */
-	public void setAvgRoadSpeed(float roadspeed) throws IllegalArgumentException, NullPointerException{
+	public void setAvgRoadSpeed(float roadspeed) throws IllegalArgumentException{
 		if (!isValidRoadSpeed(roadspeed))
 			throw new IllegalArgumentException();
 		this.roadSpeed = roadspeed;
