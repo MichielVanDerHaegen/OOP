@@ -157,8 +157,8 @@ public interface Facade {
 		// To be implemented
 		try {
 			if (directionForth)
-				road.getDelayDirectionOne();
-			return road.getDelayDirectionTwo();
+				road.getDelayDirectionEndPointTwo();
+			return road.getDelayDirectionEndPointOne();
 		} catch (Throwable exc) {
 			throw new ModelException();
 		}
@@ -173,8 +173,8 @@ public interface Facade {
 		// To be implemented
 		try {
 			if (directionForth)
-				road.setDelayDirectionOne(delay);
-			road.setDelayDirectionTwo(delay);
+				road.setDelayDirectionEndPointTwo(delay);
+			road.setDelayDirectionEndPointOne(delay);
 		} catch (Throwable exc) {
 			throw new ModelException();
 		}
@@ -189,8 +189,8 @@ public interface Facade {
 		// To be implemented
 		try {
 			if (directionForth)
-				return road.isBlockedDirectionOne();
-			return road.isBlockedDirectionTwo();
+				return road.isBlockedDirectionEndPointTwo();
+			return road.isBlockedDirectionEndPointOne();
 		} catch (Throwable exc) {
 			throw new ModelException();
 		}
@@ -205,8 +205,8 @@ public interface Facade {
 		// To be implemented
 		try {
 			if (directionForth)
-				road.setBlockedDirectionOne(flag);
-			road.setBlockedDirectionTwo(flag);
+				road.setBlockedDirectionEndPointTwo(flag);
+			road.setBlockedDirectionEndPointOne(flag);
 		} catch (Throwable exc) {
 			throw new ModelException();
 		}

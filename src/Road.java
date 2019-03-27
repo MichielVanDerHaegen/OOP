@@ -14,6 +14,7 @@ public class Road implements Facade {
 	private int length;
 	private float speedlimit = 19.5F;
 	private float roadSpeed;
+	private final float maxSpeed = (float) 299792458.0;
 	private float delayDirectionOne = 0;
 	private float delayDirectionTwo = 0;
 	private boolean blockedDirectionOne = false;
@@ -95,17 +96,17 @@ public class Road implements Facade {
 	}
 
 	/**
-	 * Sets the Identification of the road to the given ID value, if it is unique.
+	 * Sets the Identification of the road to the given ID value, if it is valid.
 	 * If the road ID is being changed, delete the old ID from the ID list and add
 	 * the new ID to the ID list
 	 * 
-	 * @param ID The new unique ID for our road
-	 * @post The ID of the road is set to the given ID | new.getID() == ID
-	 * @throws IllegalArgumentException The given ID of the road is not valid. |
-	 *                                  !isValidID(ID)
-	 * @throws NullPointerException
-	 * 			The given ID is null
-	 * 		|	ID == null
+	 * @param ID The new ID for our road
+	 * @post The ID of the road is set to the given ID 
+	 * 		| new.getID() == ID
+	 * @throws IllegalArgumentException The given ID of the road is not valid. 
+	 * 		| !isValidID(ID)
+	 * @throws NullPointerException The given ID is null
+	 * 		| ID == null
 	 */
 
 	public void setID(String ID) throws IllegalArgumentException, NullPointerException {
@@ -133,10 +134,8 @@ public class Road implements Facade {
 	 * 
 	 * @param ID The ID of the road to check
 	 * @return True if the ID length is between the minimum and maximum ID length,
-	 *         if the ID follows the correct naming conventions is a unique ID not
-	 *         used for another road. | (ID.length()>= getMinIDLength() ||
-	 *         ID.length() <= getMaxIDLength()) && correctIDFormat(ID) &&
-	 *         isUniqueID(ID)
+	 *         if the ID follows the correct naming conventions and is a unique ID not used for another road. 
+	 *         | (ID.length()>= getMinIDLength() || ID.length() <= getMaxIDLength()) && correctIDFormat(ID) && isUniqueID(ID)
 	 */
 	public boolean isValidID(String ID) {
 		if (ID.length() >= getMinIDLength() && ID.length() <= getMaxIDLength()) {
@@ -151,11 +150,10 @@ public class Road implements Facade {
 	 * Checks to see if the given ID follows the correct naming conventions
 	 * 
 	 * @param ID The ID to be checked
-	 * @return True if the first character as a UpperCase letter and then has at
-	 *         least one number following
+	 * @return True if the first character is an UpperCase letter and then has at least one number following
 	 *         | if (Character.isUpperCase(ID.charAt(0)))
-	 *         then for each additional character i in 1:ID.length():
-	 *         Character.isDigit(ID.charAt(i)))
+	 *           then for each additional character i in 1:ID.length(): 
+	 *           Character.isDigit(ID.charAt(i)))
 	 */
 	public boolean correctIDFormat(String ID) {
 		if (Character.isUpperCase(ID.charAt(0))) {
@@ -187,15 +185,15 @@ public class Road implements Facade {
 	}
 
 	/**
-	 * Sets the minimum ID length for the roads identifier
+	 * Sets the minimum ID length for the road's identifier
 	 * 
 	 * @param minIDLength The minimum ID length to be set
-	 * @post The minimum ID length is set to the given value | new.getMinIDLength()
-	 *       == minIDLength
-	 * @throws NullPointerException     If given value is null | minIDLength == null
-	 * @throws IllegalArgumentException If the given value is less than 2 or greater
-	 *                                  than the maximum ID length | if(minIDLength
-	 *                                  <2 || minIDLength > maxIDLength)
+	 * @post The minimum ID length is set to the given value 
+	 * 		| new.getMinIDLength() == minIDLength
+	 * @throws NullPointerException     If given value is null 
+	 * 		| minIDLength == null
+	 * @throws IllegalArgumentException If the given value is less than 2 or greater than the maximum ID length 
+	 * 		| if(minIDLength <2 || minIDLength > maxIDLength)
 	 */
 	public void setMinIDLength(int minIDLength) throws NullPointerException, IllegalArgumentException {
 		if (minIDLength < 2 || minIDLength > maxIDLength) {
@@ -213,16 +211,15 @@ public class Road implements Facade {
 	}
 
 	/**
-	 * Sets the maximum ID length for the roads identifier
+	 * Sets the maximum ID length for the road's identifier
 	 * 
 	 * @param maxIDLength The maximum ID length to be set
-	 * @post The maximum ID length is set to the given value | new.getMaxIDLength()
-	 *       == maxIDLength
-	 * @throws NullPointerException     If given value is null | maxIDLength == null
-	 * @throws IllegalArgumentException If the given value is less than the minimum
-	 *                                  ID length
-	 *                                  | maxIDLength <
-	 *                                  minIDLength
+	 * @post The maximum ID length is set to the given value 
+	 * 		| new.getMaxIDLength() == maxIDLength
+	 * @throws NullPointerException     If given value is null 
+	 * 		| maxIDLength == null
+	 * @throws IllegalArgumentException If the given value is less than the minimum ID length
+	 *      | maxIDLength < minIDLength
 	 */
 	public void setMaxIDLength(int maxIDLength) throws NullPointerException, IllegalArgumentException {
 		if (maxIDLength < minIDLength) {
@@ -272,6 +269,8 @@ public class Road implements Facade {
 	 * Set the maximum value a coordinate can have to the given value.
 	 * 
 	 * @param value The new maximum value for coordinates.
+	 * @post The maximum value a coordinate can have is set to the given value
+	 * 		| new.getMaxCoordinate() == value
 	 * @throws NullPointerException if the given value is null
 	 * 		| value == null
 	 * @throws IllegalArgumentException if the given value is not between 0 and 360 degrees
@@ -282,7 +281,13 @@ public class Road implements Facade {
 			throw new IllegalArgumentException();
 		this.MAX_COORDINATE = value;
 	}
-
+	
+	/**
+	 * Returns the maximum value a coordinate can have
+	 */
+	public double getMaxCoordinate() {
+		return this.MAX_COORDINATE;
+	}
 
 
 	/**
@@ -300,18 +305,17 @@ public class Road implements Facade {
 	 * Check whether the given endpoint is a valid endpoint for any road.
 	 * 
 	 * @param endpoint The endpoint to check.
-	 * @return returns true if both the lattitude and longitude of the given
-	 *         endpoint are greater than or equal to zero and less than or equal
-	 *         to the maximum coordinate | result == ((coordinate[0] > 0) &&
-	 *         (coordinate[1] > 0) && (coordinate[0] <= MAX_COORDINATE) &&
-	 *         (coordinate[1] <= MAX_COORDINATE));
+	 * @return returns true if the number of coordinates is equal to two and both coordinates are valid endpoints
+	 * 		| result == (endpoint.length==2) && (isValidCoordinate(endpoint[0])) && (isValidCoordinate(endpoint[1]))
 	 * 
 	 */
 	public boolean isValidEndPoint(double[] endpoint) {
 		if(endpoint.length==2) {
-			assert isValidCoordinate(endpoint[0]);
-			assert isValidCoordinate(endpoint[1]);
-			return true;
+			if(isValidCoordinate(endpoint[0])) {
+				if(isValidCoordinate(endpoint[1])) {
+					return true;
+				}
+			}
 		}
 		return false;	
 	}
@@ -336,8 +340,7 @@ public class Road implements Facade {
 	}
 
 	/**
-	 * Check whether the given length is a valid length for
-	 * any road.
+	 * Check whether the given length is a valid length for any road.
 	 * 
 	 * @param length The length to check.
 	 * @return true if the given length is greater or equal to the minimal possible length of a road
@@ -351,11 +354,12 @@ public class Road implements Facade {
 	 * Set the length of this road to the given length.
 	 * 
 	 * @param length The new length for this object_name.
-	 * @post If the given length is a valid length for any
-	 *       road, the length of this new road is equal to
-	 *       the given length. | if
-	 *       (isValidLength(length)) | then
-	 *       new.getLength() == length
+	 * @post If the given length is a valid length for any road, the length of this new road is equal to the given length. 
+	 * 		| if(isValidLength(length)) 
+	 * 		| then new.getLength() == length
+	 * @post If the given length is not a valid length, the lenght of this new road is set to the minimum possible length.
+	 * 		| if(!isValidLength(length))
+	 * 		| then new.getLength() == this.calculateMinLength()
 	 */
 	public void setLength(int length) {
 		if (isValidLength(length))
@@ -364,20 +368,16 @@ public class Road implements Facade {
 			this.length=this.calculateMinLength();
 	}
 
-
-	private final float maxSpeed = (float) 299792458.0;
-
 	/**
 	 * Sets the speedlimit of the road to the given value in meters per second.
 	 * 
 	 * @param speedlimit The new speed limit for the road in meters per second.
-	 * @post The speed limit of the road is set to the given speed limit |
-	 *       new.getSpeedLimit() == speedlimit
-	 * @throws IllegalArgumentException The given speed limit for the road is not
-	 *                                  valid | !isValidSpeedLimit(speedlimit)
-	 * @throws NullPointerException
-	 * 			The given speed limit is null
-	 * 		|	speedlimit == null
+	 * @post The speed limit of the road is set to the given speed limit 
+	 * 		| new.getSpeedLimit() == speedlimit
+	 * @throws IllegalArgumentException The given speed limit for the road is not valid 
+	 * 		| !isValidSpeedLimit(speedlimit)
+	 * @throws NullPointerException The given speed limit is null
+	 * 		| speedlimit == null
 	 */
 	public void setSpeedLimit(float speedlimit) throws IllegalArgumentException, NullPointerException {
 		if (!isValidSpeedLimit(speedlimit))
@@ -394,30 +394,26 @@ public class Road implements Facade {
 	}
 
 	/**
-	 * Checks to see if the given speed limit for the road is acceptable
+	 * Checks to see if the given speed limit in meters per second for the road is acceptable
 	 * 
 	 * @param speedlimit The speed limit to check
-	 * @return True if the given speed limit is greater than 0 and less than or
-	 *         equal to the max speed limit and greater or equal to the road speed | result == (speedlimit > 0) &&
-	 *         (speedlimit <= maxSpeed) && (speedlimit >= roadSpeed)
+	 * @return True if the given speed limit is greater than 0 and less than or equal to the max speed limit and greater or equal to the road speed 
+	 * 		| result == (speedlimit > 0) && (speedlimit <= maxSpeed) && (speedlimit >= roadSpeed)
 	 */
 	public boolean isValidSpeedLimit(float speedlimit) {
 		return ((speedlimit > 0.0F) && (speedlimit <= maxSpeed) && (speedlimit >= roadSpeed));
 	}
 
 	/**
-	 * Sets the average road speed of the road to the given value in meters per
-	 * second
+	 * Sets the average road speed of the road to the given value in meters per second
 	 * 
-	 * @param roadspeed The new average speed obtained by driving on the road under
-	 *                  standard conditions
-	 * @post The average speed of the road under standard conditions is set to the
-	 *       given roadspeed value | new.getRoadSpeed() == roadspeed
-	 * @throws IllegalArgumentException The given roadspeed for the road is not
-	 *                                  valid | !isValidRoadSpeed(roadspeed)
-	 * @throws NullPointerException
-	 * 			The given roadspeed is null
-	 * 		|	roadspeed == null
+	 * @param roadspeed The new average speed obtained by driving on the road under standard conditions
+	 * @post The average speed of the road under standard conditions is set to the given roadspeed value 
+	 * 		| new.getRoadSpeed() == roadspeed
+	 * @throws IllegalArgumentException The given roadspeed for the road is not valid 
+	 * 		| !isValidRoadSpeed(roadspeed)
+	 * @throws NullPointerException The given roadspeed is null
+	 * 		| roadspeed == null
 	 */
 	public void setAvgRoadSpeed(float roadspeed) throws IllegalArgumentException, NullPointerException{
 		if (!isValidRoadSpeed(roadspeed))
@@ -426,8 +422,7 @@ public class Road implements Facade {
 	}
 
 	/**
-	 * Returns the average speed obtained driving on the road under standard
-	 * conditions
+	 * Returns the average speed obtained driving on the road under standard conditions
 	 */
 	@Basic
 	public float getRoadSpeed() {
@@ -438,50 +433,46 @@ public class Road implements Facade {
 	 * Checks to see if the given roadSpeed value is acceptable
 	 * 
 	 * @param roadSpeed The average road speed under standard conditions to check
-	 * @return True if the given road speed is greater than 0 and less than or equal
-	 *         to the roads speed limit and less or equal than te maximum speed| result == (roadSpeed > 0 && roadSpeed <=
-	 *         speedlimit && roadSpeed <= maxSpeed)
+	 * @return True if the given road speed is greater than 0 and less than or equal to the roads speed limit and less or equal than te maximum speed
+	 * 		| result == (roadSpeed > 0 && roadSpeed <= speedlimit && roadSpeed <= maxSpeed)
 	 */
 	public boolean isValidRoadSpeed(float roadSpeed) {
 		return ((roadSpeed > 0.0F) && (roadSpeed <= speedlimit) && (roadSpeed <= maxSpeed));
 	}
 
 	/**
-	 * Sets the delay of the road in Direction One to the given delay in seconds or to infinity
+	 * Sets the delay of the road in the direction of endpoint one to the given delay in seconds
 	 *
-	 * @param delay
-	 *		The new delay time for the road going towards Direction One
+	 * @param delay The new delay time for the road going towards endpoint one
 	 * @pre	The given delay of the road must be a valid delay for a road
 	 * 		| isValidDelay(delay)
-	 * @post The delay of the road going towards Direction One is equal to the given delay
+	 * @post The delay of the road going towards endpoint one is equal to the given delay
 	 * 		| new.getDelayDirectionOne() == delay
 	 */
 	
-	public void setDelayDirectionOne(float delay){
+	public void setDelayDirectionEndPointOne(float delay){
 		assert isValidDelay(delay);
 		this.delayDirectionOne = delay;
 	}
 
 	/**
-	 * Sets the delay of the road in Direction Two to the given delay in seconds or to infinity
+	 * Sets the delay of the road in the direction of endpoint two to the given delay in seconds
 	 *
-	 * @param delay
-	 *		The new delay time for the road going towards Direction Two
+	 * @param delay The new delay time for the road going towards endpoint two
 	 * @pre	The given delay of the road must be a valid delay for a road
 	 * 		| isValidDelay(delay)
-	 * @post The delay of the road going towards Direction Two is equal to the given delay
+	 * @post The delay of the road going towards endpoint two is equal to the given delay
 	 * 		| new.getDelayDirectionTwo() == delay
 	 */
 	
-	public void setDelayDirectionTwo(float delay){
+	public void setDelayDirectionEndPointTwo(float delay){
 		assert isValidDelay(delay);
 		this.delayDirectionTwo = delay;
 	}
 
 	/**
 	 * Checks to see if the given delay value for the road is valid
-	 * @param delay
-	 * 		The delay in seconds to check
+	 * @param delay The delay in seconds to check
 	 * @return True if and only if the given delay is non negative or positive infinity
 	 *		result == (delay >= 0 || delay == Float.POSITIVE_INFINITY)
 	 */
@@ -491,76 +482,91 @@ public class Road implements Facade {
 	}
 
 	/**
-	 * Returns the delay in seconds for the road in Direction Two
+	 * Returns the delay in seconds for the road in the direction of endpoint one
 	 */
-	public float getDelayDirectionOne(){return delayDirectionOne;}
+	public float getDelayDirectionEndPointOne(){return delayDirectionOne;}
 
 	/**
-	 * Returns the delay in seconds for the road in Direction Two
+	 * Returns the delay in seconds for the road in the direction of endpoint two
 	 */
-	public float getDelayDirectionTwo(){return delayDirectionTwo;}
+	public float getDelayDirectionEndPointTwo(){return delayDirectionTwo;}
 
 
 	/**
-	 * Sets the blcoked status of the road going towards direction one to the given boolean blocked value.
+	 * Sets the blocked status of the road going towards endpoint one to the given boolean blocked value.
 	 * True = blocked
 	 * False = not blocked
-	 * @param blocked
-	 * 		The new blocked status of the road.
-	 * 	|	new.isBlockedDirectionOne() == blocked
+	 * @param blocked The new blocked status of the road.
+	 * 		| new.isBlockedDirectionOne() == blocked
 	 */
-	public void setBlockedDirectionOne(boolean blocked){
+	public void setBlockedDirectionEndPointOne(boolean blocked){
 		this.blockedDirectionOne = blocked;
 	}
 
 	/**
-	 * Sets the blcoked status of the road going toward direction two to the given boolean blocked value.
+	 * Sets the blocked status of the road going towards endpoint two to the given boolean blocked value.
 	 * True = blocked
 	 * False = not blocked
-	 * @param blocked
-	 * 		The new blocked status of the road.
-	 * 	|	new.isBlockedDirectionTwo() == blocked
+	 * @param blocked The new blocked status of the road.
+	 * 		| new.isBlockedDirectionTwo() == blocked
 	 */
-	public void setBlockedDirectionTwo(boolean blocked){
+	public void setBlockedDirectionEndPointTwo(boolean blocked){
 		this.blockedDirectionTwo = blocked;
 	}
 
 	/**
-	 * Returns the blocked status of the road going towards DirectionOne
+	 * Returns the blocked status of the road going towards endpoint one
 	 */
-	public boolean isBlockedDirectionOne(){
+	public boolean isBlockedDirectionEndPointOne(){
 		return blockedDirectionOne;
 	}
 
 	/**
-	 * Returns the blocked status of the road going towards DirectionTwo
+	 * Returns the blocked status of the road going towards endpoint two
 	 */
-	public boolean isBlockedDirectionTwo(){
+	public boolean isBlockedDirectionEndPointTwo(){
 		return blockedDirectionTwo;
 	}
 	
+	/**
+	 * This method overrides the toString representation of an instance of the road class
+	 */
 	@Override
 	public String toString(){
 		return ("This road has the following properties:"+'\n'+"ID: "+this.getID()+'\n'+
 				"End point 1: "+this.getEndPoint1()[0]+","+this.getEndPoint1()[1]+'\n'+"End point 2: "+this.getEndPoint2()[0]+","+this.getEndPoint2()[1]+'\n'+"Length: "+this.getLength()
 				+'\n'+"Speed limit: "+this.getSpeedlimit()+'\n'+"Average speed: "+this.getRoadSpeed()+'\n');
 	}
-
-	public float calculateTravelTimeOne() {
-		if(this.isBlockedDirectionOne()) {
+	
+	/**
+	 * A method to calculate the travel time of a road in the direction of endpoint one
+	 * @return The travel time of the road
+	 * 		| time = (this.getLength()/this.getRoadSpeed())+this.getDelayDirectionOne();
+	 * @return Infinity if the road is blocked in this direction
+	 * 		| time = Float.POSITIVE_INFINITY;
+	 */
+	public float calculateTravelTimeEndPointOne() {
+		if(this.isBlockedDirectionEndPointOne()) {
 			System.out.println("The road "+this.getID()+" is blocked in this direction!");
 			return Float.POSITIVE_INFINITY;
 		}
-		float time = (this.getLength()/this.getRoadSpeed())+this.getDelayDirectionOne();
+		float time = (this.getLength()/this.getRoadSpeed())+this.getDelayDirectionEndPointOne();
 		return time; 
 	}
 	
-	public float calculateTravelTimeTwo() {
-		if(this.isBlockedDirectionTwo()) {
+	/**
+	 * A method to calculate the travel time of a road in the direction of endpoint two
+	 * @return The travel time of the road
+	 * 		| time = (this.getLength()/this.getRoadSpeed())+this.getDelayDirectionOne();
+	 * @return Infinity if the road is blocked in this direction
+	 * 		| time = Float.POSITIVE_INFINITY;
+	 */
+	public float calculateTravelTimeEndPointTwo() {
+		if(this.isBlockedDirectionEndPointTwo()) {
 			System.out.println("The road "+this.getID()+"  is blocked in this direction!");
 			return Float.POSITIVE_INFINITY;
 		}
-		float time = (this.getLength()/this.getRoadSpeed())+this.getDelayDirectionTwo();
+		float time = (this.getLength()/this.getRoadSpeed())+this.getDelayDirectionEndPointTwo();
 		return time; 
 	}
 	
@@ -579,16 +585,20 @@ public class Road implements Facade {
 		System.out.println(road2);
 		System.out.println(road3);
 		
-		road.setDelayDirectionTwo(100);
-		road.setBlockedDirectionOne(true);
-		float totalTime = road.calculateTravelTimeTwo()+road2.calculateTravelTimeTwo()+road3.calculateTravelTimeTwo();
+		road.setDelayDirectionEndPointTwo(100);
+		System.out.println("A delay of 100 seconds was set in the forward direction of E40");
+		road.setBlockedDirectionEndPointOne(true);
+		System.out.println("Road one was blocked in the backwards direction");
+		float totalTime = road.calculateTravelTimeEndPointTwo()+road2.calculateTravelTimeEndPointTwo()+road3.calculateTravelTimeEndPointTwo();
 		System.out.println("The total travel time is: "+totalTime+" seconds."+'\n');
 
-		road2.setDelayDirectionTwo(Float.POSITIVE_INFINITY);
-		float totalTime2 = road.calculateTravelTimeTwo()+road2.calculateTravelTimeTwo()+road3.calculateTravelTimeTwo();
+		road2.setDelayDirectionEndPointTwo(Float.POSITIVE_INFINITY);
+		System.out.println("A delay of infinity was set in the forward direction of E17");
+		float totalTime2 = road.calculateTravelTimeEndPointTwo()+road2.calculateTravelTimeEndPointTwo()+road3.calculateTravelTimeEndPointTwo();
 		System.out.println("The total travel time is: "+totalTime2+" seconds."+'\n');
 		
-		float totalTime3 = road.calculateTravelTimeOne()+road2.calculateTravelTimeOne()+road3.calculateTravelTimeOne();
+		System.out.println("This is a test for ourselves: if the road is blocked, does it return infinity?");
+		float totalTime3 = road.calculateTravelTimeEndPointOne()+road2.calculateTravelTimeEndPointOne()+road3.calculateTravelTimeEndPointOne();
 		System.out.println("The total travel time is: "+totalTime3+" seconds."+'\n');
 
 	}
