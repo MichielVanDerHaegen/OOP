@@ -112,9 +112,11 @@ public class Road implements Facade {
 	 * 		The new ID for our road
 	 * @post The ID of the road is set to the given ID 
 	 * 		| new.getID() == ID
-	 * @throws IllegalArgumentException The given ID of the road is not valid. 
+	 * @throws IllegalArgumentException
+	 * 		The given ID of the road is not valid.
 	 * 		| !isValidID(ID)
-	 * @throws NullPointerException The given ID is null
+	 * @throws NullPointerException
+	 * 		The given ID is null
 	 * 		| ID == null
 	 */
 
@@ -203,9 +205,11 @@ public class Road implements Facade {
 	 * 		The minimum ID length to be set
 	 * @post The minimum ID length is set to the given value 
 	 * 		| new.getMinIDLength() == minIDLength
-	 * @throws NullPointerException     If given value is null 
+	 * @throws NullPointerException
+	 * 		If given value is null
 	 * 		| minIDLength == null
-	 * @throws IllegalArgumentException If the given value is less than 2 or greater than the maximum ID length 
+	 * @throws IllegalArgumentException
+	 * 		If the given value is less than 2 or greater than the maximum ID length
 	 * 		| if(minIDLength <2 || minIDLength > maxIDLength)
 	 */
 	public void setMinIDLength(int minIDLength) throws NullPointerException, IllegalArgumentException {
@@ -230,9 +234,11 @@ public class Road implements Facade {
 	 * 		The maximum ID length to be set
 	 * @post The maximum ID length is set to the given value 
 	 * 		| new.getMaxIDLength() == maxIDLength
-	 * @throws NullPointerException     If given value is null 
+	 * @throws NullPointerException
+	 * 		If given value is null
 	 * 		| maxIDLength == null
-	 * @throws IllegalArgumentException If the given value is less than the minimum ID length
+	 * @throws IllegalArgumentException
+	 * 		If the given value is less than the minimum ID length
 	 *      | maxIDLength < minIDLength
 	 */
 	public void setMaxIDLength(int maxIDLength) throws NullPointerException, IllegalArgumentException {
@@ -286,9 +292,11 @@ public class Road implements Facade {
 	 * 		The new maximum value for coordinates.
 	 * @post The maximum value a coordinate can have is set to the given value
 	 * 		| new.getMaxCoordinate() == value
-	 * @throws NullPointerException if the given value is null
+	 * @throws NullPointerException
+	 * 		If the given value is null
 	 * 		| value == null
-	 * @throws IllegalArgumentException if the given value is not between 0 and 360 degrees
+	 * @throws IllegalArgumentException
+	 * 		If the given value is not between 0 and 360 degrees
 	 * 		| ((value <= 0.0) || (value >= 360.0))
 	 */
 	public void setMaxCoordinate(double value) throws NullPointerException, IllegalArgumentException {
@@ -393,7 +401,8 @@ public class Road implements Facade {
 	 * 		The new speed limit for the road in meters per second.
 	 * @post The speed limit of the road is set to the given speed limit 
 	 * 		| new.getSpeedLimit() == speedlimit
-	 * @throws IllegalArgumentException The given speed limit for the road is not valid 
+	 * @throws IllegalArgumentException
+	 * 		The given speed limit for the road is not valid
 	 * 		| !isValidSpeedLimit(speedlimit)
 	 */
 	public void setSpeedLimit(float speedlimit) throws IllegalArgumentException {
@@ -429,7 +438,8 @@ public class Road implements Facade {
 	 * 		The new average speed obtained by driving on the road under standard conditions
 	 * @post The average speed of the road under standard conditions is set to the given roadspeed value 
 	 * 		| new.getRoadSpeed() == roadspeed
-	 * @throws IllegalArgumentException The given roadspeed for the road is not valid 
+	 * @throws IllegalArgumentException
+	 * 		The given roadspeed for the road is not valid
 	 * 		| !isValidRoadSpeed(roadspeed)
 	 */
 	public void setAvgRoadSpeed(float roadspeed) throws IllegalArgumentException{
@@ -531,7 +541,7 @@ public class Road implements Facade {
 	 * @param blocked
 	 * 		 The new blocked status of the road.
 	 * @post The blocked status of the road is equal to the given blocked status
-	 * 		 True = blcoked
+	 * 		 True = blocked
 	 * 		 False = not blocked
 	 * 	   | new.isBlockedDirectionTwo() == blocked
 	 */
