@@ -24,12 +24,16 @@ public class Road implements Facade {
 	 * Initialize a new road with given ID, first and second endpoints and
 	 * roadspeed. The road will be given the standard speed limit of 19.5 m/s.
 	 *
-	 * @param id        The unique identifier for our new road.
-	 * @param endPoint1 The first endpoint of the new road.
-	 * @param endPoint2 The second endpoint of the new road.
-	 * @param length The length of the road.
-	 * @param roadSpeed The average speed obtained on the new road under standard
-	 *                  conditions.
+	 * @param id        
+	 * 		The unique identifier for our new road.
+	 * @param endPoint1 
+	 * 		The first endpoint of the new road.
+	 * @param endPoint2 
+	 * 		The second endpoint of the new road.
+	 * @param length 
+	 * 		The length of the road.
+	 * @param roadSpeed 
+	 * 		The average speed obtained on the new road under standard conditions.
 	 * @pre The given end point must be valid end point for a road
 	 * 		| isValidEndPoint(endPoint1)
 	 * @pre The given end point must be valid end point for a road
@@ -59,12 +63,16 @@ public class Road implements Facade {
 	 * Initialize a new road with given ID, first end second endpoint, speed limit and
 	 * roadspeed.
 	 *
-	 * @param id        The unique identifier for our new road.
-	 * @param endPoint1 The first endpoint of the new road.
-	 * @param endPoint2 The second endpoint of the new road.
-	 * @param length The length of the new road.
-	 * @param roadSpeed The average speed obtained on the new road under standard
-	 *                  conditions.
+	 * @param id        
+	 * 		The unique identifier for our new road.
+	 * @param endPoint1 
+	 * 		The first endpoint of the new road.
+	 * @param endPoint2 
+	 * 		The second endpoint of the new road.
+	 * @param length 
+	 * 		The length of the new road.
+	 * @param roadSpeed 
+	 * 		The average speed obtained on the new road under standard conditions.
 	 * @pre The given first endpoint must be valid endpoint for a road
 	 * 		| isValidEndPoint(endPoint1)
 	 * @pre The given second endpoint must be valid endpoint for a road
@@ -100,7 +108,8 @@ public class Road implements Facade {
 	 * If the road ID is being changed, delete the old ID from the ID list and add
 	 * the new ID to the ID list
 	 * 
-	 * @param ID The new ID for our road
+	 * @param ID 
+	 * 		The new ID for our road
 	 * @post The ID of the road is set to the given ID 
 	 * 		| new.getID() == ID
 	 * @throws IllegalArgumentException The given ID of the road is not valid. 
@@ -132,7 +141,8 @@ public class Road implements Facade {
 	/**
 	 * Checks to see if the ID given is valid
 	 * 
-	 * @param ID The ID of the road to check
+	 * @param ID 
+	 * 		The ID of the road to check
 	 * @return True if the ID length is between the minimum and maximum ID length,
 	 *         if the ID follows the correct naming conventions and is a unique ID not used for another road. 
 	 *         | (ID.length()>= getMinIDLength() || ID.length() <= getMaxIDLength()) && correctIDFormat(ID) && isUniqueID(ID)
@@ -149,7 +159,8 @@ public class Road implements Facade {
 	/**
 	 * Checks to see if the given ID follows the correct naming conventions
 	 * 
-	 * @param ID The ID to be checked
+	 * @param ID 
+	 * 		The ID to be checked
 	 * @return True if the first character is an UpperCase letter and then has at least one number following
 	 *         | if (Character.isUpperCase(ID.charAt(0)))
 	 *           then for each additional character i in 1:ID.length(): 
@@ -170,7 +181,8 @@ public class Road implements Facade {
 	/**
 	 * Checks the given ID to see if it is Unique
 	 * 
-	 * @param   ID The ID to be checked
+	 * @param   ID 
+	 * 		The ID to be checked
 	 * @return	True if the ID given is not used for another road
 	 * 		 |  for each element in idArray:
 	 *		    !ID.equals(element)
@@ -187,7 +199,8 @@ public class Road implements Facade {
 	/**
 	 * Sets the minimum ID length for the road's identifier
 	 * 
-	 * @param minIDLength The minimum ID length to be set
+	 * @param minIDLength 
+	 * 		The minimum ID length to be set
 	 * @post The minimum ID length is set to the given value 
 	 * 		| new.getMinIDLength() == minIDLength
 	 * @throws NullPointerException     If given value is null 
@@ -213,7 +226,8 @@ public class Road implements Facade {
 	/**
 	 * Sets the maximum ID length for the road's identifier
 	 * 
-	 * @param maxIDLength The maximum ID length to be set
+	 * @param maxIDLength 
+	 * 		The maximum ID length to be set
 	 * @post The maximum ID length is set to the given value 
 	 * 		| new.getMaxIDLength() == maxIDLength
 	 * @throws NullPointerException     If given value is null 
@@ -268,7 +282,8 @@ public class Road implements Facade {
 	/**
 	 * Set the maximum value a coordinate can have to the given value.
 	 * 
-	 * @param value The new maximum value for coordinates.
+	 * @param value 
+	 * 		The new maximum value for coordinates.
 	 * @post The maximum value a coordinate can have is set to the given value
 	 * 		| new.getMaxCoordinate() == value
 	 * @throws NullPointerException if the given value is null
@@ -304,7 +319,8 @@ public class Road implements Facade {
 	/**
 	 * Check whether the given endpoint is a valid endpoint for any road.
 	 * 
-	 * @param endpoint The endpoint to check.
+	 * @param endpoint 
+	 * 		The endpoint to check.
 	 * @return returns true if the number of coordinates is equal to two and both coordinates are valid endpoints
 	 * 		| result == (endpoint.length==2) && (isValidCoordinate(endpoint[0])) && (isValidCoordinate(endpoint[1]))
 	 * 
@@ -342,7 +358,8 @@ public class Road implements Facade {
 	/**
 	 * Check whether the given length is a valid length for any road.
 	 * 
-	 * @param length The length to check.
+	 * @param length 
+	 * 		The length to check.
 	 * @return true if the given length is greater or equal to the minimal possible length of a road
 	 * 		| result == (length >= calculateMinLength());
 	 */
@@ -353,7 +370,8 @@ public class Road implements Facade {
 	/**
 	 * Set the length of this road to the given length.
 	 * 
-	 * @param length The new length for this object_name.
+	 * @param length 
+	 * 		The new length for this object_name.
 	 * @post If the given length is a valid length for any road, the length of this new road is equal to the given length. 
 	 * 		| if(isValidLength(length)) 
 	 * 		| then new.getLength() == length
@@ -371,7 +389,8 @@ public class Road implements Facade {
 	/**
 	 * Sets the speedlimit of the road to the given value in meters per second.
 	 * 
-	 * @param speedlimit The new speed limit for the road in meters per second.
+	 * @param speedlimit 
+	 * 		The new speed limit for the road in meters per second.
 	 * @post The speed limit of the road is set to the given speed limit 
 	 * 		| new.getSpeedLimit() == speedlimit
 	 * @throws IllegalArgumentException The given speed limit for the road is not valid 
@@ -394,7 +413,8 @@ public class Road implements Facade {
 	/**
 	 * Checks to see if the given speed limit in meters per second for the road is acceptable
 	 * 
-	 * @param speedlimit The speed limit to check
+	 * @param speedlimit 
+	 * 		The speed limit to check
 	 * @return True if the given speed limit is greater than 0 and less than or equal to the max speed limit and greater or equal to the road speed 
 	 * 		| result == (speedlimit > 0) && (speedlimit <= maxSpeed) && (speedlimit >= roadSpeed)
 	 */
@@ -405,7 +425,8 @@ public class Road implements Facade {
 	/**
 	 * Sets the average road speed of the road to the given value in meters per second
 	 * 
-	 * @param roadspeed The new average speed obtained by driving on the road under standard conditions
+	 * @param roadspeed 
+	 * 		The new average speed obtained by driving on the road under standard conditions
 	 * @post The average speed of the road under standard conditions is set to the given roadspeed value 
 	 * 		| new.getRoadSpeed() == roadspeed
 	 * @throws IllegalArgumentException The given roadspeed for the road is not valid 
@@ -428,7 +449,8 @@ public class Road implements Facade {
 	/**
 	 * Checks to see if the given roadSpeed value is acceptable
 	 * 
-	 * @param roadSpeed The average road speed under standard conditions to check
+	 * @param roadSpeed 
+	 * 		The average road speed under standard conditions to check
 	 * @return True if the given road speed is greater than 0 and less than or equal to the roads speed limit and less or equal than te maximum speed
 	 * 		| result == (roadSpeed > 0 && roadSpeed <= speedlimit && roadSpeed <= maxSpeed)
 	 */
@@ -439,7 +461,8 @@ public class Road implements Facade {
 	/**
 	 * Sets the delay of the road in the direction of endpoint one to the given delay in seconds
 	 *
-	 * @param delay The new delay time for the road going towards endpoint one
+	 * @param delay 
+	 * 		The new delay time for the road going towards endpoint one
 	 * @pre	The given delay of the road must be a valid delay for a road
 	 * 		| isValidDelay(delay)
 	 * @post The delay of the road going towards endpoint one is equal to the given delay
@@ -454,7 +477,8 @@ public class Road implements Facade {
 	/**
 	 * Sets the delay of the road in the direction of endpoint two to the given delay in seconds
 	 *
-	 * @param delay The new delay time for the road going towards endpoint two
+	 * @param delay 
+	 * 		The new delay time for the road going towards endpoint two
 	 * @pre	The given delay of the road must be a valid delay for a road
 	 * 		| isValidDelay(delay)
 	 * @post The delay of the road going towards endpoint two is equal to the given delay
@@ -468,9 +492,10 @@ public class Road implements Facade {
 
 	/**
 	 * Checks to see if the given delay value for the road is valid
-	 * @param delay The delay in seconds to check
+	 * @param delay 
+	 * 		The delay in seconds to check
 	 * @return True if and only if the given delay is non negative or positive infinity
-	 *		result == (delay >= 0 || delay == Float.POSITIVE_INFINITY)
+	 *		| result == (delay >= 0 || delay == Float.POSITIVE_INFINITY)
 	 */
 	public boolean isValidDelay(float delay){
 		return delay >= 0 || delay == Float.POSITIVE_INFINITY ;
@@ -490,10 +515,12 @@ public class Road implements Facade {
 
 	/**
 	 * Sets the blocked status of the road going towards endpoint one to the given boolean blocked value.
-	 * True = blocked
-	 * False = not blocked
-	 * @param blocked The new blocked status of the road.
-	 * 		| new.isBlockedDirectionOne() == blocked
+	 * @param blocked
+	 * 		 The new blocked status of the road.
+	 * @post The blocked status of the road is equal to the given blocked status
+	 * 		 True = blocked
+	 * 		 False = not blocked
+	 * 	   | new.isBlockedDirectionOne() == blocked
 	 */
 	public void setBlockedDirectionEndPointOne(boolean blocked){
 		this.blockedDirectionOne = blocked;
@@ -501,10 +528,12 @@ public class Road implements Facade {
 
 	/**
 	 * Sets the blocked status of the road going towards endpoint two to the given boolean blocked value.
-	 * True = blocked
-	 * False = not blocked
-	 * @param blocked The new blocked status of the road.
-	 * 		| new.isBlockedDirectionTwo() == blocked
+	 * @param blocked
+	 * 		 The new blocked status of the road.
+	 * @post The blocked status of the road is equal to the given blocked status
+	 * 		 True = blcoked
+	 * 		 False = not blocked
+	 * 	   | new.isBlockedDirectionTwo() == blocked
 	 */
 	public void setBlockedDirectionEndPointTwo(boolean blocked){
 		this.blockedDirectionTwo = blocked;
@@ -526,6 +555,8 @@ public class Road implements Facade {
 	
 	/**
 	 * This method overrides the toString representation of an instance of the road class
+	 * @return Returns a string stating "This road has the following properties" which lists the ID, both endpoints,
+	 * 		   the length of the road, the speed limit and the average speed of the road
 	 */
 	@Override
 	public String toString(){
