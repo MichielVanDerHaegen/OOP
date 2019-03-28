@@ -572,7 +572,9 @@ public class Road implements Facade {
 	public String toString(){
 		return ("This road has the following properties:"+'\n'+"ID: "+this.getID()+'\n'+
 				"End point 1: "+this.getEndPoint1()[0]+","+this.getEndPoint1()[1]+'\n'+"End point 2: "+this.getEndPoint2()[0]+","+this.getEndPoint2()[1]+'\n'+"Length: "+this.getLength()
-				+'\n'+"Speed limit: "+this.getSpeedlimit()+'\n'+"Average speed: "+this.getRoadSpeed()+'\n');
+				+'\n'+"Speed limit: "+this.getSpeedlimit()+'\n'+"Average speed: "+this.getRoadSpeed()+'\n'+"Blocked in the direction of end point 1: "+this.isBlockedDirectionEndPointOne()+'\n'+
+				"Blocked in the direction of end point 2: "+this.isBlockedDirectionEndPointTwo()+'\n'+"Delay in the direction of end point 1: "+this.getDelayDirectionEndPointOne()+'\n'+
+				"Delay in the direction of end point 2: "+this.getDelayDirectionEndPointTwo()+'\n');
 	}
 	
 	/**
