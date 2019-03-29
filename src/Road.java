@@ -414,7 +414,7 @@ public class Road implements Facade {
 	 * Set the length of this road to the given length.
 	 * 
 	 * @param length 
-	 * 		The new length for this object_name.
+	 * 		The new length for this road.
 	 * @post If the given length is a valid length for any road, the length of this new road is equal to the given length. 
 	 * 		| if(isValidLength(length)) 
 	 * 		| then new.getLength() == length
