@@ -660,14 +660,14 @@ public class Road implements Facade {
 		System.out.println(road3);
 		
 		road.setDelayDirectionEndPointTwo(100);
-		System.out.println("A delay of 100 seconds was set in the forward direction of E40");
+		System.out.println("A delay of 100 seconds was set in the forward direction of "+road.getID());
 		road.setBlockedDirectionEndPointOne(true);
-		System.out.println("Road one was blocked in the backwards direction");
+		System.out.println("The "+road.getID()+" was blocked in the backwards direction");
 		float totalTime = road.calculateTravelTimeEndPointTwo()+road2.calculateTravelTimeEndPointTwo()+road3.calculateTravelTimeEndPointTwo();
 		System.out.println("The total travel time is: "+totalTime+" seconds."+'\n');
 
 		road2.setDelayDirectionEndPointTwo(Float.POSITIVE_INFINITY);
-		System.out.println("A delay of infinity was set in the forward direction of E17");
+		System.out.println("A delay of infinity was set in the forward direction of "+road2.getID());
 		float totalTime2 = road.calculateTravelTimeEndPointTwo()+road2.calculateTravelTimeEndPointTwo()+road3.calculateTravelTimeEndPointTwo();
 		System.out.println("The total travel time is: "+totalTime2+" seconds."+'\n');
 		
