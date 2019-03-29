@@ -3,21 +3,65 @@ import java.util.ArrayList;
 import be.kuleuven.cs.som.annotate.*;
 
 public class Road implements Facade {
-
+	/**
+	 * The unique identifier of the road
+	 */
 	private String ID;
+	/**
+	 * The list containing the IDs of all roads
+	 */
 	private static ArrayList<String> idArray = new ArrayList<>();
+	/**
+	 * The minimum length an ID can have
+	 */
 	private static int minIDLength = 2;
+	/**
+	 * The maximum length an ID can have
+	 */
 	private static int maxIDLength = 3;
+	/**
+	 * The first endpoint of the road
+	 */
 	private double[] endPoint1;
+	/**
+	 * The second endpoint of the road
+	 */
 	private double[] endPoint2;
+	/**
+	 * The maximum coordinate an endpoint can have
+	 */
 	private static double MAX_COORDINATE = 70.0;
+	/**
+	 * The length of the road
+	 */
 	private int length;
+	/**
+	 * The standard speed limit of the road
+	 */
 	private float speedlimit = 19.5F;
+	/**
+	 * The average speed of the road
+	 */
 	private float roadSpeed;
+	/**
+	 * The maximum speed limit a road can have, equal to the speed of light
+	 */
 	private static final float MAX_SPEED = (float) 299792458.0;
+	/**
+	 * The delay of a road in the direction of the first endpoint
+	 */
 	private float delayDirectionOne = 0.0F;
+	/**
+	 * The delay of a road in the direction of the second endpoint
+	 */
 	private float delayDirectionTwo = 0.0F;
+	/**
+	 * The blocked status of a road in the direction of the first endpoint
+	 */
 	private boolean blockedDirectionOne = false;
+	/**
+	 * The blocked status of a road in the direction of the second endpoint
+	 */
 	private boolean blockedDirectionTwo = false;
 
 	/**
