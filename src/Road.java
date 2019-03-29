@@ -6,15 +6,15 @@ public class Road implements Facade {
 
 	private String ID;
 	private static ArrayList<String> idArray = new ArrayList<>();
-	private int minIDLength = 2;
-	private int maxIDLength = 3;
+	private static int minIDLength = 2;
+	private static int maxIDLength = 3;
 	private double[] endPoint1;
 	private double[] endPoint2;
-	private double MAX_COORDINATE = 70.0;
+	private static double MAX_COORDINATE = 70.0;
 	private int length;
 	private float speedlimit = 19.5F;
 	private float roadSpeed;
-	private final float maxSpeed = (float) 299792458.0;
+	private static final float MAX_SPEED = (float) 299792458.0;
 	private float delayDirectionOne = 0.0F;
 	private float delayDirectionTwo = 0.0F;
 	private boolean blockedDirectionOne = false;
@@ -201,51 +201,45 @@ public class Road implements Facade {
 	/**
 	 * Sets the minimum ID length for the road's identifier
 	 * 
-	 * @param minIDLength 
+	 * @param value 
 	 * 		The minimum ID length to be set
 	 * @post The minimum ID length is set to the given value 
-	 * 		| new.getMinIDLength() == minIDLength
-	 * @throws NullPointerException
-	 * 		If given value is null
-	 * 		| minIDLength == null
+	 * 		| new.getMinIDLength() == value
 	 * @throws IllegalArgumentException
 	 * 		If the given value is less than 2 or greater than the maximum ID length
-	 * 		| if(minIDLength <2 || minIDLength > maxIDLength)
+	 * 		| if(value <2 || value > maxIDLength)
 	 */
-	public void setMinIDLength(int minIDLength) throws NullPointerException, IllegalArgumentException {
-		if (minIDLength < 2 || minIDLength > maxIDLength) {
+	public static void setMinIDLength(int value) throws IllegalArgumentException {
+		if (value < 2 || value > maxIDLength) {
 			throw new IllegalArgumentException();
 		}
-		this.minIDLength = minIDLength;
+		minIDLength = value;
 	}
 
 	/**
 	 * Returns the minimum ID length
 	 */
 	@Basic
-	public int getMinIDLength() {
+	public static int getMinIDLength() {
 		return minIDLength;
 	}
 
 	/**
 	 * Sets the maximum ID length for the road's identifier
 	 * 
-	 * @param maxIDLength 
+	 * @param value 
 	 * 		The maximum ID length to be set
 	 * @post The maximum ID length is set to the given value 
-	 * 		| new.getMaxIDLength() == maxIDLength
-	 * @throws NullPointerException
-	 * 		If given value is null
-	 * 		| maxIDLength == null
+	 * 		| new.getMaxIDLength() == value
 	 * @throws IllegalArgumentException
 	 * 		If the given value is less than the minimum ID length
-	 *      | maxIDLength < minIDLength
+	 *      | value < minIDLength
 	 */
-	public void setMaxIDLength(int maxIDLength) throws NullPointerException, IllegalArgumentException {
-		if (maxIDLength < minIDLength) {
+	public static void setMaxIDLength(int value) throws IllegalArgumentException {
+		if (value < minIDLength) {
 			throw new IllegalArgumentException();
 		}
-		this.maxIDLength = maxIDLength;
+		maxIDLength = value;
 
 	}
 
@@ -253,7 +247,7 @@ public class Road implements Facade {
 	 * Returns the maximum ID length
 	 */
 	@Basic
-	public int getMaxIDLength() {
+	public static int getMaxIDLength() {
 		return maxIDLength;
 	}
 
@@ -292,24 +286,21 @@ public class Road implements Facade {
 	 * 		The new maximum value for coordinates.
 	 * @post The maximum value a coordinate can have is set to the given value
 	 * 		| new.getMaxCoordinate() == value
-	 * @throws NullPointerException
-	 * 		If the given value is null
-	 * 		| value == null
 	 * @throws IllegalArgumentException
 	 * 		If the given value is not between 0 and 360 degrees
 	 * 		| ((value <= 0.0) || (value >= 360.0))
 	 */
-	public void setMaxCoordinate(double value) throws NullPointerException, IllegalArgumentException {
+	public static void setMaxCoordinate(double value) throws IllegalArgumentException {
 		if((value <= 0.0) || (value >= 360.0))
 			throw new IllegalArgumentException();
-		this.MAX_COORDINATE = value;
+		MAX_COORDINATE = value;
 	}
 	
 	/**
 	 * Returns the maximum value a coordinate can have
 	 */
-	public double getMaxCoordinate() {
-		return this.MAX_COORDINATE;
+	public static double getMaxCoordinate() {
+		return MAX_COORDINATE;
 	}
 
 
@@ -428,7 +419,7 @@ public class Road implements Facade {
 	 * 		| result == (speedlimit > 0) && (speedlimit <= maxSpeed) && (speedlimit >= roadSpeed)
 	 */
 	public boolean isValidSpeedLimit(float speedlimit) {
-		return ((speedlimit > 0.0F) && (speedlimit <= maxSpeed) && (speedlimit >= roadSpeed));
+		return ((speedlimit > 0.0F) && (speedlimit <= MAX_SPEED) && (speedlimit >= roadSpeed));
 	}
 
 	/**
@@ -465,7 +456,7 @@ public class Road implements Facade {
 	 * 		| result == (roadSpeed > 0 && roadSpeed <= speedlimit && roadSpeed <= maxSpeed)
 	 */
 	public boolean isValidRoadSpeed(float roadSpeed) {
-		return ((roadSpeed > 0.0F) && (roadSpeed <= speedlimit) && (roadSpeed <= maxSpeed));
+		return ((roadSpeed > 0.0F) && (roadSpeed <= speedlimit) && (roadSpeed <= MAX_SPEED));
 	}
 
 	/**
