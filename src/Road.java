@@ -104,7 +104,7 @@ public class Road implements Facade {
 	}
 
 	/**
-	 * Initialize a new road with given ID, first end second endpoint, speed limit and
+	 * Initialize a new road with given ID, first and second endpoint, speed limit and
 	 * roadspeed.
 	 *
 	 * @param id        
