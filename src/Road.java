@@ -1,13 +1,30 @@
 import java.util.ArrayList;
+import be.kuleuven.cs.som.annotate.*;
 
 /**
- * A class ... finish this
+ * A class of roads where each road has an ID, connects two end points, has a length in meters, 
+ * a speed limit and average speed in meters per second, a delay is seconds, and a blocked status.
+ * 
+ * @invar The ID of each road must be a valid ID for any road
+ * 		| isValidID(getID())
+ * @invar The end point of each road must be a valid end point for any road
+ * 		| isValidEndPoint(getEndPoint1())
+ * 		| isValidEndPoint(getEndPoint2())
+ * @invar The length of each road must be a valid length for any road
+ * 		| isValidLength(getLength())
+ * @invar The speed limit of each road must be a valid speed limit for any road
+ * 		| isValidSpeedLimit(getSpeedLimit())
+ * @invar The average road speed of each road must be a valid average road speed for any road
+ * 		| isValidRoadSpeed(getRoadSpeed())
+ * @invar
+ * @invar
+ * @invar
+ * @invar
+ * 
  * 
  * @author Michiel Van der Haegen
  * @author Sam Haberman
  */
-
-import be.kuleuven.cs.som.annotate.*;
 
 public class Road {
 	/**
