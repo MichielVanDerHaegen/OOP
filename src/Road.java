@@ -566,7 +566,7 @@ public class Road implements Facade {
 	/**
 	 * This method overrides the toString representation of an instance of the road class
 	 * @return Returns a string stating "This road has the following properties" which lists the ID, both endpoints,
-	 * 		   the length of the road, the speed limit and the average speed of the road
+	 * 		   the length of the road, the speed limit and the average speed of the road, the blocked status of the road and the delay in seconds.
 	 */
 	@Override
 	public String toString(){
