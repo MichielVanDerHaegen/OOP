@@ -3,7 +3,8 @@ import be.kuleuven.cs.som.annotate.*;
 
 /**
  * A class of roads where each road has an ID, connects two end points, has a length in meters, 
- * a speed limit and average speed in meters per second, a delay is seconds, and a blocked status.
+ * a speed limit an average road speed under normal conditions in meters per second,
+ * a delay in seconds, and a blocked status for each endpoint direction.
  * 
  * @invar The ID of each road must be a valid ID for any road
  * 		| isValidID(getID())
@@ -54,15 +55,15 @@ public class Road {
 	 */
 	private static double MAX_COORDINATE = 70.0;
 	/**
-	 * The length of the road
+	 * The length of the road in meters
 	 */
 	private int length;
 	/**
-	 * The standard speed limit of the road
+	 * The standard speed limit of the road in meters per second
 	 */
 	private float speedlimit = 19.5F;
 	/**
-	 * The average speed of the road
+	 * The average speed of the road in meters per second
 	 */
 	private float roadSpeed;
 	/**
@@ -87,7 +88,7 @@ public class Road {
 	private boolean blockedDirectionTwo = false;
 
 	/**
-	 * Initialize a new road with given ID, first and second endpoints and
+	 * Initializes a new road with given ID, first and second endpoints and
 	 * roadspeed. The road will be given the standard speed limit of 19.5 m/s.
 	 *
 	 * @param id        
@@ -100,12 +101,12 @@ public class Road {
 	 * 		The length of the road.
 	 * @param roadSpeed 
 	 * 		The average speed obtained on the new road under standard conditions.
-	 * @pre The given end point must be valid end point for a road
+	 * @pre The given end point must be a valid end point for a road
 	 * 		| isValidEndPoint(endPoint1)
-	 * @pre The given end point must be valid end point for a road
+	 * @pre The given end point must be a valid end point for a road
 	 * 		| isValidEndPoint(endPoint2)
-	 * @post The ID of this new road will be equal to the given id | new.getID() ==
-	 *       id
+	 * @post The ID of this new road will be equal to the given id
+	 * 		| new.getID() == id
 	 * @post The first endpoint of the new road will be equal to the values of the given endPoint1
 	 * 		| new.getEndPoint1() == endPoint1
 	 * @post The second endpoint of the new road will be equal to the values of the given endPoint2
@@ -126,8 +127,7 @@ public class Road {
 	}
 
 	/**
-	 * Initialize a new road with given ID, first and second endpoint, speed limit and
-	 * roadspeed.
+	 * Initialize a new road with given ID, first and second endpoint, speed limit and roadspeed.
 	 *
 	 * @param id        
 	 * 		The unique identifier for our new road.
@@ -143,11 +143,11 @@ public class Road {
 	 * 		| isValidEndPoint(endPoint1)
 	 * @pre The given second endpoint must be valid endpoint for a road
 	 * 		| isValidEndPoint(endPoint2)
-	 * @post The ID of this new road will be equal to the given id | new.getID() ==
-	 *       id
-	 * @post The first endpoint of the new road will be equal to the values of the given endPoint1s
+	 * @post The ID of this new road will be equal to the given id
+	 * 		| new.getID() == id
+	 * @post The first endpoint of the new road will be equal to the values of the given endPoint1
 	 * 		| new.getEndPoint1() == endPoint1
-	 * @post The second endpoint of the new road will be equal to the values of the given endPoint2s
+	 * @post The second endpoint of the new road will be equal to the values of the given endPoint2
 	 * 		| new.getEndPoint2() == endPoint2
 	 * @post The length of the new road will be equal to the given length in meters
 	 * 		| new.getLength() == length
@@ -171,7 +171,7 @@ public class Road {
 
 	/**
 	 * Sets the Identification of the road to the given ID value, if it is valid.
-	 * If the road ID is being changed, delete the old ID from the ID list and add
+	 * If the road ID is being changed, deletes the old ID from the ID list and adds
 	 * the new ID to the ID list
 	 * 
 	 * @param ID 
@@ -317,9 +317,9 @@ public class Road {
 		return maxIDLength;
 	}
 
-	
+
 	/**
-	 * Return the first endpoint of this road.
+	 * Returns the first endpoint of this road.
 	 */
 	@Basic
     @Immutable
@@ -328,7 +328,7 @@ public class Road {
 	}
 
 	/**
-	 * Return the second endpoint of this road.
+	 * Returns the second endpoint of this road.
 	 */
 	@Basic
     @Immutable
@@ -337,7 +337,7 @@ public class Road {
 	}
 	
 	/**
-	 * Return both endpoints of this road.
+	 * Returns both endpoints of this road.
 	 */
 	@Immutable
 	public double[][] getEndPoints(){		
@@ -346,7 +346,7 @@ public class Road {
 	}
 
 	/**
-	 * Set the maximum value a coordinate can have to the given value.
+	 * Sets the maximum value a coordinate can have to the given value.
 	 * 
 	 * @param value 
 	 * 		The new maximum value for coordinates.
@@ -382,11 +382,11 @@ public class Road {
 	}
 
 	/**
-	 * Check whether the given endpoint is a valid endpoint for any road.
+	 * Checks whether the given endpoint is a valid endpoint for any road.
 	 * 
 	 * @param endpoint 
 	 * 		The endpoint to check.
-	 * @return returns true if the number of coordinates is equal to two and both coordinates are valid endpoints
+	 * @return True if the number of coordinates is equal to two and both coordinates are valid endpoints
 	 * 		| result == (endpoint.length==2) && (isValidCoordinate(endpoint[0])) && (isValidCoordinate(endpoint[1]))
 	 * 
 	 */
@@ -413,7 +413,7 @@ public class Road {
 	}
 
 	/**
-	 * Return the length of this road.
+	 * Returns the length of this road.
 	 */
 	@Basic
 	public int getLength() {
@@ -421,11 +421,11 @@ public class Road {
 	}
 
 	/**
-	 * Check whether the given length is a valid length for any road.
+	 * Checks whether the given length is a valid length for any road.
 	 * 
 	 * @param length 
 	 * 		The length to check.
-	 * @return true if the given length is greater or equal to the minimal possible length of a road
+	 * @return True if the given length is greater or equal to the minimal possible length of a road
 	 * 		| result == (length >= calculateMinLength());
 	 */
 	public boolean isValidLength(int length) {
@@ -433,14 +433,14 @@ public class Road {
 	}
 
 	/**
-	 * Set the length of this road to the given length.
+	 * Sets the length of this road to the given length in meters.
 	 * 
 	 * @param length 
 	 * 		The new length for this road.
 	 * @post If the given length is a valid length for any road, the length of this new road is equal to the given length. 
 	 * 		| if(isValidLength(length)) 
 	 * 		| then new.getLength() == length
-	 * @post If the given length is not a valid length, the lenght of this new road is set to the minimum possible length.
+	 * @post If the given length is not a valid length, the length of this new road is set to the minimum possible length.
 	 * 		| if(!isValidLength(length))
 	 * 		| then new.getLength() == this.calculateMinLength()
 	 */
@@ -481,7 +481,8 @@ public class Road {
 	 * 
 	 * @param speedlimit 
 	 * 		The speed limit to check
-	 * @return True if the given speed limit is greater than 0 and less than or equal to the max speed limit and greater or equal to the road speed 
+	 * @return True if the given speed limit is greater than 0 and less than or equal to the max speed limit
+	 * 		   and greater or equal to the road speed
 	 * 		| result == (speedlimit > 0) && (speedlimit <= maxSpeed) && (speedlimit >= roadSpeed)
 	 */
 	public boolean isValidSpeedLimit(float speedlimit) {
@@ -517,9 +518,10 @@ public class Road {
 	 * Checks to see if the given roadSpeed value is acceptable
 	 * 
 	 * @param roadSpeed 
-	 * 		The average road speed under standard conditions to check
-	 * @return True if the given road speed is greater than 0 and less than or equal to the roads speed limit and less or equal than te maximum speed
-	 * 		| result == (roadSpeed > 0 && roadSpeed <= speedlimit && roadSpeed <= maxSpeed)
+	 * 		   The average road speed under standard conditions to check
+	 * @return True if the given road speed is greater than 0
+	 * 		   and less than or equal to the roads speed limit and less or equal than te maximum speed
+	 * 		   | result == (roadSpeed > 0 && roadSpeed <= speedlimit && roadSpeed <= maxSpeed)
 	 */
 	public boolean isValidRoadSpeed(float roadSpeed) {
 		return ((roadSpeed > 0.0F) && (roadSpeed <= speedlimit) && (roadSpeed <= MAX_SPEED));
@@ -623,7 +625,8 @@ public class Road {
 	/**
 	 * This method overrides the toString representation of an instance of the road class
 	 * @return Returns a string stating "This road has the following properties" which lists the ID, both endpoints,
-	 * 		   the length of the road, the speed limit and the average speed of the road, the blocked status of the road and the delay in seconds.
+	 * 		   the length of the road in meters, the speed limit and the average speed of the road in meters per second,
+	 * 		   the blocked status of the road and the delay in seconds.
 	 */
 	@Override
 	public String toString(){
