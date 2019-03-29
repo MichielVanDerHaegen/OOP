@@ -1,8 +1,15 @@
 import java.util.ArrayList;
 
+/**
+ * A class ... finish this
+ * 
+ * @author Michiel Van der Haegen
+ * @author Sam Haberman
+ */
+
 import be.kuleuven.cs.som.annotate.*;
 
-public class Road implements Facade {
+public class Road {
 	/**
 	 * The unique identifier of the road
 	 */
