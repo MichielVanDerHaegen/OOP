@@ -16,11 +16,9 @@ import be.kuleuven.cs.som.annotate.*;
  * 		| isValidSpeedLimit(getSpeedLimit())
  * @invar The average road speed of each road must be a valid average road speed for any road
  * 		| isValidRoadSpeed(getRoadSpeed())
- * @invar
- * @invar
- * @invar
- * @invar
- * 
+ * @invar The delay in the direction of an end point must be a valid delay for any road
+ * 		| isValidDelay(getDelayDirectionEndPoint1())
+ * 		| isValidDelay(getDelayDirectionEndPoint2())
  * 
  * @author Michiel Van der Haegen
  * @author Sam Haberman
