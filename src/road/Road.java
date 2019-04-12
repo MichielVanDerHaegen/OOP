@@ -46,7 +46,6 @@ public class Road {
 	/**
 	 * The first endpoint of the road
 	 */
-	
 	private int length;
 	/**
 	 * The standard speed limit of the road in meters per second
@@ -76,6 +75,15 @@ public class Road {
 	 * The blocked status of a road in the direction of the second endpoint
 	 */
 	private boolean blockedDirectionTwo = false;
+	/**
+	 * 
+	 */
+	private static double MAX_COORDINATE_LATITUDE=70.0;
+	private static double MAX_COORDINATE_LONGITUDE=70.0;
+	
+	private Location location1;
+	
+	private Location location2;
 
 	/**
 	 * Initializes a new road with given ID, first and second endpoints and
@@ -106,12 +114,12 @@ public class Road {
 	 * @post The average roadspeed for the new road will be equal to the given roadSpeed
 	 * 		| new.getRoadSpeed() == roadSpeed
 	 */
-	public Road(String id, double[] endPoint1, double[] endPoint2, int length, float roadSpeed) {
+	public Road(String id, Location location1, Location location2, int length, float roadSpeed) {
 		this.setID(id);
-		assert isValidEndPoint(endPoint1);
-		assert isValidEndPoint(endPoint2);
-		this.endPoint1 = endPoint1.clone();
-		this.endPoint2 = endPoint2.clone();
+		assert isValidEndPoint(location1.getCoordinate());
+		assert isValidEndPoint(location2.getCoordinate());
+		this.location1 = location1;
+		this.location2 = location2;
 		this.setLength(length);
 		this.setAvgRoadSpeed(roadSpeed);
 	}
@@ -146,12 +154,12 @@ public class Road {
 	 * @post The average roadspeed for the new road will be equal to the given roadSpeed
 	 * 		| new.getRoadSpeed() == roadSpeed
 	 */
-	public Road(String id, double[] endPoint1, double[] endPoint2, int length, float speedlimit, float roadSpeed) {
+	public Road(String id, Location location1, Location location2, int length, float speedlimit, float roadSpeed) {
 		this.setID(id);
-		assert isValidEndPoint(endPoint1);
-		assert isValidEndPoint(endPoint2);
-		this.endPoint1 = endPoint1.clone();
-		this.endPoint2 = endPoint2.clone();
+		assert isValidEndPoint(location1.getCoordinate());
+		assert isValidEndPoint(location2.getCoordinate());
+		this.location1 = location1;
+		this.location2 = location2;
 		this.setLength(length);
 		this.speedlimit = speedlimit;
 		this.roadSpeed = roadSpeed;
@@ -609,6 +617,131 @@ public class Road {
 		float totalTime3 = road.calculateTravelTimeEndPointOne()+road2.calculateTravelTimeEndPointOne()+road3.calculateTravelTimeEndPointOne();
 		System.out.println("The total travel time is: "+totalTime3+" seconds."+'\n');
 
+	}
+	
+	
+	
+	//Ask about wether we want to return location or return the coordinates of the location. Also ask about the coordinate system
+	//minimum coordinates vs leaving it as zero?
+	
+	/**
+	 * Returns the first endpoint of this road.
+	 */
+	@Basic
+	@Immutable
+	public double[] getEndPoint1() {
+		return this.location1.getCoordinate();
+	}
+
+	/**
+	 * Returns the second endpoint of this road.
+	 */
+	@Basic
+	@Immutable
+	public double[] getEndPoint2() {
+		return this.location2.getCoordinate();
+	}
+
+	/**
+	 * Returns both endpoints of this road.
+	 */
+	@Immutable
+	public double[][] getEndPoints() {
+		double[][] endpoints = new double[][] { new double[] { endPoint1[0], endPoint1[1] },
+				new double[] { endPoint2[0], endPoint2[1] } };
+		return endpoints;
+	}
+	
+	//end question part.
+
+	/**
+	 * Sets the maximum value of latitude a coordinate can have to the given value.
+	 * 
+	 * @param value The new maximum value for latitude.
+	 * @post The maximum value latidude a coordinate can have is set to the given value |
+	 *       new.getMaxCoordinateLatitude() == value
+	 * @throws IllegalArgumentException If the given value is not between -90 and 90
+	 *                                  degrees | ((value < -90.0) || (value >
+	 *                                  90.0))
+	 */
+	public static void setMaxCoordinateLatitude(double value) throws IllegalArgumentException {
+		if ((value < -90.0) || (value > 90.0))
+			throw new IllegalArgumentException();
+		MAX_COORDINATE_LATITUDE = value;
+	}
+	
+	/**
+	 * Sets the maximum value a coordinate can have to the given value.
+	 * 
+	 * @param value The new maximum value of longitude for coordinates.
+	 * @post The maximum value longitude a coordinate can have is set to the given value |
+	 *       new.getMaxCoordinateLongitude() == value
+	 * @throws IllegalArgumentException If the given value is not between -180 and 180
+	 *                                  degrees | ((value < -180.0) || (value >
+	 *                                  180.0))
+	 */
+	public static void setMaxCoordinateLongitude(double value) throws IllegalArgumentException {
+		if ((value < -180.0) || (value > 180.0))
+			throw new IllegalArgumentException();
+		MAX_COORDINATE_LONGITUDE = value;
+	}
+
+	/**
+	 * Returns the maximum latitude value a coordinate can have
+	 */
+	public static double getMaxCoordinateLatidude() {
+		return MAX_COORDINATE_LATITUDE;
+	}
+	
+	/**
+	 * Returns the maximum longitude value a coordinate can have
+	 */
+	public static double getMaxCoordinateLongitude() {
+		return MAX_COORDINATE_LONGITUDE;
+	}
+
+	/**
+	 * Checks to see if the given latitude is valid.
+	 * 
+	 * @param latitude The latitude value to check
+	 * @return True if the latitude is both greater than or equal to 0 and less
+	 *         than or equal to the Max latitude value | result == ((latitude >= 0.0)
+	 *         && (latitude <= MAX_COORDINATE_LATITUDE))
+	 */
+	public boolean isValidLatitude(double latitude) {
+		return ((latitude >= 0.0) && (latitude <= MAX_COORDINATE_LATITUDE));
+	}
+	
+	/**
+	 * Checks to see if the given longitude is valid.
+	 * 
+	 * @param longitude The longitude value to check
+	 * @return True if the longitude is both greater than or equal to 0 and less
+	 *         than or equal to the Max longitude value | result == ((longitude >= 0.0)
+	 *         && (longitude <= MAX_COORDINATE_LONGITUDE))
+	 */
+	public boolean isValidLongitude(double longitude) {
+		return ((longitude >= 0.0) && (longitude <= MAX_COORDINATE_LONGITUDE));
+	}
+
+	/**
+	 * Checks whether the given endpoint is a valid endpoint for any road.
+	 * 
+	 * @param endpoint The endpoint to check.
+	 * @return True if the number of coordinates is equal to two and both
+	 *         coordinates are valid endpoints | result == (endpoint.length==2) &&
+	 *         (isValidCoordinate(endpoint[0])) && (isValidCoordinate(endpoint[1]))
+	 * 
+	 */
+	public boolean isValidEndPoint(double[] endpoint) {
+		if (endpoint.length == 2) {
+			if (isValidLatitude(endpoint[0])) {
+				if (isValidLongitude(endpoint[1])) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 }

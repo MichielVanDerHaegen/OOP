@@ -4,7 +4,6 @@ import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
 
-
 public class Location {
 
 	/**
@@ -14,22 +13,18 @@ public class Location {
 
 	private final int minAddressLength = 2;
 
-	private final double[] endPoint1;
 	/**
-	 * The second endpoint of the road
+	 * Variable registering the coordinate of this location.
 	 */
-	private final double[] endPoint2;
-	/**
-	 * The maximum coordinate an endpoint can have
-	 */
-	private static double MAX_COORDINATE = 70.0;
+	private final double[] coordinate;
 
-	public Location(String address, double[] endPoint1, double[] endPoint2) {
+	
+	public Location(String address, double[] coordinate) throws IllegalArgumentException {
 		this.setAddress(address);
-		assert isValidEndPoint(endPoint1);
-		assert isValidEndPoint(endPoint2);
-		this.endPoint1 = endPoint1.clone();
-		this.endPoint2 = endPoint2.clone();
+		if (this.address.equals(""))
+			throw new IllegalArgumentException();
+		assert canHaveAsCoordinate(coordinate);
+		this.coordinate = coordinate.clone();
 	}
 
 	/**
@@ -51,10 +46,9 @@ public class Location {
 	 * @return | result ==
 	 */
 	public boolean isValidAddress(String address) {
-		String pattern = new String("(\w|\s|\,)*");
 		if (address.length() >= minAddressLength)
 			if (Character.isUpperCase(address.charAt(0))) {
-				if (address.matches()) {
+				if (address.matches("(\\w|\\s|\\,)+")) {
 					return true;
 				}
 				return false;
@@ -74,88 +68,39 @@ public class Location {
 	public void setAddress(String address) {
 		if (isValidAddress(address))
 			this.address = address;
+		else
+			this.address = "";
 	}
 
 	/**
-	 * Returns the first endpoint of this road.
+	 * @invar Each location can have its coordinate as coordinate. |
+	 *        canHaveAsCoordinate(this.getCoordinate())
+	 */
+
+	/**
+	 * Return the coordinate of this location.
 	 */
 	@Basic
+	@Raw
 	@Immutable
-	public double[] getEndPoint1() {
-		return this.endPoint1;
+	public double[] getCoordinate() {
+		return this.coordinate;
 	}
 
 	/**
-	 * Returns the second endpoint of this road.
-	 */
-	@Basic
-	@Immutable
-	public double[] getEndPoint2() {
-		return this.endPoint2;
-	}
-
-	/**
-	 * Returns both endpoints of this road.
-	 */
-	@Immutable
-	public double[][] getEndPoints() {
-		double[][] endpoints = new double[][] { new double[] { endPoint1[0], endPoint1[1] },
-				new double[] { endPoint2[0], endPoint2[1] } };
-		return endpoints;
-	}
-
-	/**
-	 * Sets the maximum value a coordinate can have to the given value.
+	 * Check whether this location can have the given coordinate as its coordinate.
 	 * 
-	 * @param value The new maximum value for coordinates.
-	 * @post The maximum value a coordinate can have is set to the given value |
-	 *       new.getMaxCoordinate() == value
-	 * @throws IllegalArgumentException If the given value is not between 0 and 360
-	 *                                  degrees | ((value <= 0.0) || (value >=
-	 *                                  360.0))
+	 * @param coordinate The coordinate to check.
+	 * @return True if the coordinate (both longitude and latitude) is a finite number
+	 * | result ==
 	 */
-	public static void setMaxCoordinate(double value) throws IllegalArgumentException {
-		if ((value <= 0.0) || (value >= 360.0))
-			throw new IllegalArgumentException();
-		MAX_COORDINATE = value;
+	@Raw
+	public boolean canHaveAsCoordinate(double[] coordinate) {
+		return ((coordinate[0]!=Double.POSITIVE_INFINITY)&&(coordinate[1]!=Double.POSITIVE_INFINITY)&&(coordinate[0]!=Double.NEGATIVE_INFINITY)&&(coordinate[1]!=Double.NEGATIVE_INFINITY));
 	}
+	
+	
+	//Still have to add adjoining roads --> HashMap where key is location and value is all the roads connected to this location
 
-	/**
-	 * Returns the maximum value a coordinate can have
-	 */
-	public static double getMaxCoordinate() {
-		return MAX_COORDINATE;
-	}
 
-	/**
-	 * Checks to see if the given coordinate is valid.
-	 * 
-	 * @param coordinate The coordinate value to check
-	 * @return True if the coordinate is both greater than or equal to 0 and less
-	 *         than or equal to the Max coordinate | result == ((coordinate >= 0.0)
-	 *         && (coordinate <= MAX_COORDINATE))
-	 */
-	public boolean isValidCoordinate(double coordinate) {
-		return ((coordinate >= 0.0) && (coordinate <= MAX_COORDINATE));
-	}
-
-	/**
-	 * Checks whether the given endpoint is a valid endpoint for any road.
-	 * 
-	 * @param endpoint The endpoint to check.
-	 * @return True if the number of coordinates is equal to two and both
-	 *         coordinates are valid endpoints | result == (endpoint.length==2) &&
-	 *         (isValidCoordinate(endpoint[0])) && (isValidCoordinate(endpoint[1]))
-	 * 
-	 */
-	public boolean isValidEndPoint(double[] endpoint) {
-		if (endpoint.length == 2) {
-			if (isValidCoordinate(endpoint[0])) {
-				if (isValidCoordinate(endpoint[1])) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
 }
