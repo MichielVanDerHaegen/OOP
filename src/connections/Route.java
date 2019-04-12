@@ -1,4 +1,4 @@
-package road;
+package connections;
 
 public class Route {
 

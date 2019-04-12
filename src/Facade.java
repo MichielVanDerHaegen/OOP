@@ -1,4 +1,4 @@
-import road.Road;
+import connections.Road;
 
 /**
  * A facade to enable a collection of tests.

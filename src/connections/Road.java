@@ -1,4 +1,4 @@
-package road;
+package connections;
 import java.util.ArrayList;
 import be.kuleuven.cs.som.annotate.*;
 
@@ -618,7 +618,6 @@ public class Road {
 		System.out.println("The total travel time is: "+totalTime3+" seconds."+'\n');
 
 	}
-	
 	
 	
 	//Ask about wether we want to return location or return the coordinates of the location. Also ask about the coordinate system
