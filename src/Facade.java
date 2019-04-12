@@ -1,3 +1,5 @@
+import road.Road;
+
 /**
  * A facade to enable a collection of tests.
  * 

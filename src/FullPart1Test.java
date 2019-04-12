@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import road.Road;
+
 class FullPart1Test {
 	
 	public static final float SPEED_OF_LIGHT = 299792458.0F;
