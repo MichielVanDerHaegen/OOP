@@ -5,6 +5,7 @@ import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Location {
@@ -46,7 +47,7 @@ public class Location {
 	 *		|	(roadMap.get(key).getEndpoint2() == this.getCoordinate())
 	 *		|	(roadMap.get(key).getCoordinate() == this.getCoordinate())
 	 */
-	private final Map<Location, Road> roadMap = new HashMap<>();
+	private final Map<Location, List<Road>> roadMap = new HashMap<>();
 
 	/**
 	 * Initialize a new Location that is not terminated, with given Address, and set of Longitude and Latitude coordinates
@@ -154,18 +155,58 @@ public class Location {
 	public void terminate(){
 
 	}
-	//Need to make this method defensive
 
 	/**
 	 * Checks to see if this location has a road as one of its adjoining roads.
 	 * @param road The road to check
-	 * @throws NullPointerException
+	 * @return True if the road given has this location as one of its two endpoints.
+	 * 		| result == ((roadMap.get(road.getEndPoint1()).contains(road) ||
+	 * 		|	(roadMap.get(road.getEndPoint2()).contains(road)))
 	 */
 	@Basic
-	public boolean hasAsAdjoiningRoad(Road road) throws NullPointerException{
-			return (roadMap.get(road.getEndPoint1()) == road) || (roadMap.get(road.getEndPoint2()) == road);
-
+	public boolean hasAsAdjoiningRoad(Road road){
+			return (roadMap.get(road.getEndPoint1()).contains(road) || (roadMap.get(road.getEndPoint2()).contains(road)));
 	}
+
+	/**
+	 * Checks to see if the given road can be an adjoining road for this location.
+	 * @param road The road to check
+	 * @return  True if one of the two endpoints of the given road is this location, and that the road is not terminated.
+	 * 		|   result == (road.getEndPoint1() == this || road.getEndPoint2() == this) &&
+	 * 		|	!road.isTerminated()
+	 */
+	public boolean canHaveAsAdjoiningRoad(Road road){
+		return (road.getEndPoint1() == this || road.getEndPoint2() == this) && !road.isTerminated();
+	}
+
+	/**
+	 * Checks to see if every adjoining road for this location is proper.
+	 * @return True if each road for this
+	 */
+	//NOT SURE IF WE NEED THIS METHOD
+	public boolean hasProperAdjoiningRoads(){
+		for (List<Road> road : roadMap.values()){
+			for (Road road1 : road){
+				if (!canHaveAsAdjoiningRoad(road1))
+					return false;
+			}
+			//if ()
+		}
+		return true;
+	}
+
+	/**
+	 * Returns all the adjoining roads for the given location.
+	 * @param location The location to check
+	 * @return A list of Roads that are adjoining to the given location
+	 * 		| result == roadMap.get(this)
+	 */
+	public List<Road> getAdjoiningRoads(Location location){
+		if (location == null)
+			return null;
+		return roadMap.get(this);
+	}
+
 	//Still have to add adjoining roads --> HashMap where key is location and value is all the roads connected to this location
 
 
