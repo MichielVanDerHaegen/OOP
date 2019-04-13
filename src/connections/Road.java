@@ -91,9 +91,9 @@ public class Road {
 	 *
 	 * @param id        
 	 * 		The unique identifier for our new road.
-	 * @param endPoint1 
+	 * @param location1
 	 * 		The first endpoint of the new road.
-	 * @param endPoint2 
+	 * @param location2
 	 * 		The second endpoint of the new road.
 	 * @param length 
 	 * 		The length of the road.
@@ -129,9 +129,9 @@ public class Road {
 	 *
 	 * @param id        
 	 * 		The unique identifier for our new road.
-	 * @param endPoint1 
+	 * @param location1
 	 * 		The first endpoint of the new road.
-	 * @param endPoint2 
+	 * @param location2
 	 * 		The second endpoint of the new road.
 	 * @param length 
 	 * 		The length of the new road.
@@ -588,36 +588,36 @@ public class Road {
 	
 	
 	
-	public static void main(String[] args) {
-		double[] point1 = new double[] {10.0,20.0};
-		double[] point2 = new double[] {15.3,60.6};
-		double[] point3 = new double[] {40.5,5.5};
-		double[] point4 = new double[] {3.14,42.0};
-
-		Road road = new Road("E40",point1,point2,1000,120.0F,100.0F);
-		Road road2 = new Road("E17",point2,point3,200,120.0F,50.0F);
-		Road road3 = new Road("R0",point3,point4,500,120.0F,25.0F);
-		System.out.println(road);
-		System.out.println(road2);
-		System.out.println(road3);
-		
-		road.setDelayDirectionEndPointTwo(100);
-		System.out.println("A delay of 100 seconds was set in the forward direction of "+road.getID());
-		road.setBlockedDirectionEndPointOne(true);
-		System.out.println("The "+road.getID()+" was blocked in the backwards direction");
-		float totalTime = road.calculateTravelTimeEndPointTwo()+road2.calculateTravelTimeEndPointTwo()+road3.calculateTravelTimeEndPointTwo();
-		System.out.println("The total travel time is: "+totalTime+" seconds."+'\n');
-
-		road2.setDelayDirectionEndPointTwo(Float.POSITIVE_INFINITY);
-		System.out.println("A delay of infinity was set in the forward direction of "+road2.getID());
-		float totalTime2 = road.calculateTravelTimeEndPointTwo()+road2.calculateTravelTimeEndPointTwo()+road3.calculateTravelTimeEndPointTwo();
-		System.out.println("The total travel time is: "+totalTime2+" seconds."+'\n');
-		
-		System.out.println("This is a test for ourselves: if the road is blocked, does it return infinity?");
-		float totalTime3 = road.calculateTravelTimeEndPointOne()+road2.calculateTravelTimeEndPointOne()+road3.calculateTravelTimeEndPointOne();
-		System.out.println("The total travel time is: "+totalTime3+" seconds."+'\n');
-
-	}
+//	public static void main(String[] args) {
+//		double[] point1 = new double[] {10.0,20.0};
+//		double[] point2 = new double[] {15.3,60.6};
+//		double[] point3 = new double[] {40.5,5.5};
+//		double[] point4 = new double[] {3.14,42.0};
+//
+//		Road road = new Road("E40",point1,point2,1000,120.0F,100.0F);
+//		Road road2 = new Road("E17",point2,point3,200,120.0F,50.0F);
+//		Road road3 = new Road("R0",point3,point4,500,120.0F,25.0F);
+//		System.out.println(road);
+//		System.out.println(road2);
+//		System.out.println(road3);
+//
+//		road.setDelayDirectionEndPointTwo(100);
+//		System.out.println("A delay of 100 seconds was set in the forward direction of "+road.getID());
+//		road.setBlockedDirectionEndPointOne(true);
+//		System.out.println("The "+road.getID()+" was blocked in the backwards direction");
+//		float totalTime = road.calculateTravelTimeEndPointTwo()+road2.calculateTravelTimeEndPointTwo()+road3.calculateTravelTimeEndPointTwo();
+//		System.out.println("The total travel time is: "+totalTime+" seconds."+'\n');
+//
+//		road2.setDelayDirectionEndPointTwo(Float.POSITIVE_INFINITY);
+//		System.out.println("A delay of infinity was set in the forward direction of "+road2.getID());
+//		float totalTime2 = road.calculateTravelTimeEndPointTwo()+road2.calculateTravelTimeEndPointTwo()+road3.calculateTravelTimeEndPointTwo();
+//		System.out.println("The total travel time is: "+totalTime2+" seconds."+'\n');
+//
+//		System.out.println("This is a test for ourselves: if the road is blocked, does it return infinity?");
+//		float totalTime3 = road.calculateTravelTimeEndPointOne()+road2.calculateTravelTimeEndPointOne()+road3.calculateTravelTimeEndPointOne();
+//		System.out.println("The total travel time is: "+totalTime3+" seconds."+'\n');
+//
+//	}
 	
 	
 	//Ask about wether we want to return location or return the coordinates of the location. Also ask about the coordinate system
@@ -646,8 +646,8 @@ public class Road {
 	 */
 	@Immutable
 	public double[][] getEndPoints() {
-		double[][] endpoints = new double[][] { new double[] { endPoint1[0], endPoint1[1] },
-				new double[] { endPoint2[0], endPoint2[1] } };
+		double[][] endpoints = new double[][] { new double[] {location1.getCoordinate()[0], location1.getCoordinate()[1] },
+				new double[] { location2.getCoordinate()[0], location2.getCoordinate()[1] } };
 		return endpoints;
 	}
 	
