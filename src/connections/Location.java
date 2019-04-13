@@ -4,6 +4,9 @@ import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Location {
 
 	/**
@@ -25,6 +28,25 @@ public class Location {
 	 * Variable registering whether or not this location has been terminated.
 	 */
 	private boolean isTerminated = false;
+
+	/**
+	 * Variable referencing a map collecting all the adjoining roads connected to each location.
+	 *
+	 * @invar The referenced map is effective
+	 *		| roadMap != null
+	 * @invar Each key registered in the map is an effective location.
+	 *		| for each key in roadMap.keySet():
+	 *		|(key != null)
+	 * @invar Each value associated with a key in this map is an effective, non-terminated road connected to this location
+	 * 		  and involving a location whose coordinates are identical to the associated keys coordinates.
+	 *		| for each key in roadMap.keySet():
+	 *		|	roadMap.get(key) != null &&
+	 *		|	(! roadMap.get(key).isTerminated()) &&
+	 *		|	(roadMap.get(key).getEndpoint1() == this.getCoordinate()) ||
+	 *		|	(roadMap.get(key).getEndpoint2() == this.getCoordinate())
+	 *		|	(roadMap.get(key).getCoordinate() == this.getCoordinate())
+	 */
+	private final Map<Location, Road> roadMap = new HashMap<>();
 
 	/**
 	 * Initialize a new Location that is not terminated, with given Address, and set of Longitude and Latitude coordinates
@@ -132,7 +154,18 @@ public class Location {
 	public void terminate(){
 
 	}
+	//Need to make this method defensive
 
+	/**
+	 * Checks to see if this location has a road as one of its adjoining roads.
+	 * @param road The road to check
+	 * @throws NullPointerException
+	 */
+	@Basic
+	public boolean hasAsAdjoiningRoad(Road road) throws NullPointerException{
+			return (roadMap.get(road.getEndPoint1()) == road) || (roadMap.get(road.getEndPoint2()) == road);
+
+	}
 	//Still have to add adjoining roads --> HashMap where key is location and value is all the roads connected to this location
 
 

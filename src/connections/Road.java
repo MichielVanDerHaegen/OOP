@@ -336,8 +336,8 @@ public class Road {
 	 * 		| sqrt((x2-x1)^2+(y2-y1)^2)
 	 */
 	public int calculateMinLength() {
-		double ydif=getEndPoint2()[1]-getEndPoint1()[1];
-		double xdif=getEndPoint2()[0]-getEndPoint1()[0];
+		double ydif=getEndPoint2().getCoordinate()[1]-getEndPoint1().getCoordinate()[1];
+		double xdif=getEndPoint2().getCoordinate()[0]-getEndPoint1().getCoordinate()[0];
 		return (int) Math.sqrt((xdif*xdif)+(ydif*ydif));
 	}
 
@@ -560,7 +560,7 @@ public class Road {
 	@Override
 	public String toString(){
 		return ("This road has the following properties:"+'\n'+"ID: "+this.getID()+'\n'+
-				"End point 1: "+this.getEndPoint1()[0]+","+this.getEndPoint1()[1]+'\n'+"End point 2: "+this.getEndPoint2()[0]+","+this.getEndPoint2()[1]+'\n'+"Length: "+this.getLength()
+				"End point 1: "+this.getEndPoint1().getCoordinate()[0]+","+this.getEndPoint1().getCoordinate()[1]+'\n'+"End point 2: "+this.getEndPoint2().getCoordinate()[0]+","+this.getEndPoint2().getCoordinate()[1]+'\n'+"Length: "+this.getLength()
 				+'\n'+"Speed limit: "+this.getSpeedlimit()+'\n'+"Average speed: "+this.getRoadSpeed()+'\n'+"Blocked in the direction of end point 1: "+this.isBlockedDirectionEndPointOne()+'\n'+
 				"Blocked in the direction of end point 2: "+this.isBlockedDirectionEndPointTwo()+'\n'+"Delay in the direction of end point 1: "+this.getDelayDirectionEndPointOne()+'\n'+
 				"Delay in the direction of end point 2: "+this.getDelayDirectionEndPointTwo()+'\n');
@@ -632,34 +632,33 @@ public class Road {
 //	}
 	
 	
-	//Ask about wether we want to return location or return the coordinates of the location. Also ask about the coordinate system
+	//Ask about whether we want to return location or return the coordinates of the location. Also ask about the coordinate system
 	//minimum coordinates vs leaving it as zero?
 	
 	/**
-	 * Returns the first endpoint of this road.
+	 * Returns the first endpoint of this road as a location.
 	 */
 	@Basic
 	@Immutable
-	public double[] getEndPoint1() {
-		return this.location1.getCoordinate();
+	public Location getEndPoint1() {
+		return this.location1;
 	}
 
 	/**
-	 * Returns the second endpoint of this road.
+	 * Returns the second endpoint of this road as a location.
 	 */
 	@Basic
 	@Immutable
-	public double[] getEndPoint2() {
-		return this.location2.getCoordinate();
+	public Location getEndPoint2() {
+		return this.location2;
 	}
 
 	/**
-	 * Returns both endpoints of this road.
+	 * Returns both endpoints of this road as locations.
 	 */
 	@Immutable
-	public double[][] getEndPoints() {
-		double[][] endpoints = new double[][] { new double[] {location1.getCoordinate()[0], location1.getCoordinate()[1] },
-				new double[] { location2.getCoordinate()[0], location2.getCoordinate()[1] } };
+	public Location[] getEndPoints() {
+		Location[] endpoints = new Location[] {location1, location2 };
 		return endpoints;
 	}
 	
