@@ -76,17 +76,29 @@ public class Road {
 	 */
 	private boolean blockedDirectionTwo = false;
 	/**
-	 * 
+	 * The maximum latitude coordinate
 	 */
 	private static double MAX_COORDINATE_LATITUDE=70.0;
+	/**
+	 * The maximum longitude coordinate
+	 */
 	private static double MAX_COORDINATE_LONGITUDE=70.0;
-	
+
+	/**
+	 * The first location (endpoint) of the road
+	 */
 	private Location location1;
-	
+	/**
+	 * The second location (endpoint) of the road
+	 */
 	private Location location2;
 
 	/**
-	 * Initializes a new road with given ID, first and second endpoints and
+	 * Variable registering whether or not this road has been terminated.
+	 */
+	private boolean isTerminated = false;
+	/**
+	 * Initializes a new non-terminated road with given ID, first and second location and
 	 * roadspeed. The road will be given the standard speed limit of 19.5 m/s.
 	 *
 	 * @param id        
@@ -125,7 +137,7 @@ public class Road {
 	}
 
 	/**
-	 * Initialize a new road with given ID, first and second endpoint, speed limit and roadspeed.
+	 * Initialize a new non-terminated road with given ID, first and second location, speed limit and roadspeed.
 	 *
 	 * @param id        
 	 * 		The unique identifier for our new road.
@@ -743,6 +755,16 @@ public class Road {
 		return false;
 	}
 
+	/**
+	 * Checks to see whether this road is terminated.
+	 */
+	@Basic
+	public boolean isTerminated(){return this.isTerminated;}
+
+	public void terminate(){
+
+
+	}
 }
 
 	

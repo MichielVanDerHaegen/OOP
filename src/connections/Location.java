@@ -11,14 +11,37 @@ public class Location {
 	 */
 	private String address;
 
+	/**
+	 * Variable that tracks the minimum number of characters a valid address can have.
+	 */
 	private final int minAddressLength = 2;
 
 	/**
-	 * Variable registering the coordinate of this location.
+	 * Variable registering the coordinates (longitude and latitude) of this location.
 	 */
 	private final double[] coordinate;
 
-	
+	/**
+	 * Variable registering whether or not this location has been terminated.
+	 */
+	private boolean isTerminated = false;
+
+	/**
+	 * Initialize a new Location that is not terminated, with given Address, and set of Longitude and Latitude coordinates
+	 *
+	 * @param address
+	 * 		The address of this location
+	 * @param coordinate
+	 * 		The coordinates (longitude and latitude) of this location
+	 * @throws IllegalArgumentException
+	 *
+	 * @pre The given coordinates must be a set of valid coordinates
+	 * 		| canHaveAsCoordinate(coordinate)
+	 * @post The address of this road will be equal to the given address
+	 * 		| new.getAddress() == address
+	 * @post The coordinates of this location will be equal to the given coordinates
+	 * 		| new.getCoordinate() == coordinate
+	 */
 	public Location(String address, double[] coordinate) throws IllegalArgumentException {
 		this.setAddress(address);
 		if (this.address.equals(""))
@@ -37,13 +60,14 @@ public class Location {
 	}
 
 	/**
-	 * Every location has a particular address, which consists of at least two
-	 * characters and can only contain letters, digits, commas and spaces. The
-	 * address of each location must start with a capital letter. Check whether the
-	 * given address is a valid address for any location.
+	 * Checks whether the given address is a valid address for any location.
 	 * 
-	 * @param propertyName_Java The address to check.
-	 * @return | result ==
+	 * @param address The address to check.
+	 * @return  True if the address consists of at least the minimum address length and can only contain letters, digits,
+	 * 			commas and spaces. The address of each location must start with a capital letter.
+	 * 			| if (address.length() >= minAddressLength)
+	 * 			| 	then if (Character.isUpperCase(address.charAt(0)))
+	 * 			|		address.matches("(\\w|\\s|\\,)+"))
 	 */
 	public boolean isValidAddress(String address) {
 		if (address.length() >= minAddressLength)
@@ -98,8 +122,17 @@ public class Location {
 	public boolean canHaveAsCoordinate(double[] coordinate) {
 		return ((coordinate[0]!=Double.POSITIVE_INFINITY)&&(coordinate[1]!=Double.POSITIVE_INFINITY)&&(coordinate[0]!=Double.NEGATIVE_INFINITY)&&(coordinate[1]!=Double.NEGATIVE_INFINITY));
 	}
-	
-	
+
+	/**
+	 * Checks if this location is terminated.
+	 */
+	@Basic
+	public boolean isTerminated() {return this.isTerminated;}
+
+	public void terminate(){
+
+	}
+
 	//Still have to add adjoining roads --> HashMap where key is location and value is all the roads connected to this location
 
 
