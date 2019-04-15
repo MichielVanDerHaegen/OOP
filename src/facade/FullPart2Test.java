@@ -170,7 +170,8 @@ class FullPart2Test {
 			if ( (! Character.isLetter(address.charAt(index))) &&
 				 (! Character.isDigit(address.charAt(index))) &&
 				 (address.charAt(index) != ' ') &&
-				 (address.charAt(1) != ',') )
+				 (address.charAt(index) != ',') )
+				// (address.charAt(1) != ',') )
 				return false;
 		return true;
 	}

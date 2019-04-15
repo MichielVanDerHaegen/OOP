@@ -68,12 +68,12 @@ public class Location {
 	 * @post The coordinates of this location will be equal to the given coordinates
 	 * 		| new.getCoordinate() == coordinate
 	 */
-	public Location(double[] coordinate, String address) throws IllegalArgumentException {
+	public Location(double[] coordinate, String address) {
 		assert canHaveAsCoordinate(coordinate);
 		this.coordinate = coordinate.clone();
 		this.setAddress(address);
-		if (this.address.equals(""))
-			throw new IllegalArgumentException();
+//		if (this.address.equals("Illegal"))
+//			throw new IllegalArgumentException();
 	}
 
 	/**
@@ -96,13 +96,18 @@ public class Location {
 	 * 			|		address.matches("(\\w|\\s|\\,)+"))
 	 */
 	public boolean isValidAddress(String address) {
-		if (address.length() >= minAddressLength)
-			if (Character.isUpperCase(address.charAt(0))) {
-				if (address.matches("(\\w|\\s|\\,)+")) {
-					return true;
+		if(address!=null) {
+			if (address.length() >= minAddressLength) {
+				if (Character.isUpperCase(address.charAt(0))) {
+					if (address.matches("(\\w|\\s|\\,)+")) {
+						return true;
+					}
+					return false;
 				}
 				return false;
 			}
+			return false;
+		}
 		return false;
 	}
 
@@ -119,7 +124,7 @@ public class Location {
 		if (isValidAddress(address))
 			this.address = address;
 		else
-			this.address = "";
+			this.address = "Celestijnenlaan 200A, 3001 Heverlee";
 	}
 
 	/**
@@ -134,11 +139,14 @@ public class Location {
 	@Raw
 	@Immutable
 	public double[] getCoordinate() {
-		return this.coordinate;
+		double clone1 = this.coordinate[0];
+		double clone2 = this.coordinate[1];
+		double[] clone = new double[] {clone1,clone2};
+		return clone;
 	}
 	
-	public boolean isValidCoordinate(double[] coordinate) {
-		return ((coordinate[0]!=Double.POSITIVE_INFINITY)&&(coordinate[1]!=Double.POSITIVE_INFINITY)&&(coordinate[0]!=Double.NEGATIVE_INFINITY)&&(coordinate[1]!=Double.NEGATIVE_INFINITY));
+	public boolean isValidCoordinate(double coordinate) {
+		return ((coordinate!=Double.POSITIVE_INFINITY)&&(coordinate!=Double.POSITIVE_INFINITY));
 	}
 
 	/**
@@ -151,8 +159,10 @@ public class Location {
 	@Raw
 	public boolean canHaveAsCoordinate(double[] coordinate) {
 		if(coordinate.length==2) {
-			if(isValidCoordinate(coordinate)) {
+			if(isValidCoordinate(coordinate[0])) {
+				if(isValidCoordinate(coordinate[1])) {
 					return true;
+				}
 			}
 		}
 		return false;	
