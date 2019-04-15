@@ -13,12 +13,6 @@ import java.util.Set;
 
 public class Location {
 
-	public static void main(String[] args) {
-		Location theLocation = new Location(new double[] {10.0,20.0},"Leuven");
-		assertEquals(10.0,theLocation.getCoordinate()[0],0.05);
-		assertEquals(20.0,theLocation.getCoordinate()[1],0.05);
-		assertEquals("Leuven",theLocation.getAddress());
-	}
 	/**
 	 * Variable registering the address of this location.
 	 */
