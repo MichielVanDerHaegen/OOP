@@ -1,8 +1,9 @@
 package connections;
-
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,6 +13,12 @@ import java.util.Set;
 
 public class Location {
 
+	public static void main(String[] args) {
+		Location theLocation = new Location(new double[] {10.0,20.0},"Leuven");
+		assertEquals(10.0,theLocation.getCoordinate()[0],0.05);
+		assertEquals(20.0,theLocation.getCoordinate()[1],0.05);
+		assertEquals("Leuven",theLocation.getAddress());
+	}
 	/**
 	 * Variable registering the address of this location.
 	 */
@@ -135,6 +142,10 @@ public class Location {
 	public double[] getCoordinate() {
 		return this.coordinate;
 	}
+	
+	public boolean isValidCoordinate(double[] coordinate) {
+		return ((coordinate[0]!=Double.POSITIVE_INFINITY)&&(coordinate[1]!=Double.POSITIVE_INFINITY)&&(coordinate[0]!=Double.NEGATIVE_INFINITY)&&(coordinate[1]!=Double.NEGATIVE_INFINITY));
+	}
 
 	/**
 	 * Check whether this location can have the given coordinate as its coordinate.
@@ -145,7 +156,12 @@ public class Location {
 	 */
 	@Raw
 	public boolean canHaveAsCoordinate(double[] coordinate) {
-		return ((coordinate[0]!=Double.POSITIVE_INFINITY)&&(coordinate[1]!=Double.POSITIVE_INFINITY)&&(coordinate[0]!=Double.NEGATIVE_INFINITY)&&(coordinate[1]!=Double.NEGATIVE_INFINITY));
+		if(coordinate.length==2) {
+			if(isValidCoordinate(coordinate)) {
+					return true;
+			}
+		}
+		return false;	
 	}
 
 	/**
