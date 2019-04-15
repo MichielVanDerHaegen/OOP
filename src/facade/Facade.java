@@ -40,23 +40,37 @@ public interface Facade {
 	 * Return a new location with given coordinate, given address and no adjoining roads yet.
 	 */
 	default Location createLocation(double[] coordinates, String address) throws Exception {
-		// To be implemented
-		return null;
+		try {
+			Location location = new Location(coordinates, address);
+			return location;
+		}
+		catch(Throwable exc) {
+			throw new Exception();
+		}
 	}
 
 	/**
 	 * Terminate the given location.
 	 */
 	default void terminateLocation(Location location) throws ModelException {
-		// To be implemented
+		try {
+			location.terminate();
+		}
+		catch(Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
 	 * Check whether the given location is terminated.
 	 */
 	default boolean isTerminatedLocation(Location location) throws ModelException {
-		// To be implemented
-		return false;
+		try{
+			return location.isTerminated();
+		}
+		catch(Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
@@ -65,32 +79,48 @@ public interface Facade {
 	 *   by the longitude as two values of type double.
 	 */
 	default double[] getLocationCoordinates(Location location) throws ModelException {
-		// To be implemented
-		return null;
+		try {
+			return location.getCoordinate();
+		}
+		catch(Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
 	 * Return the address of the given location.
 	 */
 	default String getLocationAddress(Location location) throws ModelException {
-		// To be implemented
-		return null;
+		try {
+			return location.getAddress();
+		}
+		catch(Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
 	 * Return a collection of all adjoining roads of the given location.
 	 */
 	default Collection<Road> getLocationAllAdjoiningRoads(Location location) throws ModelException {
-		// To be implemented
-		return null;
+		try {
+			return location.getAdjoiningRoads();
+		}
+		catch(Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
 	 * Check whether the given location ahs the given road as one of its adjoining roads.
 	 */
 	default boolean locationHasAsAdjoiningRoad(Location location, Road road) throws ModelException {
-		// To be implemented
-		return false;
+		try {
+			return location.canHaveAsAdjoiningRoad(road);
+		}
+		catch(Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/****************
@@ -105,23 +135,37 @@ public interface Facade {
 	default Road createRoad(String identification, Location endPoint1, Location endPoint2,
 			int length, float speedLimit, float averageSpeed)
 			throws ModelException {
-		// To be implemented
-		return null;
+		try {
+			Road road = new Road(identification,endPoint1,endPoint2,length,speedLimit,averageSpeed);
+			return road;
+		}
+		catch(Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
 	 * Terminate the given road.
 	 */
 	default void terminateRoad(Road road) throws ModelException {
-		// To be implemented
+		try {
+			road.terminate();
+		}
+		catch(Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
 	 * Check whether the given road is terminated.
 	 */
 	default boolean isTerminatedRoad(Road road) throws ModelException {
-		// To be implemented
-		return false;
+		try {
+			return road.isTerminated();
+		}
+		catch(Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
@@ -130,7 +174,7 @@ public interface Facade {
 	default String getRoadIdentification(Road road) throws ModelException {
 		// Example implementation
 		try {
-			return road.getIdentification();
+			return road.getID();
 		} catch (Throwable exc) {
 			throw new ModelException();
 		}
@@ -142,7 +186,7 @@ public interface Facade {
 	default void changeRoadIdentification(Road road, String newIdentification) throws ModelException {
 		// Example implementation
 		try {
-			road.setIdentification(newIdentification);
+			road.setID(newIdentification);
 		} catch (Throwable exc) {
 			throw new ModelException();
 		}
@@ -155,53 +199,84 @@ public interface Facade {
 	 *   type double.
 	 */
 	default Location[] getEndPoints(Road road) throws ModelException {
-		// To be implemented
-		return null;
+		try {
+			return road.getEndPoints();
+		}
+		catch(Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
 	 * Return the length of the given road.
 	 */
 	default int getRoadLength(Road road) throws ModelException {
-		// To be implemented
-		return -1;
+		try {
+			return road.getLength();
+		}
+		catch(Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
 	 * Change the length of the given road to the given length.
 	 */
 	default void changeRoadLength(Road road, int newLength) throws ModelException {
-		// To be implemented
+		try {
+			road.setLength(newLength);
+		}
+		catch(Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
 	 * Return the speed limit for the given road.
 	 */
 	default float getRoadSpeedLimit(Road road) throws ModelException {
-		// To be implemented
-		return Float.NaN;
+		try {
+			return road.getSpeedlimit();
+		}
+		catch(Throwable exc) {
+			throw new ModelException();
+		}
 	}
 	
 	/**
 	 * Change the speed limit of the given road to the given speed limit.
 	 */
 	default void changeRoadSpeedLimit(Road road, float newSpeedLimit) throws ModelException {
-		// To be implemented
+		try {
+			road.setSpeedLimit(newSpeedLimit);
+		}
+		catch(Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
 	 * Return the average speed for the given road.
 	 */
 	default float getRoadAverageSpeed(Road road) throws ModelException {
-		// To be implemented
-		return Float.NaN;
+		try {
+			return road.getRoadSpeed();
+		}
+		catch(Throwable exc) {
+			throw new ModelException();
+		}
 	}
 	
 	/**
 	 * Change the average speed of the given road to the given average speed.
 	 */
 	default void changeRoadAverageSpeed(Road road, float newAverageSpeed) throws ModelException {
-		// To be implemented
+		try {
+			road.setAvgRoadSpeed(newAverageSpeed);
+		}
+		catch(Throwable exc) {
+			throw new ModelException();
+		}
 	}
 	
 	/**
@@ -210,8 +285,13 @@ public interface Facade {
 	 * is false.
 	 */
 	default float getRoadDelayinDirection(Road road, boolean directionForth) throws ModelException {
-		// To be implemented
-		return Float.NaN;
+		try {
+			if (directionForth)
+				road.getDelayDirectionEndPointTwo();
+			return road.getDelayDirectionEndPointOne();
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
@@ -220,7 +300,13 @@ public interface Facade {
 	 * in the opposite direction if directionForth is false.
 	 */
 	default void changeRoadDelayinDirection(Road road, float delay, boolean directionForth) throws ModelException {
-		// To be implemented
+		try {
+			if (directionForth)
+				road.setDelayDirectionEndPointTwo(delay);
+			road.setDelayDirectionEndPointOne(delay);
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
@@ -230,7 +316,13 @@ public interface Facade {
 	 */
 	default boolean getRoadIsBlocked(Road road, boolean directionForth) throws ModelException {
 		// To be implemented
-		return true;
+		try {
+			if (directionForth)
+				return road.isBlockedDirectionEndPointTwo();
+			return road.isBlockedDirectionEndPointOne();
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
@@ -239,7 +331,13 @@ public interface Facade {
 	 * and according to the given flag in the opposite direction if directionForth is false.
 	 */
 	default void changeRoadBlockedState(Road road, boolean flag, boolean directionForth) throws ModelException {
-		// To be implemented
+		try {
+			if (directionForth)
+				road.setBlockedDirectionEndPointTwo(flag);
+			road.setBlockedDirectionEndPointOne(flag);
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/*****************

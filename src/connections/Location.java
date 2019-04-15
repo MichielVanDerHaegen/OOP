@@ -5,8 +5,10 @@ import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Raw;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Location {
 
@@ -47,7 +49,7 @@ public class Location {
 	 *		|	(roadMap.get(key).getEndpoint2() == this.getCoordinate())
 	 *		|	(roadMap.get(key).getCoordinate() == this.getCoordinate())
 	 */
-	private final Map<Location, List<Road>> roadMap = new HashMap<>();
+	private final Set<Road> roadMap = new HashSet<>();
 
 	/**
 	 * Initialize a new Location that is not terminated, with given Address, and set of Longitude and Latitude coordinates
@@ -65,12 +67,12 @@ public class Location {
 	 * @post The coordinates of this location will be equal to the given coordinates
 	 * 		| new.getCoordinate() == coordinate
 	 */
-	public Location(String address, double[] coordinate) throws IllegalArgumentException {
+	public Location(double[] coordinate, String address) throws IllegalArgumentException {
+		assert canHaveAsCoordinate(coordinate);
+		this.coordinate = coordinate.clone();
 		this.setAddress(address);
 		if (this.address.equals(""))
 			throw new IllegalArgumentException();
-		assert canHaveAsCoordinate(coordinate);
-		this.coordinate = coordinate.clone();
 	}
 
 	/**
@@ -150,22 +152,32 @@ public class Location {
 	 * Checks if this location is terminated.
 	 */
 	@Basic
-	public boolean isTerminated() {return this.isTerminated;}
+	public boolean isTerminated() {
+		return this.isTerminated;
+	}
 
 	public void terminate(){
-
+		if(!this.isTerminated) {
+			for(Road road : roadMap)
+				road.terminate();
+			this.isTerminated=true;
+		}
 	}
 
 	/**
 	 * Checks to see if this location has a road as one of its adjoining roads.
 	 * @param road The road to check
 	 * @return True if the road given has this location as one of its two endpoints.
-	 * 		| result == ((roadMap.get(road.getEndPoint1()).contains(road) ||
-	 * 		|	(roadMap.get(road.getEndPoint2()).contains(road)))
+	 * 		| result == (roadMap.contains(road))
 	 */
 	@Basic
 	public boolean hasAsAdjoiningRoad(Road road){
-			return (roadMap.get(road.getEndPoint1()).contains(road) || (roadMap.get(road.getEndPoint2()).contains(road)));
+		try {
+			return (roadMap.contains(road));
+		}
+		catch(NullPointerException npe) {
+			throw new NullPointerException();
+		}
 	}
 
 	/**
@@ -179,21 +191,21 @@ public class Location {
 		return (road.getEndPoint1() == this || road.getEndPoint2() == this) && !road.isTerminated();
 	}
 
-	/**
-	 * Checks to see if every adjoining road for this location is proper.
-	 * @return True if each road for this
-	 */
-	//NOT SURE IF WE NEED THIS METHOD
-	public boolean hasProperAdjoiningRoads(){
-		for (List<Road> road : roadMap.values()){
-			for (Road road1 : road){
-				if (!canHaveAsAdjoiningRoad(road1))
-					return false;
-			}
-			//if ()
-		}
-		return true;
-	}
+//	/**
+//	 * Checks to see if every adjoining road for this location is proper.
+//	 * @return True if each road for this
+//	 */
+//	//NOT SURE IF WE NEED THIS METHOD
+//	public boolean hasProperAdjoiningRoads(){
+//		for (List<Road> road : roadMap.values()){
+//			for (Road road1 : road){
+//				if (!canHaveAsAdjoiningRoad(road1))
+//					return false;
+//			}
+//			//if ()
+//		}
+//		return true;
+//	}
 
 	/**
 	 * Returns all the adjoining roads for the given location.
@@ -201,13 +213,23 @@ public class Location {
 	 * @return A list of Roads that are adjoining to the given location
 	 * 		| result == roadMap.get(this)
 	 */
-	public List<Road> getAdjoiningRoads(Location location){
-		if (location == null)
-			return null;
-		return roadMap.get(this);
+	public Set<Road> getAdjoiningRoads() throws NullPointerException{
+		return roadMap;
 	}
 
-	//Still have to add adjoining roads --> HashMap where key is location and value is all the roads connected to this location
-
+	void addAdjoiningRoad(Road road) {
+		assert (this != null);
+		assert (road != null);
+		assert (road.getEndPoint1()==this) || (road.getEndPoint2()==this);
+		this.roadMap.add(road);
+	}
+	
+	void removeAdjoiningRoad(Road road) {
+		assert (hasAsAdjoiningRoad(road));
+		assert (road == null);
+		this.roadMap.remove(road);
+	}
+	
+	
 
 }

@@ -758,11 +758,17 @@ public class Road {
 	 * Checks to see whether this road is terminated.
 	 */
 	@Basic
-	public boolean isTerminated(){return this.isTerminated;}
+	public boolean isTerminated(){
+		return this.isTerminated;
+	}
 
 	public void terminate(){
-
-
+		if(!this.isTerminated) {
+			this.getEndPoint1().getAdjoiningRoads().remove(this);
+			this.getEndPoint2().getAdjoiningRoads().remove(this);
+			idArray.remove(this.ID);
+			this.isTerminated = true;
+		}
 	}
 }
 
