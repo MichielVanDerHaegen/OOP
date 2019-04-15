@@ -146,7 +146,7 @@ public class Location {
 	}
 	
 	public boolean isValidCoordinate(double coordinate) {
-		return ((coordinate!=Double.POSITIVE_INFINITY)&&(coordinate!=Double.POSITIVE_INFINITY));
+		return ((coordinate!=Double.POSITIVE_INFINITY)&&(coordinate!=Double.POSITIVE_INFINITY)&&(coordinate != Double.NaN));
 	}
 
 	/**
