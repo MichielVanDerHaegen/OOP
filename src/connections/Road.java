@@ -134,6 +134,8 @@ public class Road {
 		this.location2 = location2;
 		this.setLength(length);
 		this.setAvgRoadSpeed(roadSpeed);
+		location1.addAdjoiningRoad(this); //add docu
+		location2.addAdjoiningRoad(this); //add docu
 	}
 
 	/**
@@ -177,6 +179,8 @@ public class Road {
 		this.roadSpeed = roadSpeed;
 		this.setSpeedLimit(speedlimit);
 		this.setAvgRoadSpeed(roadSpeed);
+		location1.addAdjoiningRoad(this);  //add docu
+		location2.addAdjoiningRoad(this); //add docu
 	}
 
 	/**
@@ -765,7 +769,9 @@ public class Road {
 	public void terminate(){
 		if(!this.isTerminated) {
 			this.getEndPoint1().getAdjoiningRoads().remove(this);
+			//this.location1.removeAdjoiningRoad(this);
 			this.getEndPoint2().getAdjoiningRoads().remove(this);
+			//this.location2.removeAdjoiningRoad(this);
 			idArray.remove(this.ID);
 			this.isTerminated = true;
 		}

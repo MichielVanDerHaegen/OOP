@@ -1,14 +1,10 @@
 package connections;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
-import be.kuleuven.cs.som.annotate.Raw;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class Location {
@@ -78,7 +74,6 @@ public class Location {
 	 * Return the address of this location.
 	 */
 	@Basic
-	@Raw
 	public String getAddress() {
 		return this.address;
 	}
@@ -117,7 +112,6 @@ public class Location {
 	 *       of this new location is equal to the given address. | if
 	 *       (isValidAddress(address)) | then new.getAddress() == address
 	 */
-	@Raw
 	public void setAddress(String address) {
 		if (isValidAddress(address))
 			this.address = address;
@@ -134,7 +128,6 @@ public class Location {
 	 * Return the coordinate of this location.
 	 */
 	@Basic
-	@Raw
 	@Immutable
 	public double[] getCoordinate() {
 		double clone1 = this.coordinate[0];
@@ -154,7 +147,6 @@ public class Location {
 	 * @return True if the coordinate (both longitude and latitude) is a finite number
 	 * | result ==
 	 */
-	@Raw
 	public boolean canHaveAsCoordinate(double[] coordinate) {
 //		if(coordinate==null)
 //			return false;
@@ -187,9 +179,10 @@ public class Location {
 
 	public void terminate(){
 		if(!this.isTerminated) {
+			this.isTerminated=true;
 			for(Road road : roadMap)
 				road.terminate();
-			this.isTerminated=true;
+
 		}
 	}
 
@@ -238,24 +231,24 @@ public class Location {
 
 	/**
 	 * Returns all the adjoining roads for the given location.
-	 * @param location The location to check
 	 * @return A list of Roads that are adjoining to the given location
-	 * 		| result == roadMap.get(this)
+	 * 		| result == roadMap
 	 */
 	public Set<Road> getAdjoiningRoads() throws NullPointerException{
-		return roadMap;
+		HashSet<Road> cloneSet = new HashSet<>();
+		cloneSet.addAll(roadMap);
+		return cloneSet;
 	}
 
 	void addAdjoiningRoad(Road road) {
-		assert (this != null);
-		assert (road != null);
+		assert road != null;
 		assert (road.getEndPoint1()==this) || (road.getEndPoint2()==this);
 		this.roadMap.add(road);
 	}
 	
 	void removeAdjoiningRoad(Road road) {
-		assert (hasAsAdjoiningRoad(road));
-		assert (road == null);
+		assert hasAsAdjoiningRoad(road);
+		assert road.isTerminated();
 		this.roadMap.remove(road);
 	}
 	
