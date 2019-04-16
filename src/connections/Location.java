@@ -182,6 +182,7 @@ public class Location {
 			this.isTerminated=true;
 			for(Road road : roadMap)
 				road.terminate();
+			roadMap.clear();
 
 		}
 	}
