@@ -768,12 +768,13 @@ public class Road {
 
 	public void terminate(){
 		if(!this.isTerminated) {
+			this.isTerminated = true;
 			this.getEndPoint1().getAdjoiningRoads().remove(this);
-			//this.location1.removeAdjoiningRoad(this);
+			//this.location1.removeAdjoiningRoad(this); //what i think is the right code but breaks everything
 			this.getEndPoint2().getAdjoiningRoads().remove(this);
 			//this.location2.removeAdjoiningRoad(this);
 			idArray.remove(this.ID);
-			this.isTerminated = true;
+
 		}
 	}
 }
