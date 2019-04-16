@@ -72,8 +72,6 @@ public class Location {
 		assert canHaveAsCoordinate(coordinate);
 		this.coordinate = coordinate.clone();
 		this.setAddress(address);
-//		if (this.address.equals("Illegal"))
-//			throw new IllegalArgumentException();
 	}
 
 	/**
@@ -146,7 +144,7 @@ public class Location {
 	}
 	
 	public boolean isValidCoordinate(double coordinate) {
-		return ((coordinate!=Double.POSITIVE_INFINITY)&&(coordinate!=Double.POSITIVE_INFINITY)&&(coordinate != Double.NaN));
+		return ((coordinate!=Double.POSITIVE_INFINITY)&&(coordinate!=Double.POSITIVE_INFINITY)&&(coordinate!=Double.NaN));
 	}
 
 	/**
@@ -158,14 +156,25 @@ public class Location {
 	 */
 	@Raw
 	public boolean canHaveAsCoordinate(double[] coordinate) {
-		if(coordinate.length==2) {
-			if(isValidCoordinate(coordinate[0])) {
-				if(isValidCoordinate(coordinate[1])) {
-					return true;
-				}
-			}
-		}
-		return false;	
+//		if(coordinate==null)
+//			return false;
+//		if(coordinate.length==2) {
+//			if(isValidCoordinate(coordinate[0])) {
+//				if(isValidCoordinate(coordinate[1])) {
+//					return true;
+//				}
+//			}
+//		}
+//		return false;	
+		if(coordinate==null)
+			return false;
+		if(coordinate.length!=2)
+			return false;
+		if(!isValidCoordinate(coordinate[0]))
+			return false;
+		if(!isValidCoordinate(coordinate[1]))
+			return false;
+		return true;
 	}
 
 	/**
@@ -250,6 +259,10 @@ public class Location {
 		this.roadMap.remove(road);
 	}
 	
+	@Override
+	public String toString() {
+		return "This location, "+this.getAddress()+" has the following coordinates: "+this.getCoordinate()[0]+", "+this.getCoordinate()[1];
+	}
 	
 
 }

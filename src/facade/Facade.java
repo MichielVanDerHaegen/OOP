@@ -39,13 +39,13 @@ public interface Facade {
 	/**
 	 * Return a new location with given coordinate, given address and no adjoining roads yet.
 	 */
-	default Location createLocation(double[] coordinates, String address) throws Exception {
+	default Location createLocation(double[] coordinates, String address) throws ModelException {
 		try {
 			Location location = new Location(coordinates, address);
 			return location;
 		}
 		catch(Throwable exc) {
-			throw new Exception();
+			throw new ModelException();
 		}
 	}
 
