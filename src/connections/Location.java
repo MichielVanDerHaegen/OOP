@@ -137,7 +137,7 @@ public class Location {
 	}
 	
 	public boolean isValidCoordinate(double coordinate) {
-		return ((coordinate!=Double.POSITIVE_INFINITY)&&(coordinate!=Double.POSITIVE_INFINITY)&&(coordinate!=Double.NaN));
+		return ((coordinate!=Double.POSITIVE_INFINITY)&&(coordinate!=Double.POSITIVE_INFINITY)&&(!Double.isNaN(coordinate)));
 	}
 
 	/**
@@ -257,6 +257,5 @@ public class Location {
 	public String toString() {
 		return "This location, "+this.getAddress()+" has the following coordinates: "+this.getCoordinate()[0]+", "+this.getCoordinate()[1];
 	}
-	
 
 }

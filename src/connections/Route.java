@@ -7,7 +7,9 @@ public class Route {
 	//private final Location endLocation;
 	
 	
-	public Route(Location startLocation, Road...roads) throws IllegalArgumentException {
+	public Route(Location startLocation, Road...roads) throws IllegalArgumentException, NullPointerException {
+		if (startLocation == null)
+			throw new NullPointerException();
 		this.startLocation=startLocation;
 		if(!areValidSegments(roads))
 			throw new IllegalArgumentException();	
@@ -15,6 +17,8 @@ public class Route {
 	
 	public boolean areValidSegments(Road...roads) {
 		int length = roads.length;
+		if (length == 0)
+			return true;
 		Road firstSegment=roads[0];
 		Road lastSegment=roads[length-1];
 		//if the startlocation is equal to one of the locations of the first segment
@@ -43,5 +47,9 @@ public class Route {
 		else
 			return road.getEndPoint1();
 		
+	}
+
+	public Location getStartLocation(){
+		return startLocation;
 	}
 }

@@ -347,17 +347,26 @@ public interface Facade {
 	/**
 	 * Return a new route with given start location and given segments.
 	 */
-	default Route createRoute(Location startLocation, Road... roads) throws Exception {
-		// To be implemented
-		return null;
+	default Route createRoute(Location startLocation, Road... roads) throws ModelException {
+		try {
+			Route route = new Route(startLocation, roads);
+			return route;
+		}
+		catch (Throwable exc){
+			throw new ModelException();
+		}
 	}
 	
 	/**
 	 * Return the start location of the given route.
 	 */
 	default Location getRouteStartLocation(Route route) throws ModelException {
-		// To be implemented
-		return null;
+		try {
+			return route.getStartLocation();
+		}
+		catch (Throwable exc){
+			throw new ModelException();
+		}
 	}
 	
 	/**
