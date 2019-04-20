@@ -373,8 +373,12 @@ public interface Facade {
 	 * Return the segments of the given route.
 	 */
 	default Road[] getRouteSegments(Route route) throws ModelException {
-		// To be implemented
-		return null;
+		try{
+			return route.getRouteSegements();
+		}
+		catch (Throwable exc){
+			throw new ModelException();
+		}
 	}
 	
 	/**

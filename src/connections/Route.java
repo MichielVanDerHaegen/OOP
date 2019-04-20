@@ -1,20 +1,25 @@
 package connections;
 
+import java.util.ArrayList;
+
 public class Route {
 
 	private final Location startLocation;
-	
+	private Road[] roadSegments;
+
 	//private final Location endLocation;
-	
-	
+
+
 	public Route(Location startLocation, Road...roads) throws IllegalArgumentException, NullPointerException {
 		if (startLocation == null)
 			throw new NullPointerException();
 		this.startLocation=startLocation;
 		if(!areValidSegments(roads))
-			throw new IllegalArgumentException();	
+			throw new IllegalArgumentException();
+		roadSegments = roads;
+
 	}
-	
+
 	public boolean areValidSegments(Road...roads) {
 		int length = roads.length;
 		if (length == 0)
@@ -24,6 +29,8 @@ public class Route {
 		//if the startlocation is equal to one of the locations of the first segment
 		if(firstSegment.getEndPoint1()==this.startLocation || firstSegment.getEndPoint2()==this.startLocation) {
 			//then check that the other location of the firstsegment is equal to one of the locations of the second segment
+			if (length == 1)
+					return true;
 			if(getOtherLocation(firstSegment)==roads[1].getEndPoint1() || getOtherLocation(firstSegment)==roads[1].getEndPoint2()) {
 				//then for each segment, check that one of its locations is equal to one of the locations of the previous one
 				//and equal to one of the locations of the next one
@@ -52,4 +59,9 @@ public class Route {
 	public Location getStartLocation(){
 		return startLocation;
 	}
+
+	public Road[] getRouteSegements(){
+		return roadSegments;
+	}
+
 }
