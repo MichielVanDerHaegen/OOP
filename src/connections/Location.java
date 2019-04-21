@@ -257,19 +257,4 @@ public class Location {
 	public String toString() {
 		return "This location, "+this.getAddress()+" has the following coordinates: "+this.getCoordinate()[0]+", "+this.getCoordinate()[1];
 	}
-
-//	public static void main(String[] args) {
-//		double[] coord_10_20 = new double[] { 10.0, 20.0 };
-//		double[] coord_15_60 = new double[] { 15.3, 60.6 };
-//		Location leuven = new Location(coord_10_20, "Leuven");
-//		Location antwerp = new Location(coord_15_60, "Antwerp");
-//		Location brussels = new Location(new double[] { 20.0, 30.0 }, "Brussels");
-//		Location gent = new Location(new double[] { 15.0, 17.5 }, "Gent");
-//		Road t1_leuven_antwerp = new Road("T1", leuven, antwerp, 1111, 15.5F, 10.66F);
-//		Road t2_leuven_brussels = new Road("T2", leuven, brussels, 1500, 16.66F, 12.22F);
-//		Road t3_brussels_gent = new Road("T3", brussels, gent, 45, 85.0F, 30.0F);
-//		Road t4_brussels_antwerp = new Road("T4", brussels, antwerp, 55, 90.0F, 50.0F);
-//		Route abc = new Route(leuven, t1_leuven_antwerp, t4_brussels_antwerp, t3_brussels_gent, t2_leuven_brussels);
-//
-//	}
 }

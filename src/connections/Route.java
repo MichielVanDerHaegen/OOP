@@ -16,7 +16,7 @@ public class Route {
 		this.startLocation=startLocation;
 		if(!areValidSegments(roads))
 			throw new IllegalArgumentException();
-		roadSegments = roads;
+		roadSegments = roads.clone();
 
 	}
 
@@ -61,7 +61,7 @@ public class Route {
 	}
 
 	public Road[] getRouteSegements(){
-		return roadSegments;
+		return roadSegments.clone();
 	}
 
 }
