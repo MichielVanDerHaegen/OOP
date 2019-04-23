@@ -386,6 +386,12 @@ public interface Facade {
 	 */
 	default void addRouteSegment(Route route, Road road) throws ModelException {
 		// To be implemented
+		try{
+		route.addRouteSegment(road);
+		}
+		catch (Throwable exc){
+			throw new ModelException();
+		}
 	}
 	
 	/**
@@ -393,6 +399,12 @@ public interface Facade {
 	 */
 	default void removeRouteSegment(Route route, int index) throws ModelException {
 		// To be implemented
+		try{
+		route.removeRouteSegment(index);
+		}
+		catch (Throwable exc){
+			throw new ModelException();
+		}
 	}
 	
 	/**
@@ -400,7 +412,12 @@ public interface Facade {
 	 */
 	default int getRouteTotalLength(Route route) throws ModelException {
 		// To be implemented
-		return -1;
+		try{
+		return route.getTotalLength();
+		}
+		catch (Throwable exc){
+			throw new ModelException();
+		}
 	}
 	
 	/**
@@ -418,7 +435,12 @@ public interface Facade {
 	 */
 	default Location[] getAllLocations(Route route) throws ModelException {
 		// To be implemented
-		return null;
+		try {
+		return route.getAllLocations();
+		}
+		catch (Throwable exc){
+			throw new ModelException();
+		}
 	}
 
 }
