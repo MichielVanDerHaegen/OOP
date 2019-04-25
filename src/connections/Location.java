@@ -194,7 +194,7 @@ public class Location {
 	 * 		| result == (roadMap.contains(road))
 	 */
 	@Basic
-	public boolean hasAsAdjoiningRoad(Road road){
+	public boolean hasAsAdjoiningRoad(Road road) throws NullPointerException{
 		try {
 			return (roadMap.contains(road));
 		}
@@ -248,7 +248,7 @@ public class Location {
 	}
 	
 	void removeAdjoiningRoad(Road road) {
-		assert hasAsAdjoiningRoad(road);
+		//assert hasAsAdjoiningRoad(road);
 		assert road.isTerminated();
 		this.roadMap.remove(road);
 	}
