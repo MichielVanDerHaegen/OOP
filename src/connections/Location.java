@@ -180,8 +180,11 @@ public class Location {
 	public void terminate(){
 		if(!this.isTerminated) {
 			this.isTerminated=true;
-			for(Road road : roadMap)
+			HashSet<Road> cloneSet = new HashSet<>();
+			cloneSet.addAll(roadMap);
+			for(Road road : cloneSet) {
 				road.terminate();
+			}
 			roadMap.clear();
 
 		}
