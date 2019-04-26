@@ -29,12 +29,11 @@ public class Route {
 			if (roads.length == 1)
 					return true;
 		}
-		for(int i=0;i<roads.length-2;i++) {
-			if(roads[i].getEndPoint1()==startLocation || roads[i].getEndPoint2()==startLocation) {
-				startLocation=getOtherLocation(roads[i],startLocation);
-			}
-			else
-				return false;
+		else
+			return false;
+		for(int i=0;i<roads.length-1;i++) {
+			assert (roads[i].getEndPoint1()==startLocation || roads[i].getEndPoint2()==startLocation);
+			startLocation=getOtherLocation(roads[i],startLocation);
 		}
 		return true;
 	
