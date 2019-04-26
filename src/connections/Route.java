@@ -14,6 +14,7 @@ public class Route {
 	 * 
 	 */
 	private Road[] roadSegments;
+	private ArrayList<Location> locationList = new ArrayList<Location>();
 
 	// private final Location endLocation;
 	
@@ -40,16 +41,21 @@ public class Route {
 	 */
 	public boolean areValidSegments(Road... roads) {
 		Location startLocation = this.startLocation;
+		locationList.add(startLocation);
 		if (roads.length == 0)
 			return true;
 		if (roads[0].getEndPoint1() == startLocation || roads[0].getEndPoint2() == startLocation) {
-			if (roads.length == 1)
+			if (roads.length == 1) {
+				locationList.add(getOtherLocation(roads[0], startLocation));
 				return true;
+			}
 			startLocation = getOtherLocation(roads[0], startLocation);
 			for (int i = 1; i <= roads.length - 1; i++) {
+				locationList.add(startLocation);
 				assert (roads[i].getEndPoint1() == startLocation || roads[i].getEndPoint2() == startLocation);
 				startLocation = getOtherLocation(roads[i], startLocation);
 			}
+			locationList.add(startLocation);
 			return true;
 		}
 		return false;
@@ -132,6 +138,11 @@ public class Route {
 	 * @return
 	 */
 	public boolean isTraversable() {
+		for(Road road : roadSegments) {
+			assert (!road.isBlockedDirectionEndPointOne() || !road.isBlockedDirectionEndPointTwo());
+			//change this, because for each seperate road we need to check which direction it is (the method in the facade ask for the direction of the startLocation to the endLocation)
+			return true;
+		}
 		return false;
 	}
 
@@ -140,12 +151,8 @@ public class Route {
 	 * @return
 	 */
 	public Location[] getAllLocations() {
-		ArrayList<Location> list = new ArrayList<Location>();
-		for (Road road : roadSegments) {
-			list.add(road.getEndPoint1());
-			list.add(road.getEndPoint2());
-		}
-		Location[] array = (Location[]) list.toArray();
+		Location[] array = new Location[locationList.size()];
+		locationList.toArray(array);
 		return array;
 	}
 
