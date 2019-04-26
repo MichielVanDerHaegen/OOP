@@ -95,7 +95,8 @@ public class Route {
 			throw new IllegalArgumentException();
 		ArrayList<Road> list = new ArrayList<Road>(Arrays.asList(roadSegments));
 		list.add(road);
-		roadSegments = list.toArray(roadSegments);
+		roadSegments = new Road[list.size()];
+		list.toArray(roadSegments);
 		assert (areValidSegments(roadSegments));
 	}
 
