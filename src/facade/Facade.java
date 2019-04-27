@@ -426,7 +426,12 @@ public interface Facade {
 	 */
 	default boolean isRouteTraversable(Route route) throws ModelException {
 		// To be implemented
-		return true;
+		try {
+			return route.isTraversable();
+		}
+		catch (Throwable exc){
+			throw new ModelException();
+		}
 	}
 	
 	/**

@@ -1,5 +1,7 @@
 package connections;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -138,12 +140,25 @@ public class Route {
 	 * @return
 	 */
 	public boolean isTraversable() {
-		for(Road road : roadSegments) {
-			assert (!road.isBlockedDirectionEndPointOne() || !road.isBlockedDirectionEndPointTwo());
-			//change this, because for each seperate road we need to check which direction it is (the method in the facade ask for the direction of the startLocation to the endLocation)
-			return true;
+		for(int i=0;i<=roadSegments.length-1;i++) {
+			if(locationList.get(i)==roadSegments[i].getEndPoint1()) {
+				if(roadSegments[i].isBlockedDirectionEndPointTwo())
+					return false;
+			}
+			if(locationList.get(i)==roadSegments[i].getEndPoint2()) {
+				if(roadSegments[i].isBlockedDirectionEndPointOne())
+					return false;
+			}	
 		}
-		return false;
+		return true;
+		
+		
+//		for(Road road : roadSegments) {
+//			assert (!road.isBlockedDirectionEndPointOne() || !road.isBlockedDirectionEndPointTwo());
+//			//change this, because for each seperate road we need to check which direction it is (the method in the facade ask for the direction of the startLocation to the endLocation)
+//			return true;
+//		}
+//		return false;
 	}
 
 	/**
