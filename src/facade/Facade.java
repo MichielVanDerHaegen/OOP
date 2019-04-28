@@ -334,7 +334,8 @@ public interface Facade {
 		try {
 			if (directionForth)
 				road.setBlockedDirectionEndPointTwo(flag);
-			road.setBlockedDirectionEndPointOne(flag);
+			else
+				road.setBlockedDirectionEndPointOne(flag);
 		} catch (Throwable exc) {
 			throw new ModelException();
 		}
