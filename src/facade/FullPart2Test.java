@@ -818,16 +818,8 @@ class FullPart2Test {
 	void isTraversable_TrueCase() throws Exception {
 		maxScore += 8;
 		theFacade.changeRoadBlockedState(t4_brussels_antwerp, true, true);
-		//Here he blocks the road from brussels to antwerp, so antwerp to brussels should still be good
-		//but if you log it, both come back as true
-		//System.out.println(t4_brussels_antwerp.isBlockedDirectionEndPointTwo());
-		//should be true, because he sets it above
-		//System.out.println(t4_brussels_antwerp.isBlockedDirectionEndPointOne());
-		//also returns true for some weird reason
 		Route theRoute = theFacade.createRoute(antwerp, t4_brussels_antwerp, c2_circularRoad_brussels, t3_brussels_gent);
-		//He makes a route that runs from antwerp to brussels and so on, so according to his test, this should not be blocked
 		assertTrue(theFacade.isRouteTraversable(theRoute));
-		//however, the test fails, because for some weird reason, the road is blocked from antwerp to brussels
 		actualScore += 8;
 	}
 
@@ -835,11 +827,8 @@ class FullPart2Test {
 	void isTraversable_FalseCase() throws Exception {
 		maxScore += 8;
 		theFacade.changeRoadBlockedState(t4_brussels_antwerp, true, false);
-		//here he blocks the road from antwerp to brussels
 		Route theRoute = theFacade.createRoute(antwerp, t4_brussels_antwerp, c2_circularRoad_brussels, t3_brussels_gent);
-		//route runs from antwerp to brussels and so on
 		assertFalse(theFacade.isRouteTraversable(theRoute));
-		//this test returns false at is should
 		actualScore += 8;
 	}
 

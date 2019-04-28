@@ -1,24 +1,24 @@
 package connections;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Route {
 
 	/**
-	 * 
+	 * Variable registering the startLocation of the route
 	 */
 	private final Location startLocation;
 	
 	/**
-	 * 
+	 * Variable registering the set of roadSegments of the route
 	 */
 	private Road[] roadSegments;
+	
+	/**
+	 * Variable registering the list of startLocation for each segment of the route
+	 */
 	private ArrayList<Location> locationList = new ArrayList<Location>();
-
-	// private final Location endLocation;
 	
 	/**
 	 * 
@@ -74,7 +74,6 @@ public class Route {
 			return road.getEndPoint2();
 		else
 			return road.getEndPoint1();
-
 	}
 
 	/**
@@ -151,14 +150,6 @@ public class Route {
 			}	
 		}
 		return true;
-		
-		
-//		for(Road road : roadSegments) {
-//			assert (!road.isBlockedDirectionEndPointOne() || !road.isBlockedDirectionEndPointTwo());
-//			//change this, because for each seperate road we need to check which direction it is (the method in the facade ask for the direction of the startLocation to the endLocation)
-//			return true;
-//		}
-//		return false;
 	}
 
 	/**

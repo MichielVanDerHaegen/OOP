@@ -1,11 +1,9 @@
 package connections;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.HashSet;
 import java.util.Set;
+
 //not sure what invars we need
 /**
  * A class of locations where each location has an address and a longitude and latitude coordinate.
@@ -171,16 +169,24 @@ public class Location {
 
 	/**
 	 * Checks if this location is terminated.
+	 * 
 	 */
 	@Basic
 	public boolean isTerminated() {
 		return this.isTerminated;
 	}
-
+	
 	/**
 	 * Terminates this location
 	 *
-	 * @post
+	 * @post This location is terminated.
+	 * 		| new.isTerminated() == true
+	 * @post All roads in the roadMap are terminated.
+	 * 	 	| for each road in roadMap:
+	 * 		| road.isTerminated() == true
+	 * @post The roadMap is cleared.
+	 * 		| for each road in roadMap:
+	 * 		| roadMap.contains(road)==false
 	 */
 	public void terminate(){
 		if(!this.isTerminated) {
@@ -191,13 +197,15 @@ public class Location {
 				road.terminate();
 			}
 			roadMap.clear();
-
 		}
 	}
 
 	/**
 	 * Checks to see if this location has a road as one of its adjoining roads.
 	 * @param road The road to check
+	 * 
+//	 * @throws not sure if we need this one
+	 * 
 	 * @return True if the road given has this location as one of its two endpoints.
 	 * 		| result == (roadMap.contains(road))
 	 */
@@ -222,22 +230,6 @@ public class Location {
 		return (road.getEndPoint1() == this || road.getEndPoint2() == this) && !road.isTerminated();
 	}
 
-//	/**
-//	 * Checks to see if every adjoining road for this location is proper.
-//	 * @return True if each road for this
-//	 */
-//	//NOT SURE IF WE NEED THIS METHOD
-//	public boolean hasProperAdjoiningRoads(){
-//		for (List<Road> road : roadMap.values()){
-//			for (Road road1 : road){
-//				if (!canHaveAsAdjoiningRoad(road1))
-//					return false;
-//			}
-//			//if ()
-//		}
-//		return true;
-//	}
-
 	/**
 	 * Returns all the adjoining roads for the given location.
 	 * @return A list of Roads that are adjoining to the given location
@@ -248,15 +240,32 @@ public class Location {
 		cloneSet.addAll(roadMap);
 		return cloneSet;
 	}
-
+	
+	/**
+	 * Adds an adjoining road to the given location
+	 * @param road the Road to add to the given location
+	 * @pre The road is not null
+	 * 		| road != null
+	 * @pre One of the endpoints of the road is the given location
+	 * 		| (road.getEndPoint1()==this) || (road.getEndPoint2()==this)
+	 * @post The roadMap contains this new road
+	 * 		| roadMap.contains(road) == true
+	 */
 	void addAdjoiningRoad(Road road) {
 		assert road != null;
 		assert (road.getEndPoint1()==this) || (road.getEndPoint2()==this);
 		this.roadMap.add(road);
 	}
 	
+	/**
+	 * Removes an adjoining road from the given location
+	 * @param road the Road to remove from the given location
+	 * @pre The road is terminated
+	 * 		| road.isTerminated() == true
+	 * @post
+	 * 		| roadMap.contains(road) == false
+	 */
 	void removeAdjoiningRoad(Road road) {
-		//assert hasAsAdjoiningRoad(road);
 		assert road.isTerminated();
 		this.roadMap.remove(road);
 	}
