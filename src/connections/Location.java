@@ -6,7 +6,30 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashSet;
 import java.util.Set;
-
+//not sure what invars we need
+/**
+ * A class of locations where each location has an address and a longitude and latitude coordinate.
+ *
+ * @invar The referenced map is effective
+ * 		| roadMap != null
+ * @invar Each key registered in the map is an effective location.
+ * 		| for each key in roadMap.keySet():
+ * 		|(key != null)
+ * @invar Each value associated with a key in this map is an effective, non-terminated road connected to this location
+ * 		  and involving a location whose coordinates are identical to the associated keys coordinates.
+ * 		| for each key in roadMap.keySet():
+ * 		|	roadMap.get(key) != null &&
+ * 		|	(! roadMap.get(key).isTerminated()) &&
+ * 		|	(roadMap.get(key).getEndpoint1() == this.getCoordinate()) ||
+ * 		|	(roadMap.get(key).getEndpoint2() == this.getCoordinate())
+ * 		|	(roadMap.get(key).getCoordinate() == this.getCoordinate())
+ * @invar Each location can have its coordinate as coordinate. |
+ *      |  canHaveAsCoordinate(this.getCoordinate())
+ *
+ *
+ * @author Michiel Van der Haegen
+ * @author Sam Haberman
+ */
 public class Location {
 
 	/**
@@ -31,20 +54,6 @@ public class Location {
 
 	/**
 	 * Variable referencing a map collecting all the adjoining roads connected to each location.
-	 *
-	 * @invar The referenced map is effective
-	 *		| roadMap != null
-	 * @invar Each key registered in the map is an effective location.
-	 *		| for each key in roadMap.keySet():
-	 *		|(key != null)
-	 * @invar Each value associated with a key in this map is an effective, non-terminated road connected to this location
-	 * 		  and involving a location whose coordinates are identical to the associated keys coordinates.
-	 *		| for each key in roadMap.keySet():
-	 *		|	roadMap.get(key) != null &&
-	 *		|	(! roadMap.get(key).isTerminated()) &&
-	 *		|	(roadMap.get(key).getEndpoint1() == this.getCoordinate()) ||
-	 *		|	(roadMap.get(key).getEndpoint2() == this.getCoordinate())
-	 *		|	(roadMap.get(key).getCoordinate() == this.getCoordinate())
 	 */
 	private final Set<Road> roadMap = new HashSet<>();
 
@@ -120,11 +129,6 @@ public class Location {
 	}
 
 	/**
-	 * @invar Each location can have its coordinate as coordinate. |
-	 *        canHaveAsCoordinate(this.getCoordinate())
-	 */
-
-	/**
 	 * Return the coordinate of this location.
 	 */
 	@Basic
@@ -135,7 +139,13 @@ public class Location {
 		double[] clone = new double[] {clone1,clone2};
 		return clone;
 	}
-	
+
+	/**
+	 * Checks to see if the given coordinate is valid.
+	 * @param coordinate The coordinate to check
+	 * @return True if the given coordinate is not equal to positive or negative infinity and is not Not A Number.
+	 * 		| result == ((coordinate!=Double.POSITIVE_INFINITY)&&(coordinate!=Double.POSITIVE_INFINITY)&&(!Double.isNaN(coordinate)))
+	 */
 	public boolean isValidCoordinate(double coordinate) {
 		return ((coordinate!=Double.POSITIVE_INFINITY)&&(coordinate!=Double.POSITIVE_INFINITY)&&(!Double.isNaN(coordinate)));
 	}
@@ -144,20 +154,10 @@ public class Location {
 	 * Check whether this location can have the given coordinate as its coordinate.
 	 * 
 	 * @param coordinate The coordinate to check.
-	 * @return True if the coordinate (both longitude and latitude) is a finite number
-	 * | result ==
+	 * @return True if the coordinate (both longitude and latitude) are valid and not null, and if coordinate only has a length of two.
+	 * | result == (coordinate!=null && coordinate.length == 2 && isValidCoordinate(coordinate[0]) && isValidCoordinate(coordinate[1]))
 	 */
 	public boolean canHaveAsCoordinate(double[] coordinate) {
-//		if(coordinate==null)
-//			return false;
-//		if(coordinate.length==2) {
-//			if(isValidCoordinate(coordinate[0])) {
-//				if(isValidCoordinate(coordinate[1])) {
-//					return true;
-//				}
-//			}
-//		}
-//		return false;	
 		if(coordinate==null)
 			return false;
 		if(coordinate.length!=2)
@@ -177,6 +177,11 @@ public class Location {
 		return this.isTerminated;
 	}
 
+	/**
+	 * Terminates this location
+	 *
+	 * @post
+	 */
 	public void terminate(){
 		if(!this.isTerminated) {
 			this.isTerminated=true;

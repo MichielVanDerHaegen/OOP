@@ -10,8 +10,8 @@ import be.kuleuven.cs.som.annotate.*;
  * @invar The ID of each road must be a valid ID for any road
  * 		| isValidID(getID())
  * @invar The end point of each road must be a valid end point for any road
- * 		| isValidEndPoint(getEndPoint1())
- * 		| isValidEndPoint(getEndPoint2())
+ * 		| isValidEndPoint(location1.getCoordinate())
+ * 		| isValidEndPoint(location2.getCoordinate())
  * @invar The length of each road must be a valid length for any road
  * 		| isValidLength(getLength())
  * @invar The speed limit of each road must be a valid speed limit for any road
@@ -113,9 +113,9 @@ public class Road {
 	 * @param roadSpeed
 	 * 		The average speed obtained on the new road under standard conditions.
 	 * @pre The given end point must be a valid end point for a road
-	 * | isValidEndPoint(endPoint1)
+	 * | isValidEndPoint(location1.getCoordinate())
 	 * @pre The given end point must be a valid end point for a road
-	 * | isValidEndPoint(endPoint2)
+	 * | isValidEndPoint(location2.getCoordinate())
 	 * @post The ID of this new road will be equal to the given id
 	 * | new.getID() == id
 	 * @post The first endpoint of the new road will be equal to the values of the given endPoint1
@@ -152,9 +152,9 @@ public class Road {
 	 * @param length    The length of the new road.
 	 * @param roadSpeed The average speed obtained on the new road under standard conditions.
 	 * @pre The given first endpoint must be valid endpoint for a road
-	 * | isValidEndPoint(endPoint1)
+	 * | isValidEndPoint(location1.getCoordinate())
 	 * @pre The given second endpoint must be valid endpoint for a road
-	 * | isValidEndPoint(endPoint2)
+	 * | isValidEndPoint(location2.getCoordinate())
 	 * @post The ID of this new road will be equal to the given id
 	 * | new.getID() == id
 	 * @post The first endpoint of the new road will be equal to the values of the given endPoint1
@@ -750,6 +750,18 @@ public class Road {
 		return this.isTerminated;
 	}
 
+	/**
+	 *Terminates this road
+	 *
+	 * @post This road is terminated.
+	 * 		| new.isTerminated() == true
+	 * @post Both locations connected to this road are set to null.
+	 * 		| new.getEndpoint1 == null && new.getEndpoint2 == null
+	 * @post Both locations connected to this road remove this road from their respective list of adjoining roads
+	 * 		| new.location1.getAdjoiningRoads.contains(this) == false && new.location2.getAdjoiningRoads.contains(this) == false
+	 * @post The list of IDs no longer contains this roads ID.
+	 * 		| new.idArray.contains(this.getID()) == false
+	 */
 	public void terminate() {
 		if (!this.isTerminated) {
 			this.isTerminated = true;
@@ -758,7 +770,6 @@ public class Road {
 			location1 = null;
 			location2 = null;
 			idArray.remove(this.ID);
-
 		}
 	}
 }
