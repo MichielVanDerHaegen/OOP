@@ -552,10 +552,10 @@ public class Road {
 	@Override
 	public String toString() {
 		return ("This road has the following properties:" + '\n' + "ID: " + this.getID() + '\n' +
-				"End point 1: " + this.getEndPoint1().getCoordinate()[0] + "," + this.getEndPoint1().getCoordinate()[1] + '\n' + "End point 2: " + this.getEndPoint2().getCoordinate()[0] + "," + this.getEndPoint2().getCoordinate()[1] + '\n' + "Length: " + this.getLength()
-				+ '\n' + "Speed limit: " + this.getSpeedlimit() + '\n' + "Average speed: " + this.getRoadSpeed() + '\n' + "Blocked in the direction of end point 1: " + this.isBlockedDirectionEndPointOne() + '\n' +
-				"Blocked in the direction of end point 2: " + this.isBlockedDirectionEndPointTwo() + '\n' + "Delay in the direction of end point 1: " + this.getDelayDirectionEndPointOne() + '\n' +
-				"Delay in the direction of end point 2: " + this.getDelayDirectionEndPointTwo() + '\n');
+				"End point 1: " + this.getEndPoint1().getAddress() + '\n' + "End point 2: " + this.getEndPoint2().getAddress() + '\n' + "Length: " + this.getLength()
+				+ '\n' + "Speed limit: " + this.getSpeedlimit() + '\n' + "Average speed: " + this.getRoadSpeed() + '\n' + "Blocked in the direction of "+this.getEndPoint1().getAddress()+": " + this.isBlockedDirectionEndPointOne() + '\n' +
+				"Blocked in the direction of "+this.getEndPoint2().getAddress() + ": " + this.isBlockedDirectionEndPointTwo() + '\n' + "Delay in the direction of "+this.getEndPoint1().getAddress()+": " + this.getDelayDirectionEndPointOne() + '\n' +
+				"Delay in the direction of "+this.getEndPoint2().getAddress()+ ": " + this.getDelayDirectionEndPointTwo() + '\n');
 	}
 
 	/**
@@ -735,7 +735,10 @@ public class Road {
 		}
 	}
 	
-//	public static void main(String[] args) {
+	public static void main(String[] args) {
+		
+// 	THE CODE FOR THE MAIN METHOD OF PART 1
+		
 //	double[] point1 = new double[] {10.0,20.0};
 //	double[] point2 = new double[] {15.3,60.6};
 //	double[] point3 = new double[] {40.5,5.5};
@@ -764,7 +767,29 @@ public class Road {
 //	float totalTime3 = road.calculateTravelTimeEndPointOne()+road2.calculateTravelTimeEndPointOne()+road3.calculateTravelTimeEndPointOne();
 //	System.out.println("The total travel time is: "+totalTime3+" seconds."+'\n');
 //
-//}
+//   	THE CODE FOR THE MAIN METHOD OF PART 2
+		
+		Location Aarschot = new Location(new double[] {30.0,15.0}, "Aarschot");
+		Location Diest = new Location(new double[] {30.0,30.0}, "Diest");
+		Location Tienen = new Location(new double[] {10.0,15.0}, "Tienen");
+		Location Leuven = new Location(new double[] {40.0,70.0}, "Leuven");
+		
+		Road narrowCountryRoad = new Road("N36", Aarschot, Diest, 200, 8F);
+		Road A1 = new Road("A1", Diest , Tienen, 300, 25F, 20F);
+		Road A2 = new Road("A2", Tienen, Leuven, 250, 30F, 25F);
+		Road motorWay = new Road("M1", Aarschot, Diest, 400, 40F, 32F);
+		
+		System.out.println(narrowCountryRoad+"\n"+motorWay);
+		System.out.println("Travel time for narrow road is: "+narrowCountryRoad.calculateTravelTimeEndPointTwo()+"\n"+"Travel time for motorway is: "+motorWay.calculateTravelTimeEndPointTwo()+"\n");
+
+		Route route = new Route(Leuven, A2, A1, motorWay);
+		System.out.println(route);
+		
+		motorWay.setBlockedDirectionEndPointOne(true);
+		System.out.println("The motorway was blocked in the direction of the route");
+		System.out.println("This route is traversable: "+route.isTraversable());
+		
+	}
 
 }
 

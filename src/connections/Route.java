@@ -161,5 +161,20 @@ public class Route {
 		locationList.toArray(array);
 		return array;
 	}
+	
+	@Override
+	public String toString() {
+		String string1 = new String("This route has the following properties:"+"\n"+"It connects these segments: ");
+		String segments = roadSegments[0].getID();
+		for(int i = 1; i < roadSegments.length; i++) {
+			segments = segments + ", "+roadSegments[i].getID();
+		}	
+		String string2 = new String("\n"+"With these respective start locations: ");
+		String locations = locationList.get(0).getAddress();
+		for(int i = 1; i < locationList.size(); i++) {
+			locations = locations + ", "+locationList.get(i).getAddress();
+		}
+		return string1+segments+string2+locations+"\n"+"Blocked in the direction of the route: "+!isTraversable()+"\n";
+	}
 
 }
