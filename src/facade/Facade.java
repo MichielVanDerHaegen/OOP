@@ -287,7 +287,7 @@ public interface Facade {
 	default float getRoadDelayinDirection(Road road, boolean directionForth) throws ModelException {
 		try {
 			if (directionForth)
-				road.getDelayDirectionEndPointTwo();
+				return road.getDelayDirectionEndPointTwo();
 			return road.getDelayDirectionEndPointOne();
 		} catch (Throwable exc) {
 			throw new ModelException();
@@ -303,7 +303,8 @@ public interface Facade {
 		try {
 			if (directionForth)
 				road.setDelayDirectionEndPointTwo(delay);
-			road.setDelayDirectionEndPointOne(delay);
+			else
+				road.setDelayDirectionEndPointOne(delay);
 		} catch (Throwable exc) {
 			throw new ModelException();
 		}
