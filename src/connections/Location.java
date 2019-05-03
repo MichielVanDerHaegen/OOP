@@ -4,7 +4,6 @@ import be.kuleuven.cs.som.annotate.Immutable;
 import java.util.HashSet;
 import java.util.Set;
 
-//not sure what invars we need
 /**
  * A class of locations where each location has an address and a longitude and latitude coordinate.
  *
@@ -226,7 +225,7 @@ public class Location {
 	 * @return A list of Roads that are adjoining to the given location
 	 * 		| result == roadMap
 	 */
-	public Set<Road> getAdjoiningRoads() throws NullPointerException{
+	public Set<Road> getAdjoiningRoads() throws NullPointerException{ //Why do we have a NullPointer ask Michiel?
 		HashSet<Road> cloneSet = new HashSet<>();
 		cloneSet.addAll(roadMap);
 		return cloneSet;
