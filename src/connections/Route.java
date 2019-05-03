@@ -3,6 +3,13 @@ package connections;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ *  A class of Routes where every route has a start location and a list of 0 to n connecting road segments in it.
+ *
+ *
+ * @author Michiel Van der Haegen
+ * @author Sam Haberman
+ */
 public class Route {
 
 	/**
@@ -16,16 +23,27 @@ public class Route {
 	private Road[] roadSegments;
 	
 	/**
-	 * Variable registering the list of startLocation for each segment of the route
+	 * Variable registering the list of locations for each route
 	 */
 	private ArrayList<Location> locationList = new ArrayList<Location>();
 	
 	/**
-	 * 
+	 * Initialize a new Route with given start location and collection of road segments.
+	 *
 	 * @param startLocation
+	 * 		The start location of this route
 	 * @param roads
+	 * 		The connecting road segments that are a part of this route
 	 * @throws IllegalArgumentException
+	 * 		The given road segments are not valid connecting segments.
+	 * 	|	!areValidSegments(roads)
 	 * @throws NullPointerException
+	 * 		The given start location is null
+	 * 	|	startLocation == null
+	 * @post The start location of this route is equal to the given start location
+	 * 	|	new.getStartLocation() == startLocation
+	 * @post The road segments of this route are equal to the given road segments.
+	 * 	|	new.getRouteSegments() == roads
 	 */
 	public Route(Location startLocation, Road... roads) throws IllegalArgumentException, NullPointerException {
 		if (startLocation == null)
@@ -37,9 +55,13 @@ public class Route {
 	}
 
 	/**
-	 * 
-	 * @param roads
-	 * @return
+	 * Checks to see if the given road segments are valid, as well as adding each location in the road segments to locationList.
+	 * @param roads The road segments to check
+	 * @return True if each segment
+	 *
+	 * @post Each location contained in roads is now in the locationList.
+	 * 	|	for each location in roads
+	 * 			locationList.contains(location)
 	 */
 	public boolean areValidSegments(Road... roads) {
 		Location startLocation = this.startLocation;

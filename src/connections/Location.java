@@ -62,8 +62,6 @@ public class Location {
 	 * 		The address of this location
 	 * @param coordinate
 	 * 		The coordinates (longitude and latitude) of this location
-	 * @throws IllegalArgumentException
-	 *
 	 * @pre The given coordinates must be a set of valid coordinates
 	 * 		| canHaveAsCoordinate(coordinate)
 	 * @post The address of this road will be equal to the given address
@@ -203,20 +201,13 @@ public class Location {
 	/**
 	 * Checks to see if this location has a road as one of its adjoining roads.
 	 * @param road The road to check
-	 * 
-//	 * @throws not sure if we need this one
-	 * 
+
 	 * @return True if the road given has this location as one of its two endpoints.
 	 * 		| result == (roadMap.contains(road))
 	 */
 	@Basic
-	public boolean hasAsAdjoiningRoad(Road road) throws NullPointerException{
-		try {
+	public boolean hasAsAdjoiningRoad(Road road){
 			return (roadMap.contains(road));
-		}
-		catch(NullPointerException npe) {
-			throw new NullPointerException();
-		}
 	}
 
 	/**
