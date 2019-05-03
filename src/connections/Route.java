@@ -15,7 +15,9 @@ public class Route {
 	/**
 	 * Variable registering the startLocation of the route
 	 */
-	private final Location startLocation;
+	private Location startLocation;
+	
+	private Location endLocation;
 	
 	/**
 	 * Variable registering the set of roadSegments of the route
@@ -66,11 +68,14 @@ public class Route {
 	public boolean areValidSegments(Road... roads) {
 		Location startLocation = this.startLocation;
 		locationList.add(startLocation);
-		if (roads.length == 0)
+		if (roads.length == 0) {
+			this.endLocation=startLocation;
 			return true;
+		}
 		if (roads[0].getEndPoint1() == startLocation || roads[0].getEndPoint2() == startLocation) {
 			if (roads.length == 1) {
 				locationList.add(getOtherLocation(roads[0], startLocation));
+				this.endLocation=getOtherLocation(roads[0], startLocation);
 				return true;
 			}
 			startLocation = getOtherLocation(roads[0], startLocation);
@@ -80,6 +85,7 @@ public class Route {
 				startLocation = getOtherLocation(roads[i], startLocation);
 			}
 			locationList.add(startLocation);
+			this.endLocation=startLocation;
 			return true;
 		}
 		return false;
@@ -106,6 +112,13 @@ public class Route {
 		return startLocation;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public Location getEndLocation() {
+		 return endLocation;
+	}
 	/**
 	 * 
 	 * @return
@@ -184,6 +197,7 @@ public class Route {
 		return array;
 	}
 	
+	
 	@Override
 	public String toString() {
 		String string1 = new String("This route has the following properties:"+"\n"+"It connects these segments: ");
@@ -191,7 +205,7 @@ public class Route {
 		for(int i = 1; i < roadSegments.length; i++) {
 			segments = segments + ", "+roadSegments[i].getID();
 		}	
-		String string2 = new String("\n"+"With these respective start locations: ");
+		String string2 = new String("\n"+"With these respective locations: ");
 		String locations = locationList.get(0).getAddress();
 		for(int i = 1; i < locationList.size(); i++) {
 			locations = locations + ", "+locationList.get(i).getAddress();
