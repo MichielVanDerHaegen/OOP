@@ -193,8 +193,8 @@ public class Route {
 	 *         which the removed segment was registered, are shifted
 	 *         one position to the left.
 	 *       | for each I,J in 1..getTotalLength():
-	 *       |   if ( (getSegmentAt(I) == getSegmentAt(index)) and (I < J) )
-	 *       |     then new.getSegmentAt(J-1) == getSegmentAt(J)
+	 *       |   if ( (roadSegments[I] == roadSegments[index] and (I < J) )
+	 *       |     then new.roadSegments[J-1] == roadSegments[J]
 	 * @post The new array of road segments for the route is a valid list of road segments
 	 * 		 | areValidSegments(roadSegments)
 	 * @throws IndexOutOfBoundsException
