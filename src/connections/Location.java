@@ -200,13 +200,20 @@ public class Location {
 	/**
 	 * Checks to see if this location has a road as one of its adjoining roads.
 	 * @param road The road to check
-
+	 *
+	 * @throws NullPointerException
+	 * 		If the given road is null
 	 * @return True if the road given has this location as one of its two endpoints.
 	 * 		| result == (roadMap.contains(road))
 	 */
 	@Basic
-	public boolean hasAsAdjoiningRoad(Road road){
+	public boolean hasAsAdjoiningRoad(Road road) throws NullPointerException{
+		try {
 			return (roadMap.contains(road));
+		}
+		catch (NullPointerException exc){
+			return false;
+		}
 	}
 
 	/**
