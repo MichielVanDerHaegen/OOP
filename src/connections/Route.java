@@ -185,7 +185,9 @@ public class Route {
 	 *         The index of the segment to be removed.
 	 * @post   The number of segments of this route is
 	 *         decreased by 1.
-	 *       | new.getTotalLength() == getTotalLength() - 1
+	 *       | new.getRouteSegments().length = getRouteSegments().length - 1
+	 * @post   The total length of this route is decreased with the length of the segment removed
+	 * 		| new.getTotalLength() == getTotalLength() - roadSegment[index].getLength()
 	 * @post   This route no longer has the segment at the given index as
 	 *         one of its segments.
 	 *       | ! new.getRouteSegments().contains(roadSegment[index])
@@ -214,9 +216,9 @@ public class Route {
 	}
 
 	/**
-	 * Returns the total road length of the road segments in this route.
+	 * Returns the total length of the road segments in this route.
 	 *
-	 * @return the number of roads that are a part of this Route.
+	 * @return the sum of lengths of all roads that are a part of this Route.
 	 *	| int length = 0
 	 *	| for road in roadSegments
 	 *	|	length += road.getLength
