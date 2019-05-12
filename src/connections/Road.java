@@ -26,7 +26,7 @@ import be.kuleuven.cs.som.annotate.*;
  * @author Sam Haberman
  */
 
-public class Road {
+public abstract class Road {
 	/**
 	 * The unique identifier of the road
 	 */
@@ -151,6 +151,7 @@ public class Road {
 	 * @param location2 The second endpoint of the new road.
 	 * @param length    The length of the new road.
 	 * @param roadSpeed The average speed obtained on the new road under standard conditions.
+	 * @param speedlimit The speed limit of the new road.
 	 * @pre The given first endpoint must be valid endpoint for a road
 	 * | isValidEndPoint(location1.getCoordinate())
 	 * @pre The given second endpoint must be valid endpoint for a road
@@ -768,26 +769,26 @@ public class Road {
 //	System.out.println("The total travel time is: "+totalTime3+" seconds."+'\n');
 //
 //   	THE CODE FOR THE MAIN METHOD OF PART 2
-		
-		Location Aarschot = new Location(new double[] {30.0,15.0}, "Aarschot");
-		Location Diest = new Location(new double[] {30.0,30.0}, "Diest");
-		Location Tienen = new Location(new double[] {10.0,15.0}, "Tienen");
-		Location Leuven = new Location(new double[] {40.0,70.0}, "Leuven");
-		
-		Road narrowCountryRoad = new Road("N36", Aarschot, Diest, 200, 8F);
-		Road A1 = new Road("A1", Diest , Tienen, 300, 25F, 20F);
-		Road A2 = new Road("A2", Tienen, Leuven, 250, 30F, 25F);
-		Road motorWay = new Road("M1", Aarschot, Diest, 400, 40F, 32F);
-		
-		System.out.println(narrowCountryRoad+"\n"+motorWay);
-		System.out.println("Travel time for narrow road is: "+narrowCountryRoad.calculateTravelTimeEndPointTwo()+"\n"+"Travel time for motorway is: "+motorWay.calculateTravelTimeEndPointTwo()+"\n");
-
-		Route route = new Route(Leuven, A2, A1, motorWay);
-		System.out.println(route);
-		
-		motorWay.setBlockedDirectionEndPointOne(true);
-		System.out.println("The motorway was blocked in the direction of the route");
-		System.out.println("This route is traversable: "+route.isTraversable());
+//
+//		Location Aarschot = new Location(new double[] {30.0,15.0}, "Aarschot");
+//		Location Diest = new Location(new double[] {30.0,30.0}, "Diest");
+//		Location Tienen = new Location(new double[] {10.0,15.0}, "Tienen");
+//		Location Leuven = new Location(new double[] {40.0,70.0}, "Leuven");
+//
+//		Road narrowCountryRoad = new Road("N36", Aarschot, Diest, 200, 8F);
+//		Road A1 = new Road("A1", Diest , Tienen, 300, 25F, 20F);
+//		Road A2 = new Road("A2", Tienen, Leuven, 250, 30F, 25F);
+//		Road motorWay = new Road("M1", Aarschot, Diest, 400, 40F, 32F);
+//
+//		System.out.println(narrowCountryRoad+"\n"+motorWay);
+//		System.out.println("Travel time for narrow road is: "+narrowCountryRoad.calculateTravelTimeEndPointTwo()+"\n"+"Travel time for motorway is: "+motorWay.calculateTravelTimeEndPointTwo()+"\n");
+//
+//		Route route = new Route(Leuven, A2, A1, motorWay);
+//		System.out.println(route);
+//
+//		motorWay.setBlockedDirectionEndPointOne(true);
+//		System.out.println("The motorway was blocked in the direction of the route");
+//		System.out.println("This route is traversable: "+route.isTraversable());
 		
 	}
 
