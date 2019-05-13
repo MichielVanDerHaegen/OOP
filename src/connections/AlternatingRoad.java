@@ -66,4 +66,10 @@ public class AlternatingRoad extends Road{
     public AlternatingRoad(String id, Location location1, Location location2, int length, float speedlimit, float roadSpeed) {
         super(id, location1, location2, length, speedlimit, roadSpeed);
     }
+
+
+
+
+
+
 }

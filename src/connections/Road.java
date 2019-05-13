@@ -456,10 +456,7 @@ public abstract class Road {
 	 * | new.getDelayDirectionOne() == delay
 	 */
 
-	public void setDelayDirectionEndPointOne(float delay) {
-		assert isValidDelay(delay);
-		this.delayDirectionOne = delay;
-	}
+	public abstract void setDelayDirectionEndPointOne(float delay);
 
 	/**
 	 * Sets the delay of the road in the direction of endpoint two to the given delay in seconds
@@ -789,8 +786,6 @@ public abstract class Road {
 //		motorWay.setBlockedDirectionEndPointOne(true);
 //		System.out.println("The motorway was blocked in the direction of the route");
 //		System.out.println("This route is traversable: "+route.isTraversable());
-
-		// ssd
 
 	}
 

@@ -89,6 +89,10 @@ public class One_way extends Road{
      */
     private final Location endLocation;
 
+    /**
+     * Does nothing, road only travels in direction of end location.
+     * @param delay The new delay time for the road going towards endpoint one
+     */
     @Override
     public void setDelayDirectionEndPointOne(float delay){}
 
