@@ -456,7 +456,10 @@ public abstract class Road {
 	 * | new.getDelayDirectionOne() == delay
 	 */
 
-	public abstract void setDelayDirectionEndPointOne(float delay);
+	public void setDelayDirectionEndPointOne(float delay) {
+		assert isValidDelay(delay);
+		this.delayDirectionOne = delay;
+	}
 
 	/**
 	 * Sets the delay of the road in the direction of endpoint two to the given delay in seconds

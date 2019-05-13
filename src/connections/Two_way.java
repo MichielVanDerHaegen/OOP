@@ -67,18 +67,5 @@ public class Two_way extends Road{
         super(id, location1, location2, length, speedlimit, roadSpeed);
     }
 
-    /**
-     * Sets the delay of the road in the direction of endpoint one to the given delay in seconds
-     *
-     * @param delay The new delay time for the road going towards endpoint one
-     * @pre The given delay of the road must be a valid delay for a road
-     * | isValidDelay(delay)
-     * @post The delay of the road going towards endpoint one is equal to the given delay
-     * | new.getDelayDirectionOne() == delay
-     */
-    public void setDelayDirectionEndPointOne(float delay) {
-        assert isValidDelay(delay);
-        this.delayDirectionOne = delay;
-    }
 
 }

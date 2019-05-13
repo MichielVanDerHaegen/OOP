@@ -153,7 +153,7 @@ public interface Facade {
 	 */
 	default String getRoadIdentification(Road road) throws ModelException {
 		try {
-			return road.getIdentification();
+			return null;
 		} catch (Throwable exc) {
 			throw new ModelException();
 		}
@@ -164,7 +164,7 @@ public interface Facade {
 	 */
 	default void changeRoadIdentification(Road road, String newIdentification) throws ModelException {
 		try {
-			road.setIdentification(newIdentification);
+
 		} catch (Throwable exc) {
 			throw new ModelException();
 		}

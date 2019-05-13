@@ -2,7 +2,7 @@ package connections;
 
 public class AlternatingRoad extends Road{
     /**
-     * Initializes a new non-terminated road with given ID, first and second location and
+     * Initializes a new non-terminated one-way road with given ID, first and second location and
      * roadspeed. The road will be given the standard speed limit of 19.5 m/s.
      *
      * @param id        The unique identifier for our new road.
@@ -28,13 +28,19 @@ public class AlternatingRoad extends Road{
      * | new.location1.hasAsAdjoiningRoad(this) == true
      * @post This road is added to the list of adjoining roads for location 2.
      * | new.location2.hasAsAdjoiningRoad(this) == true
+     * @post The start location of this road is equal to location1.
+     * | new.startLocation == location1
+     * @post The end location of this road is equal to location2.
+     * | new.endLocation == location2
      */
     public AlternatingRoad(String id, Location location1, Location location2, int length, float roadSpeed) {
         super(id, location1, location2, length, roadSpeed);
+        startLocation = location1;
+        endLocation = location2;
     }
 
     /**
-     * Initialize a new non-terminated road with given ID, first and second location, speed limit and roadspeed.
+     * Initialize a new non-terminated one-way road with given ID, first and second location, speed limit and roadspeed.
      *
      * @param id         The unique identifier for our new road.
      * @param location1  The first endpoint of the new road.
@@ -62,14 +68,62 @@ public class AlternatingRoad extends Road{
      * | new.location1.hasAsAdjoiningRoad(this) == true
      * @post This road is added to the list of adjoining roads for location 2.
      * | new.location2.hasAsAdjoiningRoad(this) == true
+     * @post The start location of this road is equal to location1.
+     * | new.startLocation == location1
+     * @post The end location of this road is equal to location2.
+     * | new.endLocation == location2
      */
     public AlternatingRoad(String id, Location location1, Location location2, int length, float speedlimit, float roadSpeed) {
         super(id, location1, location2, length, speedlimit, roadSpeed);
+        startLocation = location1;
+        endLocation = location2;
     }
 
+    /**
+     * The start location of this one-way road.
+     */
+    private final Location startLocation;
+
+    /**
+     * The end location of this one-way road.
+     */
+    private final Location endLocation;
+
+    /**
+     * Boolean value that tracks the direction of the road, if true then road is moving in direction of endpoint two.
+     */
+    private boolean directionOfRoad = true;
 
 
+    /**
+     * If the road is traveling in the direction of endpoint two does nothing, else runs the method from Road.
+     * @param delay The new delay time for the road going towards endpoint one
+     *
+     * @post if !(directionOfRoad)
+     *      then new.getDelayDirectionOne() == delay
+     */
+    @Override
+    public void setDelayDirectionEndPointOne(float delay) {
+        if (directionOfRoad) {
+        } else {
+            super.setDelayDirectionEndPointOne(delay);
+        }
+    }
 
+    /**
+     * If the road is traveling in the direction of endpoint one does nothing, else runs the method from Road.
+     * @param delay The new delay time for the road going towards endpoint one
+     *
+     * @post if !(directionOfRoad)
+     *      then new.getDelayDirectionTwo() == delay
+     */
+    @Override
+    public void setDelayDirectionEndPointTwo(float delay) {
+        if (directionOfRoad) {
+        } else {
+            super.setDelayDirectionEndPointTwo(delay);
+        }
+    }
 
 
 }
