@@ -32,11 +32,17 @@ public class AlternatingRoad extends Road{
      * | new.startLocation == location1
      * @post The end location of this road is equal to location2.
      * | new.endLocation == location2
+     * @post The given location1 is stored as location1.
+     * | new.location1 = location1
+     * @post The given location2 is stored as location2.
+     * | new.location2 = location2
      */
     public AlternatingRoad(String id, Location location1, Location location2, int length, float roadSpeed) {
         super(id, location1, location2, length, roadSpeed);
         startLocation = location1;
         endLocation = location2;
+        locationOne = location1;
+        locationTwo = location2;
     }
 
     /**
@@ -72,22 +78,38 @@ public class AlternatingRoad extends Road{
      * | new.startLocation == location1
      * @post The end location of this road is equal to location2.
      * | new.endLocation == location2
+     * @post The given location1 is stored as location1.
+     * | new.location1 = location1
+     * @post The given location2 is stored as location2.
+     * | new.location2 = location2
      */
     public AlternatingRoad(String id, Location location1, Location location2, int length, float speedlimit, float roadSpeed) {
         super(id, location1, location2, length, speedlimit, roadSpeed);
         startLocation = location1;
         endLocation = location2;
+        locationOne = location1;
+        locationTwo = location2;
     }
 
     /**
      * The start location of this one-way road.
      */
-    private final Location startLocation;
+    private Location startLocation;
 
     /**
      * The end location of this one-way road.
      */
-    private final Location endLocation;
+    private Location endLocation;
+
+    /**
+     * The original given location for location one.
+     */
+    private Location locationOne;
+
+    /**
+     * The original given location for location two.
+     */
+    private Location locationTwo;
 
     /**
      * Boolean value that tracks the direction of the road, if true then road is moving in direction of endpoint two.
@@ -205,20 +227,24 @@ public class AlternatingRoad extends Road{
      * Swaps the direction the road is going.
      * @post If direction of the road was going in direction of endpoint two, now it is going in direction of endpoint one and vice versa.
      * | if (directionOfRoad)
+     * |    new.directionOfRoad = false
+     * |    new.startLocation = locationTwo
+     * |    new.endLocation = locationOne
+     * | else
      * |    new.directionOfRoad = true
-     * |    new.startLocation =
-     * |    new.endLocation = 
+     * |    new.startLocation = locationOne
+     * |    new.endLocation = locationTwo
      */
     public void swapRoadDirection(){
         if (directionOfRoad){
             directionOfRoad = false;
-            startLocation = ;
-            endLocation = ;
+            startLocation = locationTwo;
+            endLocation = locationOne;
         }
         else{
             directionOfRoad = true;
-            startLocation = ;
-            endLocation = ;
+            startLocation = locationOne;
+            endLocation = locationTwo;
         }
     }
     
