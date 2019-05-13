@@ -152,10 +152,9 @@ public class AlternatingRoad extends Road{
     /**
      * Sets the blocked status of the road to the given value if the road is travelling in the direction of endpoint one.
      * @param blocked The new blocked status of the road.
-     *
      * @post The blocked status of the road is equal to the given blocked boolean if the road is travelling in the direction of endpoint one.
      *  | if (!directionOfRoad)
-     *  |   new.isBlockedDirectionEndPointOne == true
+     *  |   new.isBlockedDirectionEndPointOne == blocked
      */
     @Override
     public void setBlockedDirectionEndPointOne(boolean blocked){
@@ -164,8 +163,64 @@ public class AlternatingRoad extends Road{
         }
     }
 
+    /**
+     * Sets the blocked status of the road to the given value if the road is travelling in the direction of endpoint tow.
+     * @param blocked The new blocked status of the road.
+     * @post The blocked status of the road is equal to the given blocked boolean if the road is travelling in the direction of endpoint two.
+     * |    if (directionOfRoad)
+     *          new.isBlockedDirectionEndPointTwo == blocked
+     */
+    @Override
+    public void setBlockedDirectionEndPointTwo(boolean blocked){
+        if (directionOfRoad){
+            super.setBlockedDirectionEndPointTwo(blocked);
+        }
+    }
 
-    
+    /**
+     * Returns the blocked status of the road, only works if road is going in direction of endpoint one
+     * @throws NullPointerException If road is travelling in direction of endpoint two
+     */
+    @Override
+    public boolean isBlockedDirectionEndPointOne() throws NullPointerException{
+        if (!directionOfRoad){
+            return super.isBlockedDirectionEndPointOne();
+        }
+        throw new NullPointerException();
+    }
+
+    /**
+     * Returns the blocked status of the road, only works if road is going in direction of endpoint two.
+     * @throws NullPointerException If road is travelling in direction of endpoint one.
+     */
+    @Override
+    public boolean isBlockedDirectionEndPointTwo() throws NullPointerException{
+        if (directionOfRoad){
+            return super.isBlockedDirectionEndPointTwo();
+        }
+        throw new NullPointerException();
+    }
+
+    /**
+     * Swaps the direction the road is going.
+     * @post If direction of the road was going in direction of endpoint two, now it is going in direction of endpoint one and vice versa.
+     * | if (directionOfRoad)
+     * |    new.directionOfRoad = true
+     * |    new.startLocation =
+     * |    new.endLocation = 
+     */
+    public void swapRoadDirection(){
+        if (directionOfRoad){
+            directionOfRoad = false;
+            startLocation = ;
+            endLocation = ;
+        }
+        else{
+            directionOfRoad = true;
+            startLocation = ;
+            endLocation = ;
+        }
+    }
 
 }
 

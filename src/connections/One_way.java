@@ -111,4 +111,15 @@ public class One_way extends Road{
      */
     @Override
     public void setBlockedDirectionEndPointOne(boolean blocked){}
+
+    /**
+     * Road never travels in direction of endpoint one
+     * @throws NullPointerException Every time method is called
+     */
+    @Override
+    public boolean isBlockedDirectionEndPointOne() throws NullPointerException{
+        throw new NullPointerException();
+    }
+
+
 }
