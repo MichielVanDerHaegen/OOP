@@ -789,7 +789,9 @@ public abstract class Road {
 //		motorWay.setBlockedDirectionEndPointOne(true);
 //		System.out.println("The motorway was blocked in the direction of the route");
 //		System.out.println("This route is traversable: "+route.isTraversable());
-		
+
+		// ssd
+
 	}
 
 }
