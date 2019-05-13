@@ -221,6 +221,8 @@ public class AlternatingRoad extends Road{
             endLocation = ;
         }
     }
+    
+
 
 }
 
