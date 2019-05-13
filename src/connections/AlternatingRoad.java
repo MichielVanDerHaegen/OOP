@@ -215,13 +215,13 @@ public class AlternatingRoad extends Road{
      * Returns the blocked status of the road, only works if road is going in direction of endpoint two.
      * @throws NullPointerException If road is travelling in direction of endpoint one.
      */
-    @Override
-    public boolean isBlockedDirectionEndPointTwo() throws NullPointerException{
-        if (directionOfRoad){
-            return super.isBlockedDirectionEndPointTwo();
-        }
-        throw new NullPointerException();
-    }
+  @Override
+  public boolean isBlockedDirectionEndPointTwo() throws NullPointerException{
+      if (directionOfRoad){
+      	return super.isBlockedDirectionEndPointTwo();
+      }
+      throw new NullPointerException();
+  }
 
     /**
      * Swaps the direction the road is going.

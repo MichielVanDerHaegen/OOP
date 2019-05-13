@@ -175,7 +175,7 @@ class FullPart3Test {
 			if ( (! Character.isLetter(address.charAt(index))) &&
 				 (! Character.isDigit(address.charAt(index))) &&
 				 (address.charAt(index) != ' ') &&
-				 (address.charAt(1) != ',') )
+				 (address.charAt(index) != ',') )
 				return false;
 		return true;
 	}
