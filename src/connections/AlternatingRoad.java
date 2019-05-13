@@ -99,13 +99,13 @@ public class AlternatingRoad extends Road{
      * If the road is traveling in the direction of endpoint two does nothing, else runs the method from Road.
      * @param delay The new delay time for the road going towards endpoint one
      *
-     * @post if !(directionOfRoad)
-     *      then new.getDelayDirectionOne() == delay
+     * @post The delay in the direction of endpoint one is equal to the given delay, if travelling in the direction of endpoint one
+     * | if !(directionOfRoad)
+     * |    then new.getDelayDirectionOne() == delay
      */
     @Override
     public void setDelayDirectionEndPointOne(float delay) {
-        if (directionOfRoad) {
-        } else {
+        if (!directionOfRoad) {
             super.setDelayDirectionEndPointOne(delay);
         }
     }
@@ -114,16 +114,58 @@ public class AlternatingRoad extends Road{
      * If the road is traveling in the direction of endpoint one does nothing, else runs the method from Road.
      * @param delay The new delay time for the road going towards endpoint one
      *
-     * @post if !(directionOfRoad)
-     *      then new.getDelayDirectionTwo() == delay
+     * @post The delay in the direction of endpoint two is equal to the given delay, if travelling in the direction of endpoint two.
+     * | if (directionOfRoad)
+     * |    then new.getDelayDirectionTwo() == delay
      */
     @Override
     public void setDelayDirectionEndPointTwo(float delay) {
         if (directionOfRoad) {
-        } else {
             super.setDelayDirectionEndPointTwo(delay);
         }
     }
 
+    /**
+     * Gets the delay of endpoint one if travelling in direction of endpoint one.
+     * @throws NullPointerException If travelling in direction of endpoint two.
+     */
+    @Override
+    public float getDelayDirectionEndPointOne() throws NullPointerException{
+        if (!directionOfRoad){
+            return super.getDelayDirectionEndPointOne();
+        }
+        throw new NullPointerException();
+    }
+
+    /**
+     * Gets the delay of endpoint two if travelling in the direction of endpoint two.
+     * @throws NullPointerException If travelling in direction of endpoint one.
+     */
+    @Override
+    public float getDelayDirectionEndPointTwo() throws NullPointerException{
+        if (directionOfRoad){
+            return super.getDelayDirectionEndPointTwo();
+        }
+        throw new NullPointerException();
+    }
+
+    /**
+     * Sets the blocked status of the road to the given value if the road is travelling in the direction of endpoint one.
+     * @param blocked The new blocked status of the road.
+     *
+     * @post The blocked status of the road is equal to the given blocked boolean if the road is travelling in the direction of endpoint one.
+     *  | if (!directionOfRoad)
+     *  |   new.isBlockedDirectionEndPointOne == true
+     */
+    @Override
+    public void setBlockedDirectionEndPointOne(boolean blocked){
+        if (!directionOfRoad){
+            super.setBlockedDirectionEndPointOne(blocked);
+        }
+    }
+
+
+    
 
 }
+

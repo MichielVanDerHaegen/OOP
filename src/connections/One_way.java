@@ -90,11 +90,25 @@ public class One_way extends Road{
     private final Location endLocation;
 
     /**
-     * Does nothing, road only travels in direction of end location.
+     * Does nothing, road only travels in direction of endpoint two, the end location.
      * @param delay The new delay time for the road going towards endpoint one
      */
     @Override
     public void setDelayDirectionEndPointOne(float delay){}
 
+    /**
+     * Road never travels in the direction of endpoint one.
+     * @throws NullPointerException Every time method is called.
+     */
+    @Override
+    public float getDelayDirectionEndPointOne() throws NullPointerException{
+        throw new NullPointerException();
+    }
 
+    /**
+     * Does nothing, road only travels in direction of endpoint two, the end location.
+     * @param blocked The new blocked status of the road.
+     */
+    @Override
+    public void setBlockedDirectionEndPointOne(boolean blocked){}
 }
