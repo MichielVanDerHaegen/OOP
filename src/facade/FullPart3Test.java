@@ -738,6 +738,7 @@ class FullPart3Test {
 		}
 	}
 
+	@Test
 	void reverseTraversalDirection_LegalCase() throws Exception {
 		maxScore += 10;
 		theFacade.reverseTraversalDirection(a1_gent_brussels_alter);

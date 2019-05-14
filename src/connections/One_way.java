@@ -92,9 +92,12 @@ public class One_way extends Road{
     /**
      * Does nothing, road only travels in direction of endpoint two, the end location.
      * @param delay The new delay time for the road going towards endpoint one
+     * @throws NullPointerException Every time method is called
      */
     @Override
-    public void setDelayDirectionEndPointOne(float delay){}
+    public void setDelayDirectionEndPointOne(float delay) throws NullPointerException{
+    	throw new NullPointerException();
+    }
 
     /**
      * Road never travels in the direction of endpoint one.
@@ -108,9 +111,12 @@ public class One_way extends Road{
     /**
      * Does nothing, road only travels in direction of endpoint two, the end location.
      * @param blocked The new blocked status of the road.
+     * @throws NullPointerException Every time method is called
      */
     @Override
-    public void setBlockedDirectionEndPointOne(boolean blocked){}
+    public void setBlockedDirectionEndPointOne(boolean blocked) throws NullPointerException{
+    	throw new NullPointerException();
+    }
 
     /**
      * Road never travels in direction of endpoint one
@@ -121,5 +127,26 @@ public class One_way extends Road{
         throw new NullPointerException();
     }
 
+    /**
+     * Get all valid start locations for this road
+     * For a one way road, this is the startLocation
+     */
+	@Override
+	public Location[] getStartLocations() {
+		// TODO Auto-generated method stub
+		Location[] array = new Location[] {startLocation};
+		return array;
+	}
+
+	/**
+	 * Get all valid end locations for this road
+	 * For a one way road, this is the endLocation
+	 */
+	@Override
+	public Location[] getEndLocations() {
+		// TODO Auto-generated method stub
+		Location[] array = new Location[] {endLocation};
+		return array;
+	}
 
 }

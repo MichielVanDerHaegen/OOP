@@ -41,8 +41,8 @@ public class AlternatingRoad extends Road{
         super(id, location1, location2, length, roadSpeed);
         startLocation = location1;
         endLocation = location2;
-        locationOne = location1;
-        locationTwo = location2;
+        super.location1 = location1;
+        super.location2 = location2;
     }
 
     /**
@@ -87,35 +87,9 @@ public class AlternatingRoad extends Road{
         super(id, location1, location2, length, speedlimit, roadSpeed);
         startLocation = location1;
         endLocation = location2;
-        locationOne = location1;
-        locationTwo = location2;
+        super.location1 = location1;
+        super.location2 = location2;
     }
-
-    /**
-     * The start location of this one-way road.
-     */
-    private Location startLocation;
-
-    /**
-     * The end location of this one-way road.
-     */
-    private Location endLocation;
-
-    /**
-     * The original given location for location one.
-     */
-    private Location locationOne;
-
-    /**
-     * The original given location for location two.
-     */
-    private Location locationTwo;
-
-    /**
-     * Boolean value that tracks the direction of the road, if true then road is moving in direction of endpoint two.
-     */
-    private boolean directionOfRoad = true;
-
 
     /**
      * If the road is traveling in the direction of endpoint two does nothing, else runs the method from Road.
@@ -124,12 +98,15 @@ public class AlternatingRoad extends Road{
      * @post The delay in the direction of endpoint one is equal to the given delay, if travelling in the direction of endpoint one
      * | if !(directionOfRoad)
      * |    then new.getDelayDirectionOne() == delay
+     * @throws NullPointerException If travelling in direction of endpoint two.
      */
     @Override
-    public void setDelayDirectionEndPointOne(float delay) {
+    public void setDelayDirectionEndPointOne(float delay) throws NullPointerException {
         if (!directionOfRoad) {
             super.setDelayDirectionEndPointOne(delay);
         }
+        else
+        	throw new NullPointerException();
     }
 
     /**
@@ -139,12 +116,15 @@ public class AlternatingRoad extends Road{
      * @post The delay in the direction of endpoint two is equal to the given delay, if travelling in the direction of endpoint two.
      * | if (directionOfRoad)
      * |    then new.getDelayDirectionTwo() == delay
+     * @throws NullPointerException If not travelling in direction of endpoint two.
      */
     @Override
-    public void setDelayDirectionEndPointTwo(float delay) {
+    public void setDelayDirectionEndPointTwo(float delay) throws NullPointerException {
         if (directionOfRoad) {
             super.setDelayDirectionEndPointTwo(delay);
         }
+        else
+        	throw new NullPointerException();
     }
 
     /**
@@ -156,7 +136,8 @@ public class AlternatingRoad extends Road{
         if (!directionOfRoad){
             return super.getDelayDirectionEndPointOne();
         }
-        throw new NullPointerException();
+        else
+        	throw new NullPointerException();
     }
 
     /**
@@ -168,7 +149,8 @@ public class AlternatingRoad extends Road{
         if (directionOfRoad){
             return super.getDelayDirectionEndPointTwo();
         }
-        throw new NullPointerException();
+        else
+        	throw new NullPointerException();
     }
 
     /**
@@ -177,12 +159,15 @@ public class AlternatingRoad extends Road{
      * @post The blocked status of the road is equal to the given blocked boolean if the road is travelling in the direction of endpoint one.
      *  | if (!directionOfRoad)
      *  |   new.isBlockedDirectionEndPointOne == blocked
+     * @throws NullPointerException If road is travelling in direction of endpoint two
      */
     @Override
-    public void setBlockedDirectionEndPointOne(boolean blocked){
+    public void setBlockedDirectionEndPointOne(boolean blocked) throws NullPointerException{
         if (!directionOfRoad){
             super.setBlockedDirectionEndPointOne(blocked);
         }
+        else
+        	throw new NullPointerException();
     }
 
     /**
@@ -191,12 +176,15 @@ public class AlternatingRoad extends Road{
      * @post The blocked status of the road is equal to the given blocked boolean if the road is travelling in the direction of endpoint two.
      * |    if (directionOfRoad)
      *          new.isBlockedDirectionEndPointTwo == blocked
+     * @throws NullPointerException If road is not travelling in direction of endpoint two
      */
     @Override
-    public void setBlockedDirectionEndPointTwo(boolean blocked){
+    public void setBlockedDirectionEndPointTwo(boolean blocked) throws NullPointerException{
         if (directionOfRoad){
             super.setBlockedDirectionEndPointTwo(blocked);
         }
+        else
+        	throw new NullPointerException();
     }
 
     /**
@@ -208,45 +196,45 @@ public class AlternatingRoad extends Road{
         if (!directionOfRoad){
             return super.isBlockedDirectionEndPointOne();
         }
-        throw new NullPointerException();
+        else
+        	throw new NullPointerException();
     }
 
     /**
      * Returns the blocked status of the road, only works if road is going in direction of endpoint two.
      * @throws NullPointerException If road is travelling in direction of endpoint one.
      */
-  @Override
-  public boolean isBlockedDirectionEndPointTwo() throws NullPointerException{
+    @Override
+    public boolean isBlockedDirectionEndPointTwo() throws NullPointerException {
       if (directionOfRoad){
       	return super.isBlockedDirectionEndPointTwo();
       }
-      throw new NullPointerException();
-  }
+      else
+    	  throw new NullPointerException();
+  	}
+
 
     /**
-     * Swaps the direction the road is going.
-     * @post If direction of the road was going in direction of endpoint two, now it is going in direction of endpoint one and vice versa.
-     * | if (directionOfRoad)
-     * |    new.directionOfRoad = false
-     * |    new.startLocation = locationTwo
-     * |    new.endLocation = locationOne
-     * | else
-     * |    new.directionOfRoad = true
-     * |    new.startLocation = locationOne
-     * |    new.endLocation = locationTwo
-     */
-    public void swapRoadDirection(){
-        if (directionOfRoad){
-            directionOfRoad = false;
-            startLocation = locationTwo;
-            endLocation = locationOne;
-        }
-        else{
-            directionOfRoad = true;
-            startLocation = locationOne;
-            endLocation = locationTwo;
-        }
-    }
+	 * Get all valid start locations for this road
+	 * For an alternating road, this returns the start location, which is updated by changing the direction
+	 */
+	@Override
+	public Location[] getStartLocations() {
+		// TODO Auto-generated method stub
+		Location[] array = new Location[] {startLocation};
+		return array;
+	}
+
+	/**
+	 * Get all valid end locations for this road
+ 	 * For an alternating road, this returns the end location, which is updated by changing the direction
+	 */
+	@Override
+	public Location[] getEndLocations() {
+		// TODO Auto-generated method stub
+		Location[] array = new Location[] {endLocation};
+		return array;
+	}
     
 
 

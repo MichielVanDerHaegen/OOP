@@ -87,17 +87,32 @@ public abstract class Road {
 	/**
 	 * The first location (endpoint) of the road
 	 */
-	private Location location1;
+	protected Location location1;
 	/**
 	 * The second location (endpoint) of the road
 	 */
-	private Location location2;
+	protected Location location2;
 
 	/**
 	 * Variable registering whether or not this road has been terminated.
 	 */
-	private boolean isTerminated = false;
+	protected boolean isTerminated = false;
 
+    /**
+     * Boolean value that tracks the direction of the road, if true then road is moving in direction of endpoint two.
+     */
+	protected boolean directionOfRoad = true;
+
+	 /**
+     * The start location of this one-way road.
+     */
+	protected Location startLocation;
+
+    /**
+     * The end location of this one-way road.
+     */
+	protected Location endLocation;
+    
 	/**
 	 * Initializes a new non-terminated road with given ID, first and second location and
 	 * roadspeed. The road will be given the standard speed limit of 19.5 m/s.
@@ -736,6 +751,48 @@ public abstract class Road {
 		}
 	}
 	
+	/**
+	 * Returns all valid start locations for this road
+	 */
+	public abstract Location[] getStartLocations();
+	
+	/**
+	 * Returns all valid end locations for this road
+	 */
+	public abstract Location[] getEndLocations();
+	
+	
+    /**
+     * Swaps the direction the road is going.
+     * @throws ClassCastException if the road upon this method is called is not an instance of an alternating road
+     * @post If direction of the road was going in direction of endpoint two, now it is going in direction of endpoint one and vice versa.
+     * | if (directionOfRoad)
+     * |    new.directionOfRoad = false
+     * |    new.startLocation = location2
+     * |    new.endLocation = location1
+     * | else
+     * |    new.directionOfRoad = true
+     * |    new.startLocation = location2
+     * |    new.endLocation = location1
+     */
+    public void swapRoadDirection() throws ClassCastException {
+        if(this instanceof AlternatingRoad){
+    	if(directionOfRoad){
+            directionOfRoad = false;
+            startLocation = location2;
+            endLocation = location1;
+        }
+        else{
+            directionOfRoad = true;
+            startLocation = location2;
+            endLocation = location1;
+        }
+        }
+        else
+        	throw new ClassCastException();
+        
+    }
+
 	public static void main(String[] args) {
 		
 // 	THE CODE FOR THE MAIN METHOD OF PART 1

@@ -246,7 +246,11 @@ public interface Facade {
 	 */
 	default Location[] getStartLocations(Road road) throws ModelException {
 		// To be implemented
-		return null;
+		try {
+			return road.getStartLocations();
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
@@ -256,7 +260,11 @@ public interface Facade {
 	 */
 	default Location[] getEndLocations(Road road) throws ModelException {
 		// To be implemented
-		return null;
+		try {
+			return road.getEndLocations();
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
@@ -340,11 +348,11 @@ public interface Facade {
 	default float getRoadDelayinDirection(Road road, boolean directionForth) throws ModelException {
 		// To be implemented
 		try {
-			if(directionForth)
+			if (directionForth)
 				return road.getDelayDirectionEndPointTwo();
 			else
 				return road.getDelayDirectionEndPointOne();
-			
+
 		} catch (Throwable exc) {
 			throw new ModelException();
 		}
@@ -360,11 +368,10 @@ public interface Facade {
 	default void changeRoadDelayinDirection(Road road, float delay, boolean directionForth) throws ModelException {
 		// To be implemented
 		try {
-			if(directionForth)
+			if (directionForth)
 				road.setDelayDirectionEndPointTwo(delay);
 			else
 				road.setDelayDirectionEndPointOne(delay);
-			
 		} catch (Throwable exc) {
 			throw new ModelException();
 		}
@@ -380,14 +387,15 @@ public interface Facade {
 	default boolean getRoadIsBlocked(Road road, boolean directionForth) throws ModelException {
 		// To be implemented
 		try {
-			if(directionForth)
+			if (directionForth)
 				return road.isBlockedDirectionEndPointTwo();
 			else
 				return road.isBlockedDirectionEndPointOne();
-			
+
 		} catch (Throwable exc) {
 			throw new ModelException();
-		}	}
+		}
+	}
 
 	/**
 	 * Set the blocked state of the given road in the direction from the first end
@@ -400,11 +408,11 @@ public interface Facade {
 	default void changeRoadBlockedState(Road road, boolean flag, boolean directionForth) throws ModelException {
 		// To be implemented
 		try {
-			if(directionForth)
+			if (directionForth)
 				road.setBlockedDirectionEndPointTwo(flag);
 			else
 				road.setBlockedDirectionEndPointOne(flag);
-			
+
 		} catch (Throwable exc) {
 			throw new ModelException();
 		}
@@ -417,7 +425,7 @@ public interface Facade {
 	default void reverseTraversalDirection(Road road) throws ModelException {
 		// To be implemented
 		try {
-			//road.swapRoadDirection();
+			road.swapRoadDirection();
 		} catch (Throwable exc) {
 			throw new ModelException();
 		}

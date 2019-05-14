@@ -66,6 +66,26 @@ public class Two_way extends Road{
     public Two_way(String id, Location location1, Location location2, int length, float speedlimit, float roadSpeed) {
         super(id, location1, location2, length, speedlimit, roadSpeed);
     }
+    
+    /**
+	 * Get all valid start locations for this road
+	 * For a two way road, these are all locations
+	 */
+	@Override
+	public Location[] getStartLocations() {
+		// TODO Auto-generated method stub
+		return getEndPoints();
+	}
+
+	/**
+	 * Get all valid end locations for this road
+	 * For a two way road, these are all locations
+	 */
+	@Override
+	public Location[] getEndLocations() {
+		// TODO Auto-generated method stub
+		return getEndPoints();
+	}
 
 
 }
