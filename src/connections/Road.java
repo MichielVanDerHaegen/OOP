@@ -26,7 +26,7 @@ import be.kuleuven.cs.som.annotate.*;
  * @author Sam Haberman
  */
 
-public abstract class Road {
+public abstract class Road extends Segments {
 	/**
 	 * The unique identifier of the road
 	 */
@@ -754,11 +754,13 @@ public abstract class Road {
 	/**
 	 * Returns all valid start locations for this road
 	 */
+	@Override
 	public abstract Location[] getStartLocations();
 	
 	/**
 	 * Returns all valid end locations for this road
 	 */
+	@Override
 	public abstract Location[] getEndLocations();
 	
 	

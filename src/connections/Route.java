@@ -10,7 +10,7 @@ import java.util.Arrays;
  * @author Michiel Van der Haegen
  * @author Sam Haberman
  */
-public class Route {
+public class Route extends Segments{
 
 	/**
 	 * Variable registering the startLocation of the route
@@ -140,15 +140,19 @@ public class Route {
 	 * Returns the start location of the Route
 	 *
 	 */
-	public Location getStartLocation() {
-		return startLocation;
+	@Override
+	public Location[] getStartLocations() {
+		Location[] array = new Location[] {startLocation};
+		return array;
 	}
 
 	/**
 	 * Returns the end location of the Route
 	 */
-	public Location getEndLocation() {
-		 return endLocation;
+	@Override
+	public Location[] getEndLocations() {
+		Location[] array = new Location[] {endLocation};
+		return array;
 	}
 	/**
 	 * Returns an array of Roads consisting of each road segment in the Route
@@ -297,5 +301,6 @@ public class Route {
 		}
 		return string1+segments+string2+locations+"\n"+"Blocked in the direction of the route: "+!isTraversable()+"\n";
 	}
+
 
 }

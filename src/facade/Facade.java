@@ -455,7 +455,7 @@ public interface Facade {
 	default Location getRouteStartLocation(Route route) throws ModelException {
 		// To be implemented
 		try {
-			return route.getStartLocation();
+			return route.getStartLocations();
 		} catch (Throwable exc) {
 			throw new ModelException();
 		}
