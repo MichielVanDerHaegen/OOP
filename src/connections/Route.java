@@ -22,7 +22,7 @@ public class Route {
 	/**
 	 * Variable registering the set of roadSegments of the route
 	 */
-	private Road[] roadSegments;
+	private Object[] roadSegments;
 	
 	/**
 	 * Variable registering the list of locations for each route
@@ -47,7 +47,7 @@ public class Route {
 	 * @post The road segments of this route are equal to the given road segments.
 	 * 	|	new.getRouteSegments() == roads
 	 */
-	public Route(Location startLocation, Road... roads) throws IllegalArgumentException, NullPointerException {
+	public Route(Location startLocation, Object... roads) throws IllegalArgumentException, NullPointerException {
 		if (startLocation == null)
 			throw new NullPointerException();
 		this.startLocation = startLocation;
@@ -89,14 +89,14 @@ public class Route {
 	 * 	|	 	else
 	 *  |	 		new.getEndLocation() == roads[-1].getEndPoint1()
 	 */
-	public boolean areValidSegments(Road... roads) {
+	public boolean areValidSegments(Object... roads) {
 		Location startLocation = this.startLocation;
 		locationList.add(startLocation);
 		if (roads.length == 0) {
 			this.endLocation=startLocation;
 			return true;
 		}
-		if (roads[0].getEndPoint1() == startLocation || roads[0].getEndPoint2() == startLocation) {
+		if (((Road) roads[0]).getEndPoint1() == startLocation || ((Road) roads[0]).getEndPoint2() == startLocation) {
 			if (roads.length == 1) {
 				locationList.add(getOtherLocation(roads[0], startLocation));
 				this.endLocation=getOtherLocation(roads[0], startLocation);
@@ -105,7 +105,7 @@ public class Route {
 			startLocation = getOtherLocation(roads[0], startLocation);
 			for (int i = 1; i <= roads.length - 1; i++) {
 				locationList.add(startLocation);
-				assert (roads[i].getEndPoint1() == startLocation || roads[i].getEndPoint2() == startLocation);
+				assert (((Road) roads[i]).getEndPoint1() == startLocation || ((Road) roads[i]).getEndPoint2() == startLocation);
 				startLocation = getOtherLocation(roads[i], startLocation);
 			}
 			locationList.add(startLocation);
@@ -129,11 +129,11 @@ public class Route {
 	 * 		|	if (road.getEndPoint2() == startLocation)
 	 * 		|	return road.getEndPoint1()
 	 */
-	public Location getOtherLocation(Road road, Location startLocation) {
-		if (road.getEndPoint1() == startLocation)
-			return road.getEndPoint2();
+	public Location getOtherLocation(Object road, Location startLocation) {
+		if (((Road) road).getEndPoint1() == startLocation)
+			return ((Road) road).getEndPoint2();
 		else
-			return road.getEndPoint1();
+			return ((Road) road).getEndPoint1();
 	}
 
 	/**
@@ -153,7 +153,7 @@ public class Route {
 	/**
 	 * Returns an array of Roads consisting of each road segment in the Route
 	 */
-	public Road[] getRouteSegements() {
+	public Object[] getRouteSegements() {
 		return roadSegments.clone();
 	}
 
@@ -168,10 +168,10 @@ public class Route {
 	 * 	|	if areValidSegments(roadSegments)
 	 * 	|		new.roadSegments.contains(road)
 	 */
-	public void addRouteSegment(Road road) throws IllegalArgumentException {
+	public void addRouteSegment(Object road) throws IllegalArgumentException {
 		if (road == null)
 			throw new IllegalArgumentException();
-		ArrayList<Road> list = new ArrayList<Road>(Arrays.asList(roadSegments));
+		ArrayList<Object> list = new ArrayList<Object>(Arrays.asList(roadSegments));
 		list.add(road);
 		roadSegments = new Road[list.size()];
 		list.toArray(roadSegments);
@@ -208,7 +208,7 @@ public class Route {
 	public void removeRouteSegment(int index) throws IndexOutOfBoundsException {
 		if (index < 0 || index >= roadSegments.length)
 			throw new IndexOutOfBoundsException();
-		ArrayList<Road> list = new ArrayList<Road>(Arrays.asList(roadSegments));
+		ArrayList<Object> list = new ArrayList<Object>(Arrays.asList(roadSegments));
 		list.remove(index);
 		roadSegments = new Road[list.size()];
 		list.toArray(roadSegments);
@@ -218,16 +218,24 @@ public class Route {
 	/**
 	 * Returns the total length of the road segments in this route.
 	 *
-	 * @return the sum of lengths of all roads that are a part of this Route.
+	 * @return the sum of lengths of all roads and subroutes that are a part of this Route.
 	 *	| int length = 0
 	 *	| for road in roadSegments
-	 *	|	length += road.getLength
+	 *	|	if(road instanceof Road)
+	 *	|		length += road.getLength
+	 *	|	if(road instanceof Route
+	 *	| 		length += road.getTotalLength()
 	 *	| return length
 	 */
 	public int getTotalLength() {
 		int length = 0;
-		for (Road road : roadSegments) {
-			length += road.getLength();
+		for (Object road : roadSegments) {
+			if(road instanceof Road) {
+				length += ((Road) road).getLength();
+			}
+			if(road instanceof Route) {
+				length += ((Route) road).getTotalLength();
+			}
 		}
 		return length;
 	}
@@ -246,12 +254,12 @@ public class Route {
 	 */
 	public boolean isTraversable() {
 		for(int i=0;i<=roadSegments.length-1;i++) {
-			if(locationList.get(i)==roadSegments[i].getEndPoint1()) {
-				if(roadSegments[i].isBlockedDirectionEndPointTwo())
+			if(locationList.get(i)==((Road) roadSegments[i]).getEndPoint1()) {
+				if(((Road) roadSegments[i]).isBlockedDirectionEndPointTwo())
 					return false;
 			}
-			if(locationList.get(i)==roadSegments[i].getEndPoint2()) {
-				if(roadSegments[i].isBlockedDirectionEndPointOne())
+			if(locationList.get(i)==((Road) roadSegments[i]).getEndPoint2()) {
+				if(((Road) roadSegments[i]).isBlockedDirectionEndPointOne())
 					return false;
 			}	
 		}
@@ -278,9 +286,9 @@ public class Route {
 	@Override
 	public String toString() {
 		String string1 = new String("This route has the following properties:"+"\n"+"It connects these segments: ");
-		String segments = roadSegments[0].getID();
+		String segments = ((Road) roadSegments[0]).getID();
 		for(int i = 1; i < roadSegments.length; i++) {
-			segments = segments + ", "+roadSegments[i].getID();
+			segments = segments + ", "+((Road) roadSegments[i]).getID();
 		}	
 		String string2 = new String("\n"+"With these respective locations: ");
 		String locations = locationList.get(0).getAddress();

@@ -442,7 +442,11 @@ public interface Facade {
 	 */
 	default Route createRoute(Location startLocation, Object... segments) throws Exception {
 		// To be implemented
-		return null;
+		try {
+			return new Route(startLocation, segments);
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
@@ -450,7 +454,11 @@ public interface Facade {
 	 */
 	default Location getRouteStartLocation(Route route) throws ModelException {
 		// To be implemented
-		return null;
+		try {
+			return route.getStartLocation();
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
@@ -459,7 +467,11 @@ public interface Facade {
 	 */
 	default Object[] getRouteSegments(Route route) throws ModelException {
 		// To be implemented
-		return null;
+		try {
+			return route.getRouteSegements();
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
@@ -469,6 +481,11 @@ public interface Facade {
 	 */
 	default void addRouteSegment(Route route, Object segment) throws ModelException {
 		// To be implemented
+		try{
+			route.addRouteSegment(segment);
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
@@ -477,6 +494,11 @@ public interface Facade {
 	 */
 	default void removeRouteSegment(Route route, int index) throws ModelException {
 		// To be implemented
+		try {
+			route.removeRouteSegment(index);
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
@@ -484,7 +506,11 @@ public interface Facade {
 	 */
 	default int getRouteTotalLength(Route route) throws ModelException {
 		// To be implemented
-		return -1;
+		try {
+			return route.getTotalLength();
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
@@ -493,7 +519,11 @@ public interface Facade {
 	 */
 	default boolean isRouteTraversable(Route route) throws ModelException {
 		// To be implemented
-		return false;
+		try {
+		return route.isTraversable();
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 	/**
@@ -502,7 +532,11 @@ public interface Facade {
 	 */
 	default Location[] getAllLocations(Route route) throws ModelException {
 		// To be implemented
-		return null;
+		try {
+			return route.getAllLocations();
+		} catch (Throwable exc) {
+			throw new ModelException();
+		}
 	}
 
 }
