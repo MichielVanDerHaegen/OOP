@@ -99,17 +99,17 @@ public class Route extends Segments{
 //I find this one pretty hard. So, if the segments are length zero, then we are good, just set the variables. If the length is greater than zero
 //we need to check wether the endpoint matches on of the next segment's locations, and so on. BUT, for alternating roads the array is of size two
 //(both endpoints are valid start/endpoints. so we have to find a way that checks for the length of the getter?
-		if(((Segments) roads[0]).getStartLocations().contains(startLocation)){
+		if(Arrays.asList(((Segments) roads[0]).getStartLocations()).contains(startLocation)){
 			if(roads.length == 1) {
-				locationList.add(getOtherLocation(roads[0], startLocation));
-				this.endLocation=getOtherLocation(roads[0], startLocation);
+				locationList.add(((Segments) roads[0]).getOtherLocation(startLocation));
+				this.endLocation=((Segments) roads[0]).getOtherLocation(startLocation);
 				return true;
 			}
-		startLocation = getOtherLocation(roads[0], startLocation);
+		startLocation = ((Segments) roads[0]).getOtherLocation(startLocation);
 		for (int i = 1; i <= roads.length - 1; i++) {
 			locationList.add(startLocation);
 			assert (((Segments) roads[i]).getStartLocations()[0] == startLocation || ((Segments) roads[i]).getEndLocations()[0] == startLocation);
-			startLocation = getOtherLocation(roads[i], startLocation);
+			startLocation = ((Segments) roads[i]).getOtherLocation(startLocation);
 		}
 		locationList.add(startLocation);
 		this.endLocation=startLocation;
@@ -158,26 +158,11 @@ public class Route extends Segments{
 //			return ((Road) road).getEndPoint1();
 //	}
 	
-	public Location getOtherLocation(Object segment, Location startLocation) {
-		if(segment instanceof Road){
-			if(((Segments) segment).getStartLocations().length==1){
-				if(((Segments) segment).getStartLocations()[0] == startLocation)
-					return ((Segments) segment).getEndLocations()[0];
-				else
-					return ((Segments) segment).getStartLocations()[0];
-			}
-			if(((Segments) segment).getStartLocations()[0] == startLocation)
-				return ((Segments) segment).getStartLocations()[1];
-			else
-				return ((Segments) segment).getStartLocations()[0];
-			}
-		if(segment instanceof Route){
-			if(((Segments) segment).getStartLocations()[0] == startLocation)
-				return ((Segments) segment).getEndLocations()[0];
-			else
-			return ((Segments) segment).getStartLocations()[0];
-		}
-		return null;
+	@Override
+	public Location getOtherLocation(Location location) {
+		if(location==startLocation)
+			return endLocation;
+		return startLocation;
 	}
 
 	/**

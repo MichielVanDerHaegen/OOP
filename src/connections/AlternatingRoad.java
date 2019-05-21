@@ -235,6 +235,14 @@ public class AlternatingRoad extends Road{
 		Location[] array = new Location[] {endLocation};
 		return array;
 	}
+
+	@Override
+	public Location getOtherLocation(Location location) {
+		// TODO Auto-generated method stub
+		if(location==startLocation)
+			return endLocation;
+		return startLocation;
+	}
     
 
 

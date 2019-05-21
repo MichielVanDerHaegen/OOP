@@ -87,4 +87,12 @@ public class Two_way extends Road{
 		return getEndPoints();
 	}
 
+	@Override
+	public Location getOtherLocation(Location location) {
+		// TODO Auto-generated method stub
+		if(location==startLocation)
+			return endLocation;
+		return startLocation;
+	}
+
 }
