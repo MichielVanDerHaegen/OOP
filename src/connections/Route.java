@@ -90,6 +90,14 @@ public class Route extends Segments{
 	 *  |	 		new.getEndLocation() == roads[-1].getEndPoint1()
 	 */
 	public boolean areValidSegments(Object... segments) {
+		for (int i = 0; i <= segments.length - 1; i++) {
+			if(((Segments) segments[i]).equals(this)) {
+				return false;
+			}
+			if(segments[i].getClass()==Route.class) {
+				((Route) segments[i]).areValidSegments(segments[i]);
+			}
+		}
 		Location startLocation = this.startLocation;
 		locationList.add(startLocation);
 		if (segments.length == 0) {
@@ -105,7 +113,12 @@ public class Route extends Segments{
 		startLocation = ((Segments) segments[0]).getOtherLocation(startLocation);
 		for (int i = 1; i <= segments.length - 1; i++) {
 			locationList.add(startLocation);
-			assert (((Segments) segments[i]).getStartLocations()[0] == startLocation || ((Segments) segments[i]).getEndLocations()[0] == startLocation);
+			if(((Segments) segments[i]).getStartLocations().length==1){
+				assert (((Segments) segments[i]).getStartLocations()[0] == startLocation || ((Segments) segments[i]).getEndLocations()[0] == startLocation);
+			}
+			else {
+				assert (((Segments) segments[i]).getStartLocations()[0] == startLocation || ((Segments) segments[i]).getEndLocations()[1] == startLocation);
+			}
 			startLocation = ((Segments) segments[i]).getOtherLocation(startLocation);
 		}
 		locationList.add(startLocation);
