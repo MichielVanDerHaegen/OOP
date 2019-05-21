@@ -96,6 +96,7 @@ public class Route extends Segments{
 			this.endLocation=startLocation;
 			return true;
 		}
+		//if(((Segments) roads[0]).getStartLocations().length==1)
 		if (((Segments) roads[0]).getStartLocations()[0] == startLocation || ((Segments) roads[0]).getEndLocations()[0] == startLocation) {
 			if (roads.length == 1) {
 				locationList.add(getOtherLocation(roads[0], startLocation));
