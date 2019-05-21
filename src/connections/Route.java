@@ -34,8 +34,8 @@ public class Route extends Segments{
 	 *
 	 * @param startLocation
 	 * 		The start location of this route
-	 * @param roads
-	 * 		The connecting road segments that are a part of this route
+	 * @param segments
+	 * 		The connecting segments that are a part of this route
 	 * @throws IllegalArgumentException
 	 * 		The given road segments are not valid connecting segments.
 	 * 	|	!areValidSegments(roads)
@@ -47,13 +47,13 @@ public class Route extends Segments{
 	 * @post The road segments of this route are equal to the given road segments.
 	 * 	|	new.getRouteSegments() == roads
 	 */
-	public Route(Location startLocation, Object... roads) throws IllegalArgumentException, NullPointerException {
+	public Route(Location startLocation, Object... segments) throws IllegalArgumentException, NullPointerException {
 		if (startLocation == null)
 			throw new NullPointerException();
 		this.startLocation = startLocation;
-		if (!areValidSegments(roads))
+		if (!areValidSegments(segments))
 			throw new IllegalArgumentException();
-		roadSegments = roads.clone();
+		roadSegments = segments.clone();
 	}
 
 	/**
@@ -89,52 +89,30 @@ public class Route extends Segments{
 	 * 	|	 	else
 	 *  |	 		new.getEndLocation() == roads[-1].getEndPoint1()
 	 */
-	public boolean areValidSegments(Object... roads) {
+	public boolean areValidSegments(Object... segments) {
 		Location startLocation = this.startLocation;
 		locationList.add(startLocation);
-		if (roads.length == 0) {
+		if (segments.length == 0) {
 			this.endLocation=startLocation;
 			return true;
 		}
-//I find this one pretty hard. So, if the segments are length zero, then we are good, just set the variables. If the length is greater than zero
-//we need to check wether the endpoint matches on of the next segment's locations, and so on. BUT, for alternating roads the array is of size two
-//(both endpoints are valid start/endpoints. so we have to find a way that checks for the length of the getter?
-		if(Arrays.asList(((Segments) roads[0]).getStartLocations()).contains(startLocation)){
-			if(roads.length == 1) {
-				locationList.add(((Segments) roads[0]).getOtherLocation(startLocation));
-				this.endLocation=((Segments) roads[0]).getOtherLocation(startLocation);
+		if(Arrays.asList(((Segments) segments[0]).getStartLocations()).contains(startLocation)){
+			if(segments.length == 1) {
+				locationList.add(((Segments) segments[0]).getOtherLocation(startLocation));
+				this.endLocation=((Segments) segments[0]).getOtherLocation(startLocation);
 				return true;
 			}
-		startLocation = ((Segments) roads[0]).getOtherLocation(startLocation);
-		for (int i = 1; i <= roads.length - 1; i++) {
+		startLocation = ((Segments) segments[0]).getOtherLocation(startLocation);
+		for (int i = 1; i <= segments.length - 1; i++) {
 			locationList.add(startLocation);
-			assert (((Segments) roads[i]).getStartLocations()[0] == startLocation || ((Segments) roads[i]).getEndLocations()[0] == startLocation);
-			startLocation = ((Segments) roads[i]).getOtherLocation(startLocation);
+			assert (((Segments) segments[i]).getStartLocations()[0] == startLocation || ((Segments) segments[i]).getEndLocations()[0] == startLocation);
+			startLocation = ((Segments) segments[i]).getOtherLocation(startLocation);
 		}
 		locationList.add(startLocation);
 		this.endLocation=startLocation;
 		return true;
 	}
 	return false;	
-		
-
-//		if (((Segments) roads[0]).getStartLocations()[0] == startLocation || ((Segments) roads[0]).getEndLocations()[0] == startLocation) {
-//			if (roads.length == 1) {
-//				locationList.add(getOtherLocation(roads[0], startLocation));
-//				this.endLocation=getOtherLocation(roads[0], startLocation);
-//				return true;
-//			}
-//			startLocation = getOtherLocation(roads[0], startLocation);
-//			for (int i = 1; i <= roads.length - 1; i++) {
-//				locationList.add(startLocation);
-//				assert (((Segments) roads[i]).getStartLocations()[0] == startLocation || ((Segments) roads[i]).getEndLocations()[0] == startLocation);
-//				startLocation = getOtherLocation(roads[i], startLocation);
-//			}
-//			locationList.add(startLocation);
-//			this.endLocation=startLocation;
-//			return true;
-//		}
-//		return false;
 	}
 
 	/**
@@ -151,12 +129,6 @@ public class Route extends Segments{
 	 * 		|	if (road.getEndPoint2() == startLocation)
 	 * 		|	return road.getEndPoint1()
 	 */
-//	public Location getOtherLocation(Object road, Location startLocation) {
-//		if (((Road) road).getEndPoint1() == startLocation)
-//			return ((Road) road).getEndPoint2();
-//		else
-//			return ((Road) road).getEndPoint1();
-//	}
 	
 	@Override
 	public Location getOtherLocation(Location location) {

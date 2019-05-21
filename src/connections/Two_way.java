@@ -74,7 +74,8 @@ public class Two_way extends Road{
 	@Override
 	public Location[] getStartLocations() {
 		// TODO Auto-generated method stub
-		return getEndPoints();
+		Location[] array = new Location[] {getEndPoints()[0], getEndPoints()[1]};
+		return array;
 	}
 
 	/**
@@ -84,15 +85,16 @@ public class Two_way extends Road{
 	@Override
 	public Location[] getEndLocations() {
 		// TODO Auto-generated method stub
-		return getEndPoints();
+		Location[] array = new Location[] {getEndPoints()[1], getEndPoints()[0]};
+		return array;
 	}
 
 	@Override
 	public Location getOtherLocation(Location location) {
 		// TODO Auto-generated method stub
-		if(location==startLocation)
-			return endLocation;
-		return startLocation;
+		if(location==getStartLocations()[0])
+			return getStartLocations()[1];
+		return getStartLocations()[0];
 	}
 
 }
