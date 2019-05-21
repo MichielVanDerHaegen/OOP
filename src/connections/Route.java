@@ -96,7 +96,7 @@ public class Route extends Segments{
 			this.endLocation=startLocation;
 			return true;
 		}
-		if (((Road) roads[0]).getEndPoint1() == startLocation || ((Road) roads[0]).getEndPoint2() == startLocation) {
+		if (((Segments) roads[0]).getStartLocations()[0] == startLocation || ((Segments) roads[0]).getEndLocations()[0] == startLocation) {
 			if (roads.length == 1) {
 				locationList.add(getOtherLocation(roads[0], startLocation));
 				this.endLocation=getOtherLocation(roads[0], startLocation);
@@ -105,7 +105,7 @@ public class Route extends Segments{
 			startLocation = getOtherLocation(roads[0], startLocation);
 			for (int i = 1; i <= roads.length - 1; i++) {
 				locationList.add(startLocation);
-				assert (((Road) roads[i]).getEndPoint1() == startLocation || ((Road) roads[i]).getEndPoint2() == startLocation);
+				assert (((Segments) roads[i]).getStartLocations()[0] == startLocation || ((Segments) roads[i]).getEndLocations()[0] == startLocation);
 				startLocation = getOtherLocation(roads[i], startLocation);
 			}
 			locationList.add(startLocation);
@@ -231,15 +231,11 @@ public class Route extends Segments{
 	 *	| 		length += road.getTotalLength()
 	 *	| return length
 	 */
-	public int getTotalLength() {
+	@Override
+	public int getLength() {
 		int length = 0;
 		for (Object road : roadSegments) {
-			if(road instanceof Road) {
-				length += ((Road) road).getLength();
-			}
-			if(road instanceof Route) {
-				length += ((Route) road).getTotalLength();
-			}
+			length += ((Segments) road).getLength();
 		}
 		return length;
 	}

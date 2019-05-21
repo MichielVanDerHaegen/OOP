@@ -455,7 +455,7 @@ public interface Facade {
 	default Location getRouteStartLocation(Route route) throws ModelException {
 		// To be implemented
 		try {
-			return route.getStartLocations();
+			return route.getStartLocations()[0];
 		} catch (Throwable exc) {
 			throw new ModelException();
 		}
@@ -507,7 +507,7 @@ public interface Facade {
 	default int getRouteTotalLength(Route route) throws ModelException {
 		// To be implemented
 		try {
-			return route.getTotalLength();
+			return route.getLength();
 		} catch (Throwable exc) {
 			throw new ModelException();
 		}

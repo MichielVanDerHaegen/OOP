@@ -87,5 +87,4 @@ public class Two_way extends Road{
 		return getEndPoints();
 	}
 
-
 }

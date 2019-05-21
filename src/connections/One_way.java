@@ -148,5 +148,6 @@ public class One_way extends Road{
 		Location[] array = new Location[] {endLocation};
 		return array;
 	}
+	
 
 }

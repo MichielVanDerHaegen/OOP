@@ -358,6 +358,7 @@ public abstract class Road extends Segments {
 	 * Returns the length of this road.
 	 */
 	@Basic
+	@Override
 	public int getLength() {
 		return this.length;
 	}
@@ -750,18 +751,6 @@ public abstract class Road extends Segments {
 			idArray.remove(this.ID);
 		}
 	}
-	
-	/**
-	 * Returns all valid start locations for this road
-	 */
-	@Override
-	public abstract Location[] getStartLocations();
-	
-	/**
-	 * Returns all valid end locations for this road
-	 */
-	@Override
-	public abstract Location[] getEndLocations();
 	
 	
     /**

@@ -11,4 +11,9 @@ public abstract class Segments {
 	 * Returns all valid end locations for this road
 	 */
 	public abstract Location[] getEndLocations();
+	
+	
+	public abstract int getLength();
+	
+
 }
