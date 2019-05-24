@@ -290,44 +290,28 @@ public class Route extends Segments{
 	 */
 	public Location[] getAllLocations() {
 		ArrayList<Object> list = new ArrayList<Object>();
-		Location tracker=startLocation;
-		if(roadSegments.length==0) {
-			list.add(tracker);
-		}
-		else if(roadSegments.length==1) {
-			if(roadSegments[0].getClass()==Route.class) {
-				ArrayList<Location> sublist = new ArrayList<Location>(); 
-				sublist.addAll(Arrays.asList(((Route) roadSegments[0]).getAllLocations()));
-				sublist.remove(0);
-				list.addAll(sublist);
+		Location tracker = this.startLocation;
+		list.add(tracker);
+		if (roadSegments.length == 0) {
+			
+		} else if (roadSegments.length == 1) {
+			if (roadSegments[0].getClass() == Route.class) {
+				return ((Route) roadSegments[0]).getAllLocations();
+			} else {
+				list.add(getOtherLocation(tracker));
 			}
-			list.add(tracker);
-			list.add(getOtherLocation(tracker));
-		}
-		else {
-			for(int i = 0; i <= roadSegments.length-1;i++) {
-				if(roadSegments[i].getClass()==Route.class) {
-					ArrayList<Location> sublist = new ArrayList<Location>(); 
+		} else { 
+			for (int i = 0; i <= roadSegments.length - 1; i++) {
+				if (roadSegments[i].getClass() == Route.class) {
+					ArrayList<Location> sublist = new ArrayList<Location>();
 					sublist.addAll(Arrays.asList(((Route) roadSegments[0]).getAllLocations()));
 					sublist.remove(0);
 					list.addAll(sublist);
-				}
-				else {
+				} else {
+					tracker = ((Segments) roadSegments[i]).getOtherLocation(tracker);
 					list.add(tracker);
 				}
-				tracker=((Segments) roadSegments[i]).getOtherLocation(tracker);
 			}
-			list.add(tracker);
-			
-//			if(roadSegments[0].getClass()==Route.class) {
-//				list.add(((Route) roadSegments[0]).getAllLocations());
-//			}
-//			tracker=((Segments) roadSegments[0]).getOtherLocation(tracker);
-//			for(int i = 1; i <= roadSegments.length-1;i++) {
-//				list.add(tracker);
-//				tracker=((Segments) roadSegments[i]).getOtherLocation(tracker);
-//			}
-//			list.add(tracker);
 		}
 		Location[] array = new Location[list.size()];
 		list.toArray(array);
