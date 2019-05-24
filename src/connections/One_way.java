@@ -149,22 +149,34 @@ public class One_way extends Road{
 		return array;
 	}
 
+    /**
+     * Gets the other location of the road when given a location.
+     * @param location The location to get the other end of.
+     * @return Always returns endLocation since this is a one way road with the same never changing end location.
+     *  |       return this.endLocation
+     */
 	@Override
 	public Location getOtherLocation(Location location) {
-		// TODO Auto-generated method stub
 		return this.endLocation;
 		
 	}
 
+    /**
+     * Gets the route segments.
+     * @return Null because a Road does not have road segments.
+     */
 	@Override
 	public Segments[] getRouteSegments() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
+    /**
+     * Checks to see whether an Object contains itself.
+     * @param segment The segment to check
+     * @return False because a Road does not have segments and cannot contain itself.
+     */
 	@Override
 	public boolean containsItself(Object segment) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

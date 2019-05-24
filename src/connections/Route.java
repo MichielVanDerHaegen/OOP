@@ -25,11 +25,6 @@ public class Route extends Segments{
 	private Object[] roadSegments;
 	
 	/**
-	 * Variable registering the list of locations for each route
-	 */
-//	private ArrayList<Location> locationList = new ArrayList<Location>();
-	
-	/**
 	 * Initialize a new Route with given start location and collection of road segments.
 	 *
 	 * @param startLocation
@@ -55,8 +50,18 @@ public class Route extends Segments{
 			throw new IllegalArgumentException();
 		roadSegments = segments.clone();
 	}
-	
 
+	/**
+	 * Checks whether the Route contains itself in one of its segments or nested segments.
+	 * @param segment The segment of the Route to check
+	 * @return True if the given segment is equal to the Route
+	 * |	if(segment ==this)
+	 * |		return true
+	 * @return True if a sub segment of the route is a subroute that contains the original Route
+	 * |		for each object in this.getRouteSegments()
+	 * |			if(((Segments) object).containsItself(segment))
+	 * |				return True
+	 */
 	@Override
 	public boolean containsItself(Object segment) {
 		if(segment==this)
@@ -71,9 +76,8 @@ public class Route extends Segments{
 
 	/**
 	 * Checks to see if the given road segments are valid, as well as
-	 * adding each location in the road segments to locationList, and recording the last location visited as end location
-	 * for the route.
-	 * @param roads The road segments to check
+	 * recording the last location visited as end location for the route.
+	 * @param segments The road segments to check
 	 * @return True if each road segment in the given segments connects in a unbroken line where the location that is not the
 	 * 			start location for the first road segment is the same as a location in the next segment where in turn the second
 	 * 			segments other location is in turn the same as one of the locations in the third road segment until there is a final
@@ -88,9 +92,6 @@ public class Route extends Segments{
 	 * @return True if there is one road segment, and one of the segments locations is the start location of the route.
 	 * 		|	if roads.length ==1
 	 * 		|		result == roads[0].getEndPoint1() == startLocation || roads[0].getEndpoint2() == startLocation
-	 * @post Each location contained in roads is now in the locationList.
-	 * 	|	for each location in roads
-	 * 			locationList.contains(location)
 	 * @post The final location visited for each Route is the end location of the route.
 	 * 	| 	 if roads.length == 0 then
 	 * 	|		new.getEndLocation == startLocation
@@ -130,11 +131,8 @@ public class Route extends Segments{
 	}
 
 	/**
-	 * Given a road and one of its locations, gets the other location of that road
-	 *
-	 * @param road
-	 * 		The road to check
-	 * @param startLocation
+	 * Given a location, gets the other location of that road
+	 * @param location
 	 * 		One of the locations of the road
 	 * @return If the first endpoint of the road is the start location returns the second endpoint.
 	 * 		|	if (road.getEndPoint1() == startLocation)
@@ -180,24 +178,27 @@ public class Route extends Segments{
 	/**
 	 * Adds a road segment to the route if it connects to a previous road segment already in the list.
 	 *
-	 * @param road The road segment to add
+	 * @param segment The road segment to add
 	 * @throws IllegalArgumentException
 	 * 		The given road is null
 	 * 	|	road == null
 	 * @post The given road segment is added to the routes list of road segments, assuming it is a valid list after addition
 	 * 	|	if areValidSegments(roadSegments)
-	 * 	|		new.roadSegments.contains(road)
+	 * 	|		new.roadSegments.contains(road)\
+	 * @post The new updated Route does not contain itself(is acyclic)
+	 * |	for each segment in the new updated Route
+	 * |		assert(!containsItself(segment))
 	 */
-	public void addRouteSegment(Object road) throws IllegalArgumentException {
-		if (road == null)
+	public void addRouteSegment(Object segment) throws IllegalArgumentException {
+		if (segment == null)
 			throw new IllegalArgumentException();
 		ArrayList<Object> list = new ArrayList<Object>(Arrays.asList(roadSegments));
-		list.add(road);
+		list.add(segment);
 		roadSegments = new Road[list.size()];
 		list.toArray(roadSegments);
 		assert (areValidSegments(roadSegments));
-		for(Object segment: roadSegments) {
-			assert(!containsItself(segment));
+		for(Object item: roadSegments) {
+			assert(!containsItself(item));
 		}
 	}
 

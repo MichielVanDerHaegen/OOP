@@ -220,7 +220,6 @@ public class AlternatingRoad extends Road{
 	 */
 	@Override
 	public Location[] getStartLocations() {
-		// TODO Auto-generated method stub
 		Location[] array = new Location[] {startLocation};
 		return array;
 	}
@@ -231,28 +230,41 @@ public class AlternatingRoad extends Road{
 	 */
 	@Override
 	public Location[] getEndLocations() {
-		// TODO Auto-generated method stub
 		Location[] array = new Location[] {endLocation};
 		return array;
 	}
 
+    /**
+     * Returns the other location for the road when given a location.
+     * @param location The location given
+     * @return If given the start location returns the end location and vice versa.
+     * |    if location == startLocation
+     * |        return endLocation
+     * |    else
+     * |        return startLocation
+     */
 	@Override
 	public Location getOtherLocation(Location location) {
-		// TODO Auto-generated method stub
 		if(location==startLocation)
 			return endLocation;
 		return startLocation;
 	}
 
+    /**
+     * Does nothing, no Route Segments for a Road.
+     */
 	@Override
 	public Segments[] getRouteSegments() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
+    /**
+     * Method to check whether a Object contains itself.
+     * @param segment The segment to check
+     * @return False always because roads do not have segments and cannot contain themselves.
+     */
 	@Override
 	public boolean containsItself(Object segment) {
-		// TODO Auto-generated method stub
 		return false;
 	}    
 

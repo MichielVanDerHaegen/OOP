@@ -266,7 +266,11 @@ public class Location {
 		assert road.isTerminated();
 		this.roadMap.remove(road);
 	}
-	
+
+	/**
+	 * Returns a string representative of the Location saying "this location " + this.getAddress() + "has the following coordinates: " +
+	 * this.getCoordinate()[0] + this.getCoordinate()[1]
+	 */
 	@Override
 	public String toString() {
 		return "This location, "+this.getAddress()+" has the following coordinates: "+this.getCoordinate()[0]+", "+this.getCoordinate()[1];

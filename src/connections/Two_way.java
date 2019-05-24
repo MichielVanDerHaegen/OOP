@@ -73,7 +73,6 @@ public class Two_way extends Road{
 	 */
 	@Override
 	public Location[] getStartLocations() {
-		// TODO Auto-generated method stub
 		return getEndPoints();
 	}
 
@@ -83,27 +82,32 @@ public class Two_way extends Road{
 	 */
 	@Override
 	public Location[] getEndLocations() {
-		// TODO Auto-generated method stub
 		return getEndPoints();
 	}
 
 	@Override
 	public Location getOtherLocation(Location location) {
-		// TODO Auto-generated method stub
 		if(location==getStartLocations()[0])
 			return getStartLocations()[1];
 		return getStartLocations()[0];
 	}
 
+	/**
+	 * Gets the segments for the route that is checked
+	 * @return Null since a Road does not have segments
+	 */
 	@Override
 	public Segments[] getRouteSegments() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Checks to see whether a segment contains itself
+	 * @param segment The segment to check
+	 * @return False since a road does not have segments and cannot contain itself.
+	 */
 	@Override
 	public boolean containsItself(Object segment) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
