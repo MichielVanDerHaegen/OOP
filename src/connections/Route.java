@@ -296,7 +296,10 @@ public class Route extends Segments{
 		}
 		else if(roadSegments.length==1) {
 			if(roadSegments[0].getClass()==Route.class) {
-				list.addAll(Arrays.asList(((Route) roadSegments[0]).getAllLocations()));
+				ArrayList<Location> sublist = new ArrayList<Location>(); 
+				sublist.addAll(Arrays.asList(((Route) roadSegments[0]).getAllLocations()));
+				sublist.remove(0);
+				list.addAll(sublist);
 			}
 			list.add(tracker);
 			list.add(getOtherLocation(tracker));
@@ -304,12 +307,15 @@ public class Route extends Segments{
 		else {
 			for(int i = 0; i <= roadSegments.length-1;i++) {
 				if(roadSegments[i].getClass()==Route.class) {
-					list.addAll(Arrays.asList(((Route) roadSegments[i]).getAllLocations()));
+					ArrayList<Location> sublist = new ArrayList<Location>(); 
+					sublist.addAll(Arrays.asList(((Route) roadSegments[0]).getAllLocations()));
+					sublist.remove(0);
+					list.addAll(sublist);
 				}
 				else {
 					list.add(tracker);
-					tracker=((Segments) roadSegments[i]).getOtherLocation(tracker);
 				}
+				tracker=((Segments) roadSegments[i]).getOtherLocation(tracker);
 			}
 			list.add(tracker);
 			
