@@ -155,6 +155,5 @@ public class One_way extends Road{
 		return this.endLocation;
 		
 	}
-	
 
 }

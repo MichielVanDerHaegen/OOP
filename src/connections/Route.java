@@ -27,7 +27,7 @@ public class Route extends Segments{
 	/**
 	 * Variable registering the list of locations for each route
 	 */
-	private ArrayList<Location> locationList = new ArrayList<Location>();
+//	private ArrayList<Location> locationList = new ArrayList<Location>();
 	
 	/**
 	 * Initialize a new Route with given start location and collection of road segments.
@@ -99,20 +99,20 @@ public class Route extends Segments{
 			}
 		}
 		Location startLocation = this.startLocation;
-		locationList.add(startLocation);
+//		locationList.add(startLocation);
 		if (segments.length == 0) {
 			this.endLocation=startLocation;
 			return true;
 		}
 		if(Arrays.asList(((Segments) segments[0]).getStartLocations()).contains(startLocation)){
 			if(segments.length == 1) {
-				locationList.add(((Segments) segments[0]).getOtherLocation(startLocation));
+//				locationList.add(((Segments) segments[0]).getOtherLocation(startLocation));
 				this.endLocation=((Segments) segments[0]).getOtherLocation(startLocation);
 				return true;
 			}
 		startLocation = ((Segments) segments[0]).getOtherLocation(startLocation);
 		for (int i = 1; i <= segments.length - 1; i++) {
-			locationList.add(startLocation);
+//			locationList.add(startLocation);
 			if(((Segments) segments[i]).getStartLocations().length==1){
 				assert (((Segments) segments[i]).getStartLocations()[0] == startLocation || ((Segments) segments[i]).getEndLocations()[0] == startLocation);
 			}
@@ -121,7 +121,7 @@ public class Route extends Segments{
 			}
 			startLocation = ((Segments) segments[i]).getOtherLocation(startLocation);
 		}
-		locationList.add(startLocation);
+//		locationList.add(startLocation);
 		this.endLocation=startLocation;
 		return true;
 	}
@@ -268,11 +268,11 @@ public class Route extends Segments{
 	 */
 	public boolean isTraversable() {
 		for(int i=0;i<=roadSegments.length-1;i++) {
-			if(locationList.get(i)==((Road) roadSegments[i]).getEndPoint1()) {
+			if(getAllLocations()[i]==((Road) roadSegments[i]).getEndPoint1()) {
 				if(((Road) roadSegments[i]).isBlockedDirectionEndPointTwo())
 					return false;
 			}
-			if(locationList.get(i)==((Road) roadSegments[i]).getEndPoint2()) {
+			if(getAllLocations()[i]==((Road) roadSegments[i]).getEndPoint2()) {
 				if(((Road) roadSegments[i]).isBlockedDirectionEndPointOne())
 					return false;
 			}	
@@ -284,8 +284,25 @@ public class Route extends Segments{
 	 * Returns an array of all the locations that are visited when traveling through this route
 	 */
 	public Location[] getAllLocations() {
-		Location[] array = new Location[locationList.size()];
-		locationList.toArray(array);
+		ArrayList<Object> list = new ArrayList<Object>();
+		Location tracker=startLocation;
+		list.add(tracker);
+		if(roadSegments.length==0) {
+		}
+		else if(roadSegments.length==1) {
+			list.add(getOtherLocation(tracker));
+		}
+		else {
+			tracker=((Segments) roadSegments[0]).getOtherLocation(tracker);
+			for(int i = 1; i <= roadSegments.length-1;i++) {
+				list.add(tracker);
+				tracker=((Segments) roadSegments[i]).getOtherLocation(tracker);
+			}
+			tracker=((Segments) roadSegments[roadSegments.length-1]).getOtherLocation(tracker);
+			list.add(tracker);
+		}
+		Location[] array = new Location[list.size()];
+		list.toArray(array);
 		return array;
 	}
 
@@ -305,9 +322,9 @@ public class Route extends Segments{
 			segments = segments + ", "+((Road) roadSegments[i]).getID();
 		}	
 		String string2 = new String("\n"+"With these respective locations: ");
-		String locations = locationList.get(0).getAddress();
-		for(int i = 1; i < locationList.size(); i++) {
-			locations = locations + ", "+locationList.get(i).getAddress();
+		String locations = getAllLocations()[0].getAddress();
+		for(int i = 1; i < getAllLocations().length; i++) {
+			locations = locations + ", "+getAllLocations()[i].getAddress();
 		}
 		return string1+segments+string2+locations+"\n"+"Blocked in the direction of the route: "+!isTraversable()+"\n";
 	}

@@ -242,9 +242,7 @@ public class AlternatingRoad extends Road{
 		if(location==startLocation)
 			return endLocation;
 		return startLocation;
-	}
-    
-
+	}    
 
 }
 

@@ -16,5 +16,6 @@ public abstract class Segments {
 	public abstract int getLength();
 	
 	public abstract Location getOtherLocation(Location location);
+
 	
 }
