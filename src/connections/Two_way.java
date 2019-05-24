@@ -95,4 +95,16 @@ public class Two_way extends Road{
 		return getStartLocations()[0];
 	}
 
+	@Override
+	public Segments[] getRouteSegments() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean containsItself(Object segment) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

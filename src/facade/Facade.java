@@ -7,6 +7,7 @@ import connections.Location;
 import connections.One_way;
 import connections.Road;
 import connections.Route;
+import connections.Segments;
 import connections.Two_way;
 
 /**
@@ -468,7 +469,7 @@ public interface Facade {
 	default Object[] getRouteSegments(Route route) throws ModelException {
 		// To be implemented
 		try {
-			return route.getRouteSegements();
+			return route.getRouteSegments();
 		} catch (Throwable exc) {
 			throw new ModelException();
 		}

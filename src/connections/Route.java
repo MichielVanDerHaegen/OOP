@@ -55,6 +55,19 @@ public class Route extends Segments{
 			throw new IllegalArgumentException();
 		roadSegments = segments.clone();
 	}
+	
+
+	@Override
+	public boolean containsItself(Object segment) {
+		if(segment==this)
+			return true;
+		for(Object array1: this.getRouteSegments()) {
+				if(((Segments) array1).containsItself(segment))
+					return true;
+			}				
+		return false;
+	}
+
 
 	/**
 	 * Checks to see if the given road segments are valid, as well as
@@ -90,29 +103,18 @@ public class Route extends Segments{
 	 *  |	 		new.getEndLocation() == roads[-1].getEndPoint1()
 	 */
 	public boolean areValidSegments(Object... segments) {
-		for (int i = 0; i <= segments.length - 1; i++) {
-			if(((Segments) segments[i]).equals(this)) {
-				return false;
-			}
-			if(segments[i].getClass()==Route.class) {
-				((Route) segments[i]).areValidSegments(segments[i]);
-			}
-		}
 		Location startLocation = this.startLocation;
-//		locationList.add(startLocation);
 		if (segments.length == 0) {
 			this.endLocation=startLocation;
 			return true;
 		}
 		if(Arrays.asList(((Segments) segments[0]).getStartLocations()).contains(startLocation)){
 			if(segments.length == 1) {
-//				locationList.add(((Segments) segments[0]).getOtherLocation(startLocation));
 				this.endLocation=((Segments) segments[0]).getOtherLocation(startLocation);
 				return true;
 			}
 		startLocation = ((Segments) segments[0]).getOtherLocation(startLocation);
 		for (int i = 1; i <= segments.length - 1; i++) {
-//			locationList.add(startLocation);
 			if(((Segments) segments[i]).getStartLocations().length==1){
 				assert (((Segments) segments[i]).getStartLocations()[0] == startLocation || ((Segments) segments[i]).getEndLocations()[0] == startLocation);
 			}
@@ -121,7 +123,6 @@ public class Route extends Segments{
 			}
 			startLocation = ((Segments) segments[i]).getOtherLocation(startLocation);
 		}
-//		locationList.add(startLocation);
 		this.endLocation=startLocation;
 		return true;
 	}
@@ -171,7 +172,8 @@ public class Route extends Segments{
 	/**
 	 * Returns an array of Roads consisting of each road segment in the Route
 	 */
-	public Object[] getRouteSegements() {
+	@Override
+	public Object[] getRouteSegments() {
 		return roadSegments.clone();
 	}
 
@@ -194,6 +196,9 @@ public class Route extends Segments{
 		roadSegments = new Road[list.size()];
 		list.toArray(roadSegments);
 		assert (areValidSegments(roadSegments));
+		for(Object segment: roadSegments) {
+			assert(!containsItself(segment));
+		}
 	}
 
 	/**
@@ -279,27 +284,44 @@ public class Route extends Segments{
 		}
 		return true;
 	}
-
+	
 	/**
 	 * Returns an array of all the locations that are visited when traveling through this route
 	 */
 	public Location[] getAllLocations() {
 		ArrayList<Object> list = new ArrayList<Object>();
 		Location tracker=startLocation;
-		list.add(tracker);
 		if(roadSegments.length==0) {
+			list.add(tracker);
 		}
 		else if(roadSegments.length==1) {
+			if(roadSegments[0].getClass()==Route.class) {
+				list.addAll(Arrays.asList(((Route) roadSegments[0]).getAllLocations()));
+			}
+			list.add(tracker);
 			list.add(getOtherLocation(tracker));
 		}
 		else {
-			tracker=((Segments) roadSegments[0]).getOtherLocation(tracker);
-			for(int i = 1; i <= roadSegments.length-1;i++) {
-				list.add(tracker);
-				tracker=((Segments) roadSegments[i]).getOtherLocation(tracker);
+			for(int i = 0; i <= roadSegments.length-1;i++) {
+				if(roadSegments[i].getClass()==Route.class) {
+					list.addAll(Arrays.asList(((Route) roadSegments[i]).getAllLocations()));
+				}
+				else {
+					list.add(tracker);
+					tracker=((Segments) roadSegments[i]).getOtherLocation(tracker);
+				}
 			}
-			tracker=((Segments) roadSegments[roadSegments.length-1]).getOtherLocation(tracker);
 			list.add(tracker);
+			
+//			if(roadSegments[0].getClass()==Route.class) {
+//				list.add(((Route) roadSegments[0]).getAllLocations());
+//			}
+//			tracker=((Segments) roadSegments[0]).getOtherLocation(tracker);
+//			for(int i = 1; i <= roadSegments.length-1;i++) {
+//				list.add(tracker);
+//				tracker=((Segments) roadSegments[i]).getOtherLocation(tracker);
+//			}
+//			list.add(tracker);
 		}
 		Location[] array = new Location[list.size()];
 		list.toArray(array);

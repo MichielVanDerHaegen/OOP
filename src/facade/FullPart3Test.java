@@ -1103,12 +1103,8 @@ class FullPart3Test {
 		maxScore += 10;
 		assertArrayEquals(new Location[] { leuven, antwerp, brussels, gent },
 				theFacade.getAllLocations(route_leuven_antwerp_brussels_gent));
-//		for(Location loc: route_leuven_antwerp_brussels_gent.getAllLocations() )
-//			System.out.println(loc);
 		assertArrayEquals(new Location[] { antwerp, leuven, brussels, brussels, antwerp },
 				theFacade.getAllLocations(circularRoute_antwerp_leuven_brussels_brussels_antwerp));
-		for(Location loc: circularRoute_antwerp_leuven_brussels_brussels_antwerp.getAllLocations() )
-			System.out.println(loc);
 		actualScore += 10;
 	}
 

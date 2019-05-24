@@ -16,6 +16,9 @@ public abstract class Segments {
 	public abstract int getLength();
 	
 	public abstract Location getOtherLocation(Location location);
+	
+	public abstract Object[] getRouteSegments();
 
+	public abstract boolean containsItself(Object segment);
 	
 }

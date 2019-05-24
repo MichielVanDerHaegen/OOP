@@ -242,6 +242,18 @@ public class AlternatingRoad extends Road{
 		if(location==startLocation)
 			return endLocation;
 		return startLocation;
+	}
+
+	@Override
+	public Segments[] getRouteSegments() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean containsItself(Object segment) {
+		// TODO Auto-generated method stub
+		return false;
 	}    
 
 }
