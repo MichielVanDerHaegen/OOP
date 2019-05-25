@@ -1,5 +1,32 @@
 package connections;
 
+
+/**
+ * A class of roads where each road has an ID, connects two end points, has a length in meters,
+ * a speed limit an average road speed under normal conditions in meters per second,
+ * a delay in seconds, and a blocked status for each endpoint direction. This road can alternate its start and end location which
+ * is the direction that the road is being traveled.
+ *
+ * @invar The ID of each road must be a valid ID for any road
+ * 		| isValidID(getID())
+ * @invar The end point of each road must be a valid end point for any road
+ * 		| isValidEndPoint(location1.getCoordinate())
+ * 		| isValidEndPoint(location2.getCoordinate())
+ * @invar The length of each road must be a valid length for any road
+ * 		| isValidLength(getLength())
+ * @invar The speed limit of each road must be a valid speed limit for any road
+ * 		| isValidSpeedLimit(getSpeedLimit())
+ * @invar The average road speed of each road must be a valid average road speed for any road
+ * 		| isValidRoadSpeed(getRoadSpeed())
+ * @invar The delay in the direction of an end point must be a valid delay for any road, but throws an error if the direction
+ *        being queried is not the current direction of the end of the road.
+ * 		| isValidDelay(getDelayDirectionEndPoint1())
+ * 		| isValidDelay(getDelayDirectionEndPoint2())
+ *
+ * @author Michiel Van der Haegen
+ * @author Sam Haberman
+ */
+
 public class AlternatingRoad extends Road{
     /**
      * Initializes a new non-terminated one-way road with given ID, first and second location and

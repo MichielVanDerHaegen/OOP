@@ -103,15 +103,6 @@ public abstract class Road extends Segments {
      */
 	protected boolean directionOfRoad = true;
 
-	 /**
-     * The start location of this one-way road.
-     */
-	protected Location startLocation;
-
-    /**
-     * The end location of this one-way road.
-     */
-	protected Location endLocation;
     
 	/**
 	 * Initializes a new non-terminated road with given ID, first and second location and

@@ -1,5 +1,12 @@
 package connections;
 
+/**
+ * A class of segments. Each segment is either a subclass of Road(One way, two way or alternating) or a Route.
+ *
+ * @author Michiel Van der Haegen
+ * @author Sam Haberman
+ */
+
 public abstract class Segments {
 
 	/**
@@ -32,5 +39,14 @@ public abstract class Segments {
 	 * @param segment The segment to check
 	 */
 	public abstract boolean containsItself(Object segment);
-	
+
+	/**
+	 * The start location of this one-way road.
+	 */
+	protected Location startLocation;
+
+	/**
+	 * The end location of this one-way road.
+	 */
+	protected Location endLocation;
 }

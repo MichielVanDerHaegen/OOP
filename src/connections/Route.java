@@ -83,25 +83,28 @@ public class Route extends Segments{
 	 * 			segments other location is in turn the same as one of the locations in the third road segment until there is a final
 	 * 			location in the last road segment where the road ends.
 	 * 		|	result == True if
-	 * 		|	for 0..roads.length-1
-	 * 		|		assert(roads[i].getEndPoint1() == startLocation || roads[i].getEndPoint2() == startLocation)
-	 * 		|		startLocation = getOtherLocation(roads[i], startLocation)
-	 * @return True if there are zero road segements given
-	 * 		|	if roads.length ==0
+	 * 		|	for 0..segments.length-1
+	 *		|		if(((Segments) segments[i]).getStartLocations().length==1){
+	 *		|			assert (((Segments) segments[i]).getStartLocations()[0] == startLocation || ((Segments) segments[i]).getEndLocations()[0] == startLocation);}
+	 *		|		else {
+	 *		|			assert (((Segments) segments[i]).getStartLocations()[0] == startLocation || ((Segments) segments[i]).getEndLocations()[1] == startLocation);}
+	 *		|		startLocation = ((Segments) segments[i]).getOtherLocation(startLocation);
+	 * @return True if there are zero road segments given
+	 * 		|	if segments.length ==0
 	 * 		|	result == True
 	 * @return True if there is one road segment, and one of the segments locations is the start location of the route.
-	 * 		|	if roads.length ==1
-	 * 		|		result == roads[0].getEndPoint1() == startLocation || roads[0].getEndpoint2() == startLocation
+	 * 		|	if segments.length ==1
+	 * 		|		result == Arrays.asList(((Segments) segments[0]).getStartLocations()).contains(startLocation)
 	 * @post The final location visited for each Route is the end location of the route.
-	 * 	| 	 if roads.length == 0 then
-	 * 	|		new.getEndLocation == startLocation
+	 * 	| 	 if segments.length == 0 then
+	 * 	|		new.getEndLocation() == startLocation
 	 * 	|	 else if roads.length ==1 then
-	 * 	|	 	new.getEndLocation == getOtherLocation(roads[0], startLocation)
+	 * 	|	 	new.getEndLocation() == ((Segments) segments[0]).getOtherLocation(startLocation)
 	 * 	|	 else
-	 * 	|	 	if roads[-1].getEndPoint1() == roads[-2].getEndPoint2() || roads[-1].getEndPoint1() == roads[-2].getEndPoint2()
-	 * 	|	 		then new.getEndLocation() == roads[-1].getEndPoint2()
+	 * 	|	 	if segments[-1].getEndPoint1() == segments[-2].getEndPoint2() || segments[-1].getEndPoint1() == segments[-2].getEndPoint2()
+	 * 	|	 		then new.getEndLocation() == segments[-1].getEndPoint2()
 	 * 	|	 	else
-	 *  |	 		new.getEndLocation() == roads[-1].getEndPoint1()
+	 *  |	 		new.getEndLocation() == segments[-1].getEndPoint1()
 	 */
 	public boolean areValidSegments(Object... segments) {
 		Location startLocation = this.startLocation;
@@ -151,7 +154,6 @@ public class Route extends Segments{
 
 	/**
 	 * Returns the start location of the Route
-	 *
 	 */
 	@Override
 	public Location[] getStartLocations() {
@@ -288,6 +290,35 @@ public class Route extends Segments{
 	
 	/**
 	 * Returns an array of all the locations that are visited when traveling through this route
+	 *
+	 * @return An array consisting of just the start location of the route if the route has no segments.
+	 * 	|	if (roadSegments.length ==0)
+	 * 	|		new.getAllLocations() == [startLocation]
+	 *
+	 * @return An array consisting of the start and end location of the given route if it has only one segment whether
+	 * 			it is a road or a route
+	 * 	|	if (roadSegments.length ==1)
+	 * 	|		if (roadSegments[0].getClass() == Route.class)
+	 * 	|			return ((Route) roadSegments[0].getAllLocations()
+	 * 	|		else
+	 * 	|			new.getAllLocations() == [startLocation,endLocation]
+	 *
+	 * @return An array consisting of each location visited in order during the route if the route has more than 1 segment
+	 * |	ArrayList<Object> list = new ArrayList<Object>();
+	 * |	Location tracker = this.startLocation;
+	 * |	list.add(tracker);
+	 * |	for each segment in roadSegments.length -1
+	 * |		if (roadSegments[i].getClass() == Route.class)
+	 * |			ArrayList<Location> sublist = new ArrayList<Location>()
+	 * |			sublist.addAll(Arrays.asList(((Route) roadSegments[0]).getAllLocations()))
+	 * |			sublist.remove(0)
+	 * |			list.addAll(sublist)
+	 * |        else
+	 * |			tracker = ((Segments) roadSegments[i]).getOtherLocation(tracker)
+	 * |			list.add(tracker)
+	 * |	Location[] array = new Location[list.size()];
+	 * |	list.toArray(array);
+	 * |	return array;
 	 */
 	public Location[] getAllLocations() {
 		ArrayList<Object> list = new ArrayList<Object>();
@@ -319,6 +350,12 @@ public class Route extends Segments{
 		return array;
 	}
 
+	/**
+	 * Returns the end location of this route
+	 */
+	public Location getEndLocation(){
+		return endLocation;
+	}
 	/**
 	 * This method overrides the toString representation of an instance of the road class
 	 *

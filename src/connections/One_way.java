@@ -1,5 +1,29 @@
 package connections;
 
+/**
+ * A class of roads where each road has an ID, connects two end points, has a length in meters,
+ * a speed limit an average road speed under normal conditions in meters per second,
+ * a delay in seconds, and a blocked status for each endpoint direction. Each road only travels in the direction of its
+ * second location.
+ *
+ * @invar The ID of each road must be a valid ID for any road
+ * 		| isValidID(getID())
+ * @invar The end point of each road must be a valid end point for any road
+ * 		| isValidEndPoint(location1.getCoordinate())
+ * 		| isValidEndPoint(location2.getCoordinate())
+ * @invar The length of each road must be a valid length for any road
+ * 		| isValidLength(getLength())
+ * @invar The speed limit of each road must be a valid speed limit for any road
+ * 		| isValidSpeedLimit(getSpeedLimit())
+ * @invar The average road speed of each road must be a valid average road speed for any road
+ * 		| isValidRoadSpeed(getRoadSpeed())
+ * @invar The delay in the direction of the second end point must be a valid delay for any road
+ * 		| isValidDelay(getDelayDirectionEndPoint2())
+ *
+ * @author Michiel Van der Haegen
+ * @author Sam Haberman
+ */
+
 public class One_way extends Road{
     /**
      * Initializes a new non-terminated one-way road with given ID, first and second location and
@@ -78,16 +102,6 @@ public class One_way extends Road{
         startLocation = location1;
         endLocation = location2;
     }
-
-    /**
-     * The start location of this one-way road.
-     */
-    private final Location startLocation;
-
-    /**
-     * The end location of this one-way road.
-     */
-    private final Location endLocation;
 
     /**
      * Does nothing, road only travels in direction of endpoint two, the end location.
