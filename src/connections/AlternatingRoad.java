@@ -293,7 +293,23 @@ public class AlternatingRoad extends Road{
 	@Override
 	public boolean containsItself(Object segment) {
 		return false;
-	}    
+	}   
+	
+	/**
+	 * This method overrides the toString representation of an instance of the alternating road class
+	 *
+	 * @return Returns a string stating "This alternating road has the following properties" which lists the ID, both endpoints,
+	 * the length of the road in meters, the speed limit and the average speed of the road in meters per second,
+	 * the blocked status of the road and the delay in seconds.
+	 */
+	@Override
+	public String toString() {
+		return ("This alternating road has the following properties:" + '\n' + "ID: " + this.getID() + '\n' +
+				"End point 1: " + this.getEndPoint1().getAddress() + '\n' + "End point 2: " + this.getEndPoint2().getAddress() + '\n' + "Length: " + this.getLength()
+				+ '\n' + "Speed limit: " + this.getSpeedlimit() + '\n' + "Average speed: " + this.getRoadSpeed() + '\n' + "Blocked in the direction of "+this.getEndPoint1().getAddress()+": " + this.isBlockedDirectionEndPointOne() + '\n' +
+				"Blocked in the direction of "+this.getEndPoint2().getAddress() + ": " + this.isBlockedDirectionEndPointTwo() + '\n' + "Delay in the direction of "+this.getEndPoint1().getAddress()+": " + this.getDelayDirectionEndPointOne() + '\n' +
+				"Delay in the direction of "+this.getEndPoint2().getAddress()+ ": " + this.getDelayDirectionEndPointTwo() + '\n');
+	}
 
 }
 

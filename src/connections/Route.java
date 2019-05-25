@@ -11,13 +11,6 @@ import java.util.Arrays;
  * @author Sam Haberman
  */
 public class Route extends Segments{
-
-	/**
-	 * Variable registering the startLocation of the route
-	 */
-	private Location startLocation;
-	
-	private Location endLocation;
 	
 	/**
 	 * Variable registering the set of roadSegments of the route
